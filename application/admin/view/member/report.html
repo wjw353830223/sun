@@ -1,0 +1,37 @@
+{include file="open/header" /}
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('member/index')}">会员列表</a></li>
+        <li class="active"><a href="{:url('member/index_report')}">检测报告</a></li>
+    </ul>
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>上传IP地址</th>
+                <th>上传时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach name="report" item="vo"}
+            <tr>
+                <td align="center">{$vo.report_id}</td>
+                <td>{$vo.upload_ip}</td>
+                <td>{:date('Y-m-d H:i:s',$vo.create_time)}</td>
+                <td>
+                    <a href="{:url('member/del_report',['id'=>$vo['report_id']])}" class="js-ajax-delete">删除报告</a>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

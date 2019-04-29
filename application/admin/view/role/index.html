@@ -1,0 +1,51 @@
+{include file="open/header" /} 
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('role/index')}">角色管理</a></li>
+			<li><a href="{:url('role/add')}">添加角色</a></li>
+		</ul>
+		<form action="{:url('role/listorders')}" method="post">
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th width="30">ID</th>
+						<th align="left">角色名称</th>
+						<th align="left">角色描述</th>
+						<th width="40" align="left">状态</th>
+						<th width="120">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{foreach name="roles" item="vo"}
+					<tr>
+						<td>{$vo.role_id}</td>
+						<td>{$vo.name}</td>
+						<td>{$vo.remark}</td>
+						<td>
+							{if condition="$vo['status'] eq 1"}
+								<font color="red">√</font>
+							{else /} 
+								<font color="red">╳</font>
+							{/if}
+						</td>
+						<td>
+							{if condition="$vo['role_id'] eq 1"}
+								<font color="#cccccc">权限设置</font>|
+								<font color="#cccccc">编辑</font> | <font color="#cccccc">删除</font>
+							{else /}
+								<a href="{:url('role/authorize',array('id'=>$vo['role_id']))}">权限设置</a>|
+								<a href="{:url('role/edit',array('id'=>$vo['role_id']))}">编辑</a>|
+								<a class="js-ajax-delete" href="{:url('role/delete',array('id'=>$vo['role_id']))}">删除</a>
+							{/if}
+						</td>
+					</tr>
+					{/foreach}
+				</tbody>
+			</table>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

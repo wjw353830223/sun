@@ -1,0 +1,191 @@
+body {
+  width: 100%;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft Yahei", Tahoma, Simsun, sans-serif
+}
+
+@font-face {font-family: 'DIN Regular';
+  src: url('../font/DIN Regular.otf') format('truetype') /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+}
+
+@font-face {font-family: 'DIN-Bold';
+  src: url('../font/DIN-Bold.otf') format('truetype') /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+}
+
+@font-face {font-family: 'FZZCHJW';
+  src: url('../font/FZZCHJW.ttf') format('truetype') /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+}
+
+@media screen and (min-width: 750px) {
+  .container {
+    max-width: 16rem;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: -webkit-linear-gradient(left, #0070BD, #46B6E9);
+    background: -o-linear-gradient(right, #0070BD, #46B6E9);
+    background: -moz-linear-gradient(right, #0070BD, #46B6E9);
+    background: linear-gradient(to right, #0070BD, #46B6E9);
+    height: 100%;
+    position: relative;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .container {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    background: -webkit-linear-gradient(left, #0070BD, #46B6E9);
+    background: -o-linear-gradient(right, #0070BD, #46B6E9);
+    background: -moz-linear-gradient(right, #0070BD, #46B6E9);
+    background: linear-gradient(to right, #0070BD, #46B6E9);
+    position: relative;
+  }
+}
+
+.container::after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden
+}
+
+.exhibition-banner {
+  width: 100%;
+  max-height: 5rem;
+}
+
+.exhibition-banner img {
+  display: block;
+  width: 100%;
+  max-height: 5rem;
+  border: none
+}
+
+.exhibition-explain {
+  position: absolute;
+  top: 4.76rem;
+}
+
+.exhibition-list {
+  margin: 0 0.306666rem;
+}
+
+.list-img {
+  width: 9.4rem;
+  height: 6.266666rem;
+}
+
+.list-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none
+}
+
+.list-explain {
+  padding: 0.5rem 0.4rem;
+  font-size: 0.4rem;
+  font-family: PingFang-SC-Medium;
+  color: rgba(8, 48, 74, 1);
+  text-indent: 2em;
+  background: #ffffff;
+}
+
+.list-entry{
+  padding: 0.613333rem 0 0.4rem 0.333333rem;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.entry-hexagon{
+  display: block;
+  width: 1.066666rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
+  background: url("../img/exhibition-hexagon.png") no-repeat;
+  background-size: cover;
+  font-size:0.5333333rem;
+  font-family:DIN-Bold;
+  color:rgba(8,48,74,1);
+  text-align: center;
+  font-style: normal;
+}
+
+.entry-content{
+  margin-left: 0.306666rem;
+}
+
+.entry-title{
+  font-size:0.5333333rem;
+  font-family:FZZCHJW;
+  color:rgba(255,255,255,1);
+}
+
+.entry-subtitle{
+  font-size:0.533333rem;
+  font-family:DIN Regular;
+  color:rgba(251,200,47,1);
+}
+
+.subtitle-word{
+  word-spacing: -0.08rem;
+}
+
+.exhibition-last{
+  margin-top: 1.36rem;
+  background: #ffffff;
+  padding: 0 0.4rem;
+  position: relative;
+}
+
+.exhibition-crossbar{
+  padding: 0.44rem 0 0.58666666rem 0;
+  margin-left: -0.5866666rem;
+}
+
+.exhibition-crossbar span{
+  display: block;
+  width: 5.946667rem;
+  height: 1.16rem;
+  line-height: 1rem;
+  font-size:0.533333rem;
+  font-family:FZZCHJW;
+  color:rgba(7,50,79,1);
+  background: url("../img/exhibition-oblong.png") no-repeat;
+  background-size: cover;
+  text-align: center;
+}
+
+.exhibition-link{
+  margin: 0.4rem 0.733333rem;
+}
+
+.exhibition-link p{
+  font-size:0.4rem;
+  font-family:PingFang-SC-Medium;
+  color:rgba(255,255,255,1);
+  text-indent: 2em;
+}
+
+.mb80{
+  margin-bottom: 1.066666rem;
+}
+
+.exhibition-ticket{
+  display: block;
+  font-size: 0.48rem;
+  font-family:PingFang-SC-Bold;
+  color:rgba(255,255,255,1);
+  background:rgba(251,200,47,1);
+  border-radius:0.08rem;
+  box-shadow:0 0.08rem 0 0 rgba(217,166,14,1);
+  text-align: center;
+  margin: 0 0.466666rem 1.31rem;
+  padding: 0.41rem 0;
+}
+
+.link-spacing{
+  letter-spacing: 2.8em;
+}

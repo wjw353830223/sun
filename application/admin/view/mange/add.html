@@ -1,0 +1,43 @@
+{include file="open/header" /} 
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('mange/index')}">管理员列表</a></li>
+			<li class="active"><a href="{:url('mange/add')}">管理员添加</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:url('mange/add_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">用户名</label>
+					<div class="controls">
+						<input type="text" name="admin_name">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">密码</label>
+					<div class="controls">
+						<input type="password" name="admin_password">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">角色</label>
+					<div class="controls">
+						<select name="role_id">
+							<option value="0">请选择</option>
+							{foreach name="roles" item="vo"}
+							<option value="{$vo['role_id']}">{$vo.name}</option>
+							{/foreach}
+						</select>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">添加</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

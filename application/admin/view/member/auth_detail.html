@@ -1,0 +1,110 @@
+{include file="open/header" /}
+<style>
+    .pic{
+        width: 240px;
+        height: 151px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('member/auth')}">实名认证</a></li>
+        <li class="active"><a>查看详情</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:url('member/examine_auth')}">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">会员账号</label>
+                <div class="controls">
+                    <input type="text" name="member_mobile" value="{$member_auth.member_mobile}" disabled />
+                    <span class="form-required"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">认证姓名</label>
+                <div class="controls">
+                    <input type="text" name="auth_name" value="{$member_auth.auth_name}" disabled />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">身份证号</label>
+                <div class="controls">
+                    <input type="text"  name="id_card" value="{$member_auth.id_card}" disabled />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">银行卡号</label>
+                <div class="controls">
+                    <input type="text"  name="bank_no" value="{$member_auth.bank_no}" disabled />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">身份证正面</label>
+                <div class="controls">
+                    {if condition="$member_auth.card_face"}
+                    <img src="__UPLOAD__/seller/{$member_auth.card_face}" class="pic"/>
+                    {else/}
+                    <img src="__PUBLIC__/images/id_card.png"class="pic" />
+                    {/if}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">身份证反面</label>
+                <div class="controls">
+                    {if condition="$member_auth.card_back"}
+                    <img src="__UPLOAD__/seller/{$member_auth.card_back}" class="pic" />
+                    {else/}
+                    <img src="__PUBLIC__/images/id_card.png" class="pic" />
+                    {/if}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">手持身份证</label>
+                <div class="controls">
+                    {if condition="$member_auth.card_hand"}
+                    <img src="__UPLOAD__/seller/{$member_auth.card_hand}" class="pic" />
+                    {else/}
+                    <img src="__PUBLIC__/images/id_card.png" class="pic" />
+                    {/if}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">审核状态</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <select  name="auth_state" class="auth_state" {if condition="$member_auth.auth_state !== 0"} disabled {/if}>
+                    <option type="text" value="1" {if condition="$member_auth.auth_state == 1"}selected{/if}>同意</option>
+                    <option type="text" value="2" {if condition="$member_auth.auth_state == 2"}selected{/if}>拒绝</option>
+                </select>
+            </div>
+            <div class="control-group" id="reason" {if condition="$member_auth.auth_state !== 2"} style="display:none;" {/if}>
+                <label class="control-label">拒绝理由</label>
+                <div class="controls">
+                    <textarea name="reason" rows="5" cols="57" {if condition="$member_auth.auth_state == 2"} disabled {/if}>{$member_auth.reason}</textarea>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-actions">
+            <input type="hidden" name="ma_id" value="{$member_auth.ma_id}">
+            <button type="submit" class="btn btn-primary js-ajax-submit"
+                    {if condition="$member_auth.auth_state == 1"} style="display:none" {/if}>提交</button>
+            <a class="btn" href="javascript:history.back(-1);">返回</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript">
+    $('.auth_state').change(function(){
+        $(this).val() == 2 ? $('#reason').css('display','block') : $('#reason').css('display','none');
+    });
+</script>
+<script>
+    $(function(){
+        $('.pic').hover(function(){
+            $(this).removeClass('pic');
+        },function(){
+            $(this).addClass('pic');
+        });
+    });
+</script>
+</body>
+</html>

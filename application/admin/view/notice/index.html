@@ -1,0 +1,201 @@
+{include file="open/header" /} 
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+	        <li class="active"><a href="{:url('category/index')}">发送通知</a></li>
+	    </ul>
+		<form class="form-horizontal js-ajax-forms" action="{:url('notice/send_post')}" method="post">
+			<div class="tabbable">
+		        <div class="tab-content">
+		          <div class="tab-pane active">
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label">消息类型</label>
+								<div class="controls">
+									<select name="message_type" onchange="message_change(this);">
+										<option value="1">系统消息</option>
+										<option value="0">活动消息</option>
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">发送类型</label>
+								<div class="controls">
+									<select name="send_type" onchange="member_display(this);">
+							        	<option value="1">指定会员</option>
+							        	<option value="2">全部会员</option>
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">会员列表</label>
+								<div class="controls">
+									<textarea name="mobile_list" rows="5" cols="57">{$member_mobile}</textarea>
+									<p>每行填写一个手机号</p>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">通知内容</label>
+								<div class="controls">
+									<textarea name="content" rows="5" cols="57"></textarea>
+								</div>
+							</div>
+							<div class="control-group message_title" style="display: none;">
+								<label class="control-label">活动标题</label>
+								<div class="controls">
+									<input type="text" name="message_title" value="">
+								</div>
+							</div>
+							<div class="control-group active_url" style="display: none;">
+								<label class="control-label">活动链接</label>
+								<div class="controls">
+									<textarea name="active_url" rows="5" cols="57"></textarea>
+								</div>
+							</div>
+							<div class="control-group detail" style="display: none;">
+								<label class="control-label">活动简介</label>
+								<div class="controls">
+									<textarea name="detail" rows="5" cols="57"></textarea>
+								</div>
+							</div>
+						</fieldset>
+		          </div>
+		        </div>
+		    </div>
+		    <div class="form-actions">
+		     	<button class="btn btn-primary js-ajax-submit" type="submit">发送</button>
+		    </div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function member_display(obj){
+            if ($(obj).val() == 1) {
+                $("textarea[name='mobile_list']").val('').parent().parent().show();
+            }else{
+                $("textarea[name='mobile_list']").val('all').parent().parent().hide();
+            }
+		}
+		function message_change(obj){
+            var obj = $(obj);
+            if (obj.val() == 1) {
+                $(".message_title").css('display','none');
+                $(".active_url").css('display','none');
+                $(".detail").css('display','none');
+                $("textarea[name='content']").parent().parent().css('display','block');
+            }else{
+                $(".message_title").css('display','block');
+                $(".active_url").css('display','block');
+                $(".detail").css('display','block');
+                $("textarea[name='content']").parent().parent().css('display','none');
+            }
+		}
+		$(function() {
+			/////---------------------
+			Wind.use('validate','ajaxForm','artDialog',function() {
+				
+				var form = $('form.js-ajax-forms');
+				//ie处理placeholder提交问题
+				if ($.browser && $.browser.msie) {
+					form.find('[placeholder]').each(function() {
+						var input = $(this);
+						if (input.val() == input.attr('placeholder')) {
+							input.val('');
+						}
+					});
+				}
+				//表单验证开始
+				form.validate({
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//是否在敲击键盘时验证
+					onkeyup : false,
+					//当鼠标掉级时验证
+					onclick : false,
+					//验证错误
+					showErrors : function(errorMap,errorArr) {
+						try {
+							$(errorArr[0].element).focus();
+							art.dialog({
+								id : 'error',
+								icon : 'error',
+								lock : true,
+								fixed : true,
+								background : "#CCCCCC",
+								opacity : 0,
+								content : errorArr[0].message,
+								cancelVal : '确定',
+								cancel : function() {
+									$(errorArr[0].element).focus();
+								}
+							});
+						} catch (err) {}
+					},
+					//验证规则
+					rules : {
+						'mobile_list' : {required : 1},
+						'content' : {required : true,minlength: 15 }
+					},
+					//验证未通过提示消息
+					messages : {
+						'mobile_list' : {required : '请填写指定会员手机号'},
+						'content' : {required : '通知内容不能为空',minlength: "通知内容字数不能少于15"}
+					},
+					//给未通过验证的元素加效果,闪烁等
+					highlight : false,
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//验证通过，提交表单
+					submitHandler : function(forms) {
+						$(forms).ajaxSubmit({
+							url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+							dataType : 'json',
+							beforeSubmit : function(arr,$form,options) {
+	
+							},
+							success : function(data,statusText,xhr,$form) {
+								if (data.code == 1) {
+									setCookie("refersh_time",1);
+									//添加成功
+									Wind.use("artDialog",function() {
+										art.dialog({
+											id : "succeed",
+											icon : "succeed",
+											fixed : true,
+											lock : true,
+											background : "#CCCCCC",
+											opacity : 0,
+											content : data.msg,
+											button : [
+											{
+												name : '继续发送？',
+												callback : function() {
+													reloadPage(window);
+													return true;
+												},
+												focus : true
+											},
+											{
+												name : '返回列表',
+												callback : function() {
+													location.href = "{:url('member/index')}";
+													return true;
+												}
+											}
+											]
+										});
+									});
+								} else {
+									artdialog_alert(data.msg);
+								}
+							}
+						});
+					}
+				});
+			});
+		////-------------------------
+		});
+	</script>
+</body>
+</html>

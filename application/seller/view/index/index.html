@@ -1,0 +1,273 @@
+{include file="common/joinin_header" /} 
+<script type="text/javascript">
+    function show_list(t_id){
+        var obj = $(".sidebar dl[show_id='"+t_id+"']");
+    	var show_class=obj.find("dt i").attr('class');
+    	if(show_class=='hide') {
+    		obj.find("dd").show();
+    		obj.find("dt i").attr('class','show');
+    	}else{
+    		obj.find("dd").hide();
+    		obj.find("dt i").attr('class','hide');
+    	}
+    }
+</script>
+<div class="banner">
+  	<div class="user-box">
+	   <div class="user-joinin user-all" style="display:none">
+			<h3>亲爱的：</h3>
+			<dl>
+				<dt>欢迎来到太阳健康-销售管理平台</dt>
+				<dd> 若您还没有填写入驻申请资料<br/>
+					请点击“<a href="" target="_blank">我要入驻</a>”进行入驻资料填写</dd>
+				<dd>若您的分部还未开通<br/>
+					请通过“<a href="" target="_blank">查看入驻进度</a>”了解分部开通的最新状况 </dd>
+			</dl>
+			<div class="bottom"><a href="" target="_blank">我要入住</a><a href="" target="_blank">查看入驻进度</a></div>
+		</div>
+		<div class="user-login user-all" style="display:block;">
+		  	<h3>商务登录<em>（使用已注册的会员账号）</em></h3>
+		  	<form id="login_form" action="index.php?act=login" method="post">
+			<dl>
+			  <dt>用户名：</dt>
+			  <dd>
+				<input type="text" class="text" autocomplete="off"  name="user_name" id="user_name">
+				<label></label>
+			  </dd>
+			</dl>
+			<dl>
+			  <dt>密&nbsp;&nbsp;&nbsp;码：</dt>
+			  <dd>
+				<input type="password" class="text" name="password" autocomplete="off"  id="password">
+				<label></label>
+			  </dd>
+			</dl>
+			<dl>
+			  <dt>验证码：</dt>
+				<dd>
+					<input type="text" name="captcha" class="text w50 fl" maxlength="4" size="10" style="height:24px;"/>
+					<a href="JavaScript:void(0);" class="change" title="看不清，换一张" style="margin-left:10px;width:90px;height:32px;display:inline-block;overflow: hidden">
+						{:sp_verifycode_img('length=4&font_size=15&width=110&height=32&use_noise=1&use_curve=0','style="cursor: pointer;margin-left:-15px;" title="点击获取"')}
+					</a>
+					<label></label>
+				</dd>
+			  </dd>
+			</dl>
+			<dl>
+			  <dt></dt>
+			  <dd>
+				<input name="提交" type="submit" class="button" value="登&nbsp;&nbsp;录">
+			</dl>
+		  	</form>
+		  	<div class="register">还没有成为我们的合作伙伴？ <a style="cursor:pointer " onclick="zhuce()">快速注册</a></div>
+			<script>
+				function zhuce(){
+					$(".user-register").css("display","block");
+					$(".user-joinin").css("display","none");
+					$(".user-login").css("display","none");
+				}
+			</script>
+		</div>
+		<div class="user-register user-all" style="display:none;height:360px;">
+			<h3>商务注册</h3>
+			<form  id="register_form" action="" method="post">
+				<dl>
+					<dt>用户名：</dt>
+					<dd>
+						<input type="text" class="text" autocomplete="off"  name="user_name"  >
+						<label></label>
+					</dd>
+				</dl>
+				<dl>
+					<dt>密&nbsp;&nbsp;&nbsp;码：</dt>
+					<dd>
+						<input type="password" class="text" name="password" autocomplete="off" >
+						<label></label>
+					</dd>
+				</dl>
+				<dl>
+					<dt>重复密码：</dt>
+					<dd>
+						<input type="password" class="text" name="confirm_password" autocomplete="off" >
+						<label></label>
+					</dd>
+				</dl>
+				<dl>
+					<dt>验证码：</dt>
+					<dd>
+						<input type="text" name="captcha" class="text w50 fl"  maxlength="4" size="10" style="height:24px;"/>
+						<a href="JavaScript:void(0);" class="change" title="看不清，换一张" style="margin-left:10px;width:90px;height:32px;display:inline-block;overflow: hidden">
+							{:sp_verifycode_img('length=4&font_size=15&width=110&height=32&use_noise=1&use_curve=0','style="cursor: pointer;margin-left:-15px;" title="点击获取"')}
+						</a>
+						<label></label>
+					</dd>
+					</dd>
+				</dl>
+				<dl>
+					<dt></dt>
+					<dd>
+						<input name="提交" type="submit" class="button" value="注&nbsp;&nbsp;册">
+				</dl>
+			</form>
+			<div class="denglu">是否已经拥有账号？ <a  onclick="denglu()" style="cursor:pointer;color:yellow">快速登录</a></div>
+			<script>
+				function denglu(){
+					$(".user-register").css("display","none");
+					$(".user-joinin").css("display","none");
+					$(".user-login").css("display","block");
+				}
+			</script>
+		</div>
+   	</div>
+  	<ul id="fullScreenSlides" class="full-screen-slides">
+	    <li class="slide_1" style="background-color: rgb(147,149,151); background-image: url(__PUBLIC__/images/joinin/store_joinin_4.png);background-size:cover" ></li>
+	    <li class="slide_2" style="background-color: rgb(147,149,151); background-image: url(__PUBLIC__/images/joinin/store_joinin_5.png);background-size:cover" ></li>
+		<li class="slide_3" style="background-color: rgb(147,149,151); background-image: url(__PUBLIC__/images/joinin/store_joinin_6.png);background-size:cover" ></li>
+	</ul>
+	<script>
+		$('<img/>').attr('src', '__PUBLIC__/images/joinin/store_joinin_2.png').load(function() {
+			$(this).remove();
+			$('.slide_1').css('background-image', 'url(__PUBLIC__/images/joinin/store_joinin_2.png)');
+		});
+		$('<img/>').attr('src', '__PUBLIC__/images/joinin/store_joinin_1.png').load(function() {
+			$(this).remove();
+			$('.slide_2').css('background-image', 'url(__PUBLIC__/images/joinin/store_joinin_1.png)');
+		});
+		$('<img/>').attr('src', '__PUBLIC__/images/joinin/store_joinin_3.png').load(function() {
+			$(this).remove();
+			$('.slide_3').css('background-image', 'url(__PUBLIC__/images/joinin/store_joinin_3.png)');
+		});
+	</script>
+</div>
+<div class="indextip">
+  	<div class="container"> 
+	  	<span class="title">
+	  		<i></i><h3>贴心提示</h3>
+	  	</span> 
+	    <span class="content">提供各类专业管家服务，协助您开通公司分部、运营公司、组织营销活动及分析运营数据，悉心为您解答各类疑问，引导您按相关规则展开运营；我们将竭尽全力，为您的公司保驾护航。
+	    </span>
+    </div>
+</div>
+<div class="main mt30">
+	<h2 class="index-title">入驻流程</h2>
+	<div class="joinin-index-step">
+		<span class="step"><i class="a"></i>签署入驻协议</span><span class="arrow"></span>
+		<span class="step"><i class="b"></i>商家信息提交</span><span class="arrow"></span>
+		<span class="step"><i class="c"></i>总部审核</span><span class="arrow"></span>
+		<span class="step"><i class="d"></i>合作融资</span><span class="arrow"></span>
+		<span class="step"><i class="e"></i>分部开通管理</span>
+	</div>
+	<h2 class="index-title">入驻指南</h2>
+	  	<div class="joinin-info">
+	    <ul class="tabs-nav">
+			<li class="tabs-selected"><h3>招商方向</h3></li>
+			<li class=""><h3>招商标准</h3></li>
+			<li class=""><h3>资质要求</h3></li>
+			<li class=""><h3>资费标准</h3></li>
+		</ul>
+	    <div class="tabs-panel ">
+			 <h3 class="help_tit">
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;随着“互联网+”和健康产业的发展，常仁科技联合哈工大机器人集团(HRG)以强劲势头和薄发力量进军大健康医疗领域，结合前沿科技水平，依托于强大的研发团队和先进的生产技术，不断致力于人体医疗健康的全方位管理工作。近年来，常仁科技将招商引资作为实现资源的合理配置，优化升级产业结构的首要工作，力求在产业集合体中分享专业化合作带来的利益，形成良好的社会经济效益。现明确将战略性特色产业和战略性合作贸易区建设作为招商的两大方向。<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一、结合市场背景，明确产业特色。常仁科技在哈工大机器人集团(HRG)的技术支持下，确立了机器人、智能穿戴设备、App、大数据、药草药材生产作为战略性新兴产业重点产业方向，以上海公司总部为医疗科技产品的研发基地，整合各地资源与优势，发展辐射全国，从研发到生产销售，初步明确了每个产业链的重点发展区域，建构产业特色，接下来各专业招商小组将认真开展产业规划研究，广泛调研收集信息，筛选目标企业，力争引进一批具有带动力大、吸附力强、支撑力足的好项目。<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;二、强势推进合作贸易区建设和产业专业化合作。对于大健康产业来说，地理位置、科技水平、市场氛围等作为园区建设必不可少的影响因素，在相同或相似领域，常仁科技要联合大中企业形成产业集合体对于战略性健康产业既是机遇也是挑战，我们要认真梳理发展思路，明确方向目标，加大招商投入，集中各方力量开展招商共享工作，大力发展地区经济，建立联合品牌效应和连锁影响力市场，打造颇具规模和商业氛围的医疗科技合作贸易区。
+					</p>
+			</h3>
+		</div>
+	    <div class="tabs-panel tabs-hide">
+	    	 <h3 class="help_tit">
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、接受国内外注册公司加盟，公司团队50人以上，有固定资产或股份，具有一定规模和基本运作，有自身独立业务范畴和经营范围<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、公司必须为所生产经营产品的品牌方，具备销售或代理授权证明，拥有基本线下店面经营或电商运营团队，以及相关核心技术和专业人才，具有良好的售后服务能力和市场反馈<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、旗下商品按照产品的功能分布、主题定位和业态情况，在保证质量的情况下要有市场效力，符合消费者需求，特色分明。
+					</p>
+			</h3>
+	    </div>
+	    <div class="tabs-panel tabs-hide">
+		    <h3 class="help_tit">
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、经营产品需通过国家强制认证，并且提供相应的认证资格证书，具备第三方权威机构提供的质检报告，渠道销售要具备以品牌商为源头的完整链条，级数不超过三级<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、项目引进要求产业项目外向度高、辐射带动作用明显、科技含量和附加值高，避免引进一些高污染、高能耗、已淘汰的产业，更要有一个良性循环的市场发展
+					</p>
+			</h3>
+		</div>
+		<div class="tabs-panel tabs-hide">
+		    <h3 class="help_tit">
+
+			</h3>
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function(){
+	$("#login_form ").validate({
+        errorPlacement: function(error, element){
+            var error_td = element.parent('dd');
+            error_td.find('label').hide();
+            error_td.append(error);
+        },
+		rules: {
+			user_name: "required",
+			password: "required",
+			captcha : {
+                required : true,
+                minlength: 4,
+                remote   : {
+                    url : 'index.php?act=seccode&op=check&nchash=',
+                    type: 'get',
+                    data:{
+                        captcha : function(){
+                            return $('#captcha').val();
+                        }
+                    }
+                }
+            }
+		},
+		messages: {
+			user_name: "用户名不能为空",
+			password: "密码不能为空",
+			captcha : {
+                required : '验证码不能为空',
+                minlength: '验证码不能为空',
+				remote	 : '验证码错误'
+            }
+		}
+	});
+	$("#register_form ").validate({
+		errorPlacement: function(error, element){
+			var error_td = element.parent('dd');
+			error_td.find('label').hide();
+			error_td.append(error);
+		},
+		rules: {
+			user_name: {
+				required: true,
+				minlength: 6,
+			},
+			password: {
+				required: true,
+				minlength: 6,
+			},
+			confirm_password:{
+				required: true,
+				minlength: 6,
+				equalTo: "password"
+			}
+		},
+		messages: {
+			user_name: {
+				required: "请输入用户名",
+				minlength: "账号长度不能小于6个字母"
+			},
+			password: {
+				required: "请输入密码",
+				minlength: "密码长度不能小于6个字母"
+			},
+			confirm_password: {
+				required: "请再次输入密码",
+				minlength: "密码长度不能小于6个字母",
+				equalTo: "两次密码输入不一致"
+			},
+		}
+	});
+});
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/home_index.js" charset="utf-8"></script>
+{include file="common/footer" /} 

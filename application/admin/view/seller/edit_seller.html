@@ -1,0 +1,55 @@
+{include file="open/header" /} 
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript:void(0);">编辑销售员</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:url('seller/edit_seller')}">
+			<fieldset>
+				<div class="control-group">
+					<div class="control-group">
+						<label class="control-label">所属公司</label>
+						<div class="controls">
+							<input type="hidden" name="store_id" value="{$seller.store_id}" />
+							<select name="store_id">
+								{$categorys}
+							</select>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">销售员类型</label>
+						<div class="controls">
+							<select name="seller_role">
+								<option value="1" {if condition="$seller.seller_role == 1"} selected {/if}>销售员</option>
+								<option value="2" {if condition="$seller.seller_role == 2"} selected {/if}>会员兼库管员</option>
+								<option value="3" {if condition="$seller.seller_role == 3"} selected {/if}>销售员兼库管员</option>
+							</select>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">销售员姓名</label>
+						<div class="controls">
+							<input type="text" name="seller_name" value="{$seller.seller_name}" >
+							<span class="form-required">*</span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">登录手机号</label>
+						<div class="controls">
+							<input type="text" name="seller_mobile" value="{$seller.seller_mobile}" disabled />
+							<span class="form-required">*</span>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="seller_id" value="{$seller.seller_id}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

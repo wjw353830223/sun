@@ -1,0 +1,140 @@
+{include file="open/header" /} 
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript:void(0);">添加公司</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:url('company/add_post')}">
+			<fieldset>
+			<div class="control-group">
+				<div class="control-group">
+					<label class="control-label">上级公司</label>
+					<div class="controls">
+						<select name="parent_id">
+							<option value="0">作为一级公司</option>
+							{$categorys}
+							<!-- 这里写分类树，类似于添加菜单那里的选择 -->
+						</select>
+					</div>
+				</div>
+				<label class="control-label">公司名称</label>
+					<div class="controls">
+						<input type="text" name="company_name" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">公司地址</label>
+					<div class="controls">
+						<select name="province_id" style="width:100px;" id="province">
+							<option value="">请选择省</option>
+						</select>
+						<select name="city_id" style="width:100px;" id="city">
+							<option value="">请选择市</option>
+						</select>
+						<select name="area_id" style="width:100px;" id="area">
+							<option value="">请选择区</option>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+				<label class="control-label">公司详细地址</label>
+					<div class="controls">
+						<input type="text" name="company_address" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">公司账号</label>
+					<div class="controls">
+						<input type="text" name="admin_name" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label">登录密码</label>
+					<div class="controls">
+						<input type="password" name="seller_passwd" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">确认密码</label>
+					<div class="controls">
+						<input type="password" name="re_passwd" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">公司审核</label>
+					<div class="controls">
+						<select name="store_state">
+							<option value="2">审核中</option>
+							<option value="1">开启</option>
+							<option value="0">关闭</option>
+						</select>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="position_id" value="" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function set_name(obj){
+			var input = $(obj);
+			if (input.val() != '') {
+				$("#adv_pic").val(input.val());
+			};
+		}
+        $(document).ready(function() {
+            $.ajax({
+                url:"{:url('admin/company/area')}",
+                type:"post",
+                data:{"area_parent_id": "0"},
+                dataType: "json",
+                success:function(data){
+                    $("#province").html("<option value=''>请选择省</option>");
+                    $.each(data, function(i, item) {
+                        $("#province").append("<option value='" + item.area_id + "'>" + item.area_name + "</option>");
+                    });
+                }
+            });
+          	$("#province").change(function(){
+          	    $.ajax({
+					url:"{:url('admin/company/area')}",
+					type:"post",
+					data:{"area_parent_id":$(this).val()},
+                    dataType: "json",
+					success:function(data){
+                        $("#city").html("<option value=''>请选择市</option>");
+                        $.each(data, function(i, item) {
+                            $("#city").append("<option value='" + item.area_id + "'>" + item.area_name + "</option>");
+                        });
+					}
+				});
+			});
+            $("#city").change(function(){
+                $.ajax({
+                    url:"{:url('admin/company/area')}",
+                    type:"post",
+                    data:{"area_parent_id":$(this).val()},
+                    dataType: "json",
+                    success:function(data){
+                        $("#area").html("<option value=''>请选择区</option>");
+                        $.each(data, function(i, item) {
+                            $("#area").append("<option value='" + item.area_id + "'>" + item.area_name + "</option>");
+                        });
+                    }
+                });
+            });
+		});
+	</script>
+</body>
+</html>

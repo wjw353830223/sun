@@ -1,0 +1,164 @@
+{include file="open/header" /}
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('advert/index')}">广告管理</a></li>
+			<li class="active"><a href="{:url('advert/position_add')}">添加广告位</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:url('advert/position_add_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">广告位名称</label>
+					<div class="controls">
+						<input type="text" name="name" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">广告位简介</label>
+					<div class="controls">
+					<textarea name="intro" id="description" style='width: 15%; height: 80px;'></textarea>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">类别</label>
+					<div class="controls">
+						<select name="type">
+					        	<option value="1">文字</option>
+					        	<option value="2">图片</option>
+							</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">展示方式</label>
+					<div class="controls">
+						<label class="radio inline" for="active_true">
+							<input type="radio" checked="checked" name="display" value="1" >可以发布多条广告并随机展示
+							</label>
+							<label class="radio inline" for="active_false">
+							<input type="radio" name="display" value="2" >只允许发布并展示一条广告
+						</label>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">默认图片</label>
+					<div class="controls">
+						<div class="input-append input-avatar">
+							<input type="text" name="default_content" value="" id="adv_pic">
+							<input type="file" name="advert" value="" onchange="set_name(this)" id="advert_uploder">
+							<button class="btn btn-info" type="button">浏览</button>
+						</div>
+						&nbsp;&nbsp;&nbsp;&nbsp;当没有广告展示时使用的默认图片
+					</div>
+				</div>
+				
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script>
+	function set_name(obj){
+		var input = $(obj);
+		if (input.val() != '') {
+			var val = input.val();
+			$("#adv_pic").val(input.val());
+		};
+	}
+
+	/////---------------------
+			Wind.use('validate','ajaxForm','artDialog',function() {
+				form.validate({
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//是否在敲击键盘时验证
+					onkeyup : false,
+					//当鼠标掉级时验证
+					onclick : false,
+					//验证错误
+					showErrors : function(errorMap,errorArr) {
+						try {
+							$(errorArr[0].element).focus();
+							art.dialog({
+								id : 'error',
+								icon : 'error',
+								lock : true,
+								fixed : true,
+								background : "#CCCCCC",
+								opacity : 0,
+								content : errorArr[0].msg,
+								cancelVal : '确定',
+								cancel : function() {
+									$(errorArr[0].element).focus();
+								}
+							});
+						} catch (err) {}
+					},
+					//验证规则
+					rules : {
+						'name' : {required : 1},
+					},
+					//验证未通过提示消息
+					messages : {
+						'name' : {required : '请输入标题'},
+					},
+					//给未通过验证的元素加效果,闪烁等
+					highlight : false,
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//验证通过，提交表单
+					submitHandler : function(forms) {
+						$(forms).ajaxSubmit({
+							url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+							dataType : 'json',
+							beforeSubmit : function(arr,$form,options) {
+	
+							},
+							success : function(data,statusText,xhr,$form) {
+								if (data.code == 1) {
+									setCookie("refersh_time",1);
+									//添加成功
+									Wind.use("artDialog",function() {
+										art.dialog({
+											id : "succeed",
+											icon : "succeed",
+											fixed : true,
+											lock : true,
+											background : "#CCCCCC",
+											opacity : 0,
+											content : data.msg,
+											button : [
+											{
+												name : '继续添加？',
+												callback : function() {
+													reloadPage(window);
+													return true;
+												},
+												focus : true
+											},
+											{
+												name : '返回列表',
+												callback : function() {
+													location.href = "{:url('advert/index')}";
+													return true;
+												}
+											}
+											]
+										});
+									});
+								} else {
+									artdialog_alert(data.msg);
+								}
+							}
+						});
+					}
+				});
+			});
+		////-------------------------
+	</script>
+</body>
+</html>

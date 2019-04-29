@@ -1,0 +1,67 @@
+{include file="open/header" /}
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('team/management')}">团队管理奖励</a></li>
+    </ul>
+    <form class="well form-search" method="get" action="{:url('team/management')}">
+        会员账号：
+        <input type="text" name="member_mobile" style="width: 200px;" value="{$Think.get.member_mobile}" placeholder="请输入会员账号" />
+        <input type="submit" class="btn btn-primary" value="搜索" />
+        <a class="btn btn-danger" href="{:url('team/management')}">清空</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="30px"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+                <th>ID</th>
+                <th>会员名称</th>
+                <th>会员账号</th>
+                <th>积分值</th>
+                <th>操作时间</th>
+                <th>描述</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            {foreach name="freeze_points" item="vo"}
+            <tr>
+                <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.pl_id}" onclick="check_input(this)"></td>
+                <td>{$vo.pl_id}</td>
+                <td>{$vo.member_name}</td>
+                <td>{$vo.member_mobile}</td>
+                <td>{$vo.points}</td>
+                <td>{:date("Y-m-d H:i:s",$vo.add_time)}</td>
+                <td>{$vo.pl_desc}</td>
+                <td>
+                    <a href="{:url('team/manage_examine',['id'=>$vo.pl_id])}" class="js-ajax-dialog-btn" data-msg="确定要进行此操作么？">通过审核</a>
+                </td>
+            </tr>
+            {/foreach}
+        </table>
+        <div class="table-actions">
+            <button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:url('team/agree_sum')}" data-subcheck="true" data-msg="确定进行此操作么？">审核</button>
+        </div>
+        {$page}
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //提交批量审核是不能超过五条数据
+        $('button.js-ajax-submit').on('click', function (e) {
+            var btn = $(this), form = btn.parents('form.js-ajax-form');
+            btn.parent().find('span').remove();
+            var length = form.find('input.js-check:checked').length;
+            if(length > 5){
+                $('<span class="tips_error">最多选择五项</span>').appendTo(btn.parent()).fadeIn('fast');
+                return false;
+            }else{
+                return true;
+            }
+        });
+    });
+</script>
+</body>
+</html>

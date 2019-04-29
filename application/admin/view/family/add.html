@@ -1,0 +1,88 @@
+{include file="open/header" /}
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('family/index')}">家庭列表</a></li>
+			<li class="active"><a>添加家庭</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:url('family/add_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">家庭名称</label>
+					<div class="controls">
+						<input type="text" name="family_name" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">拥有者</label>
+					<div class="controls">
+						<input type="text" name="member_name" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">性别</label>
+					<div class="controls">
+						<label class="radio inline" for="active_true">
+							<input type="radio"  name="member_sex" value="1" >男
+						</label>
+						<label class="radio inline" for="active_false">
+							<input type="radio" name="member_sex" value="2" >女
+						</label>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">姓名</label>
+					<div class="controls">
+						<input type="text" name="true_name" value="">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">年龄</label>
+					<div class="controls">
+						<input type="text"  name="member_age" value="">
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label">身高</label>
+					<div class="controls">
+						<input type="text" name="member_height" value="">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">体重</label>
+					<div class="controls">
+						<input type="text" name="member_weight" value="">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">职业</label>&nbsp;&nbsp;&nbsp;&nbsp;
+					<select  name="profession">
+						<option type="text"  value="0">未设置
+						{foreach name="profession" item="vo" key="k"}
+						<option type="text"  value="{$k}">{$vo}
+						{/foreach}
+					</select>
+				</div>
+				<div class="control-group">
+					<label class="control-label">医保类型</label>&nbsp;&nbsp;&nbsp;&nbsp;
+					<select  name="medical_type">
+						<option type="text"  value="0">未设置
+						{foreach name="medical_type" item="vo" key="k"}
+						<option type="text"  value="{$k}">{$vo}
+						{/foreach}
+					</select>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">添加</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

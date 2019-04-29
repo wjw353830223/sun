@@ -1,0 +1,67 @@
+{include file="open/header" /}
+
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('advert/index')}">广告管理</a></li>
+			<li><a href="{:url('advert/position_add')}">添加广告位</a></li>
+		</ul>
+		<form class="well form-search" method="get" action="{:url('advert/index')}" mutipa>
+			名称
+			<input type="text" name="advert_name" style="width: 200px;" value="{$Think.get.advert_name}" placeholder="请输入广告位名称...">
+			<button class="btn btn-primary">搜索</button>
+		</form>
+		<form class="js-ajax-form" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="80">ID</th>
+						<th>名称</th>
+						<th>简介</th>
+						<th width="70">类别</th>
+						<th width="170">展示方式</th>
+						<th width="70">拥有广告数</th>
+						<th width="70">状态</th>
+						<th width="130">操作</th>
+					</tr>
+				</thead>
+				{foreach name="lists" item="vo"}
+				<tr>
+					<td>{$vo.position_id}</td>
+					<td><span>{$vo.name}</span></td>
+					<td>{$vo.intro}</td>
+					<td>{if $vo.type eq 1}图片{else/}文字{/if}</td>
+					<td>{if $vo.display eq 1}多广告展示{else/}单广告展示{/if}</td>
+					<td>{$vo.advert_nums}</td>
+					<td>{if condition="$vo.is_use eq 1"}启用{else/}不启用{/if}</td>
+					<td>
+						<a href="{:url('advert/advert',array('id'=>$vo['position_id']))}">管理广告</a> |
+						<a href="{:url('advert/position_edit',array('id'=>$vo['position_id']))}">编辑</a> |
+						{if condition="$vo.is_use eq 1"}
+						<a href="{:url('advert/lock',array('id'=>$vo['position_id']))}"  class="js-ajax-dialog-btn" data-msg="您确定要下架此单页吗？">下架</a> |
+						{elseif condition="$vo.is_use eq 0"/}
+						<a href="{:url('advert/unlock',array('id'=>$vo['position_id']))}"  class="js-ajax-dialog-btn" data-msg="您确定要上架此单页吗？">上架</a> |
+						{/if}
+					</td>
+				</tr>
+				{/foreach}
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

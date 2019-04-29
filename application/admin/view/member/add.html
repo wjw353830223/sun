@@ -1,0 +1,128 @@
+{include file="open/header" /} 
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('member/index')}">会员列表</a></li>
+			<li class="active"><a>会员添加</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:url('member/add_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">头像</label>
+					<div class="controls">
+						<div class="input-append input-avatar">
+							<input type="text" name="member_avatar" value="" id="member_avatar">
+							<input type="file" name="avatar" value="" onchange="avatar_upload(this)" id="avatar_uploder">
+							<button class="btn btn-info" type="button">浏览</button>
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">手机</label>
+					<div class="controls">
+						<input type="text" name="member_mobile" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">昵称</label>
+					<div class="controls">
+						<input type="text" name="member_name" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">性别</label>
+					<div class="controls">
+						<label class="radio inline" for="active_true">
+							<input type="radio"  name="member_sex" value="1" id="active_true">男
+						</label>
+						<label class="radio inline" for="active_false">
+							<input type="radio" name="member_sex" value="2" id="active_false">女
+						</label>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">姓名</label>
+					<div class="controls">
+						<input type="text" name="true_name" value="">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">年龄</label>
+					<div class="controls">
+						<input type="text"  name="member_age" value="">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label">身高</label>
+					<div class="controls">
+						<input type="text" name="member_height" value="">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">体重</label>
+					<div class="controls">
+						<input type="text" name="member_weight" value="">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">职业</label>&nbsp;&nbsp;&nbsp;&nbsp;
+					<select  name="profession">
+						<option type="text"  value="0">未设置
+						{foreach name="profession" item="vo" key="k"}
+						<option type="text"  value="{$k}">{$vo}
+						{/foreach}
+					</select>
+				</div>
+				<div class="control-group">
+					<label class="control-label">医保类型</label>&nbsp;&nbsp;&nbsp;&nbsp;
+					<select  name="medical_type">
+						<option type="text"  value="0">未设置
+						{foreach name="medical_type" item="vo" key="k"}
+						<option type="text"  value="{$k}">{$vo}
+						{/foreach}
+					</select>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">添加</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+
+		function avatar_upload(obj){
+			var $fileinput=$(obj);
+			Wind.css("jcrop");
+			Wind.use("ajaxfileupload","jcrop","noty",function(){
+				$.ajaxFileUpload({
+					url:"{:url('member/avatar_upload')}",
+					secureuri:false,
+					fileElementId:'avatar_uploder',
+					dataType: 'json',
+					success: function (data){
+						if(data.code == 1){
+							var src= "__UPLOAD__avatar/"+data.file;
+							open_iframe_dialog("{:url('member/pic_cut',array('type' => 'member'))}" + "&x=120&y=120&src="+src,'图片裁剪',{'width' : '690px','height':'auto'});
+						}else{
+							artdialog_alert(data.msg);
+						}
+						
+					},
+					error: function (data, status, e){}
+				});
+			});
+			return false;
+		}
+		//裁剪图片后返回接收函数
+		function call_back(picname){
+			$('#member_avatar').val(picname);
+		}
+	</script>
+</body>
+</html>

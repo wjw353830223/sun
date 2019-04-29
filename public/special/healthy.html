@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>健康品质生活</title>
+    <meta content="这里有你想要的健康" name="description"/>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="full-screen" content="yes">
+    <meta name="browsermode" content="application">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-page-mode" content="app">
+    <link rel="stylesheet" href="css/healthy.css"/>
+    <script src="js/flexible_css.debug.js"></script>
+    <script src="js/flexible.debug.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="healthy-banner">
+            <img src="img/healthy-banner.png"/>
+        </div>
+
+        <div class="healthy-robot">
+            <div class="healthy-list">
+                <div class="robot-img">
+                    <img class="healthy-img" src="img/healthy-robot.png" alt="健康机器人-小贝">
+                </div>
+                <div class="robot-explain">
+                    <i class="explain-hot"></i>
+                    <div class="robot-body">
+                        <p class="explain-title">
+                            健康机器人-小宝
+                        </p>
+                        <p class="explain-price">
+                            <span class="price-now">16800</span><span class="price-rmb">RMB</span>
+                            <!-- <span class="price-old">￥9800</span> -->
+                        </p>
+                        <a href="javascript:void(0)" class="explain-but">立即购买</a>
+                        <input type="hidden" name="goods_commonid" value="205">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="healthy-watch">
+            <div class="healthy-list">
+                <div class="watch-img">
+                    <img class="healthy-img" src="img/healthy-watch.png" alt="智能手表-KR2">
+                </div>
+                <div class="watch-explain">
+                    <div class="watch-body">
+                        <p class="explain-title">
+                            智能手表-KR2
+                        </p>
+                        <p class="explain-price">
+                            <span class="price-now">1280</span><span class="price-rmb">RMB</span><span class="price-old">￥1680</span>
+                        </p>
+                        <a href="javascript:void(0)" class="explain-but">立即购买</a>
+                        <input type="hidden" name="goods_commonid" value="10">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="healthy-doctor">
+            <div class="healthy-list">
+                <div class="doctor-explain">
+                    <div class="doctor-body">
+                        <p class="explain-title">
+                            负离子疗养机
+                        </p>
+                        <p class="explain-price">
+                            <span class="price-now">10800</span><span class="price-rmb">RMB</span><span class="price-old">￥11800</span>
+                        </p>
+                        <a href="javascript:void(0)" class="explain-but">立即购买</a>
+                        <input type="hidden" name="goods_commonid" value="6">
+                    </div>
+                </div>
+                <div class="doctor-img">
+                    <img class="healthy-img" src="img/healthy-doctor.png" alt="智能手表-KR2">
+                </div>
+            </div>
+        </div>
+
+        <div class="healthy-broccoli">
+            <div class="healthy-list">
+                <div class="broccoli-img">
+                    <img class="healthy-img" src="img/healthy-broccoli.png" alt="西兰花清疏片">
+                </div>
+                <div class="broccoli-explain">
+                    <div class="broccoli-body">
+                        <p class="explain-title">
+                            西兰花清疏片
+                        </p>
+                        <p class="explain-price">
+                            <span class="price-now">398</span><span class="price-rmb">RMB</span><span class="price-old">￥580</span>
+                        </p>
+                        <a href="javascript:void(0)" class="explain-but">立即购买</a>
+                        <input type="hidden" name="goods_commonid" value="14">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="app-download">
+        <div class="download-body">
+            <img src="img/logo.png">
+            <span id="downloadButton">下载APP</span>
+        </div>
+    </div>
+
+    <script src="js/jquery.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script type="text/javascript" src="//res.cdn.openinstall.io/openinstall.js"></script>
+    <script src="js/healthy.js"></script>
+    <script>
+        $(function(){
+            var shareData = {
+                title: $('title').text(),
+                desc:$("meta[name=description]").attr('content'),
+                link: location.href,
+                imgUrl:location.protocol + "//" + location.hostname + '/special/' +$(".healthy-banner img").attr("src")
+            };
+            app_share(shareData);
+        });
+    </script>
+</body>
+</html>

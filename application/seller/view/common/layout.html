@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理中心</title>
+<link href="__PUBLIC__/css/base.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/css/seller_center.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/font-awesome/seller/css/font-awesome.min.css" rel="stylesheet" />
+<!--[if IE 7]>
+	<link rel="stylesheet" href="__PUBLIC__/font-awesome/seller/css/font-awesome-ie7.min.css">
+<![endif]-->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/seller.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/waypoints.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui/jquery.ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validation.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/member.js" charset="utf-8"></script>
+<script type="text/javascript" src="__PUBLIC__/js/dialog/dialog.js" id="dialog_js" charset="utf-8"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+	<script src="__PUBLIC__/js/html5shiv.js"></script>
+	<script src="__PUBLIC__/js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 6]>
+	<script src="__PUBLIC__/js/IE6_MAXMIX.js"></script>
+	<script src="__PUBLIC__/js/IE6_PNG.js"></script>
+	<script>
+	DD_belatedPNG.fix('.pngFix');
+	</script>
+<![endif]-->
+</head>
+<body>
+<script type="text/javascript" src="__PUBLIC__/js/ToolTip.js"></script>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<!--店铺关闭 start-->
+<!-- <div class="store-closed"><i class="icon-warning-sign"></i>
+<dl>
+<dt>您的店铺已被平台关闭</dt>
+<dd>关闭原因：强制关闭</dd>
+<dd>在此期间，您的店铺以及商品将无法访问；如果您有异议或申诉请及时联系平台管理。</dd>
+</dl>
+</div> -->
+<!--店铺关闭 end-->
+<header class="ncsc-head-layout w">
+	<div class="wrapper">
+		<div class="ncsc-admin">
+			<dl class="ncsc-admin-info">
+				<dt class="admin-avatar"><img src="" width="32" class="pngFix" alt=""/></dt>
+				<dd class="admin-permission">当前用户</dd>
+				<dd class="admin-name">当前用户昵称</dd>
+			</dl>
+			<div class="ncsc-admin-function">
+				<a href="#" title="前往店铺" ><i class="icon-home"></i></a>
+				<a href="" title="修改密码" target="_blank"><i class="icon-wrench"></i></a>
+				<a href="" title="安全退出"><i class="icon-signout"></i></a>
+			</div>
+		</div>
+		<div class="center-logo"> 
+			<a href="" target="_blank"><img src="__PUBLIC__/images/seller_center_logo.png" class="pngFix" alt=""/></a>
+			<h1>管理中心</h1>
+		</div>
+		<div class="index-search-container">
+			<div class="index-sitemap">
+				<a href="javascript:void(0);">导航管理 <i class="icon-angle-down"></i></a>
+				<div class="sitemap-menu-arrow"></div>
+			</div>
+			<div class="search-bar">
+				<form method="get" target="_blank">
+					<input type="hidden" name="act" value="search">
+					<input type="text" nctype="search_text" name="keyword" placeholder="商城商品搜索" class="search-input-text">
+					<input type="submit" nctype="search_submit" class="search-input-btn pngFix" value="">
+				</form>
+			</div>
+		</div>
+		<nav class="ncsc-nav">
+			<dl class="current">
+				<dt><a href="{:url('SellerCenter/index')}">首页</a></dt>
+				<dd class="arrow"></dd>
+			</dl>
+			<dl class="">
+				<dt><a style="cursor:pointer ">库存管理</a></dt>
+				<dd>
+					<ul>
+						<li> <a href="{:url('SellerCenter/kc_search')}"> 库存查看 </a> </li>
+						<li> <a href="{:url('SellerCenter/kc_apply')}"> 进货申请 </a> </li>
+						<li> <a href="{:url('SellerCenter/kc_output')}"> 出货申请 </a> </li>
+					</ul>
+				</dd>
+				<dd class="arrow"></dd>
+			</dl>
+			<dl class="">
+				<dt><a style="cursor:pointer ">订单物流</a></dt>
+				<dd>
+				<ul>
+					<li> <a href="{:url('SellerCenter/order_search')}"> 交易订单 </a> </li>
+					<li> <a href="{:url('SellerCenter/order_stock')}"> 进货订单 </a> </li>
+					<!--<li> <a href=""> 发货 </a> </li>-->
+					<li> <a href="{:url('SellerCenter/order_setting')}"> 发货设置 </a> </li>
+					<!--<li> <a href=""> 运单模板 </a> </li>
+					<li> <a href=""> 物流工具 </a> </li>-->
+				</ul>
+				</dd>
+				<dd class="arrow"></dd>
+			</dl>
+			<dl class="">
+				<dt><a style="cursor:pointer ">售后服务</a></dt>
+				<dd>
+				<ul>
+					<li> <a href="{:url('SellerCenter/custom_search')}"> 客户查看 </a> </li>
+				</ul>
+				</dd>
+				<dd class="arrow"></dd>
+			</dl>
+			<dl class="">
+				<dt><a style="cursor:pointer ">销售统计</a></dt>
+				<dd>
+				<ul>
+					<li> <a href="{:url('SellerCenter/achievement_search')}">销售统计 </a> </li>
+				</ul>
+				</dd>
+				<dd class="arrow"></dd>
+			</dl>
+			<dl class="">
+				<dt><a style="cursor:pointer ">员工管理</a></dt>
+				<dd>
+				<ul>
+					<li> <a href="{:url('SellerCenter/person_search')}"> 员工查看 </a> </li>
+				</ul>
+				</dd>
+				<dd class="arrow"></dd>
+			</dl>
+			<!--<dl class="">
+				<dt><a href="">子公司管理</a></dt>
+				<dd>
+				<ul>
+					<li> <a href=""> 入驻申请 </a> </li>
+					<li> <a href=""> 业绩查看 </a> </li>
+					<li> <a href=""> 库存查看 </a> </li>
+				</ul>
+				</dd>
+				<dd class="arrow"></dd>
+			</dl>-->
+        </nav>
+	</div>
+</header>
+<div class="ncsc-layout wrapper">
+	<div id="layoutLeft" class="ncsc-layout-left">
+		<div id="sidebar" class="sidebar">
+			<div class="column-title" id="main-nav"><span class="ico-goods"></span>
+				<h2>产品</h2>
+			</div>
+			<div class="column-menu">
+				<ul id="seller_center_left_menu">
+					<li class="current"> <a href=""> 商品发布 </a> </li>
+					<li class=""> <a href=""> 出售中的商品 </a> </li>
+					<li class=""> <a href=""> 仓库中的商品 </a> </li>
+					<li class=""> <a href=""> 关联版式 </a> </li>
+					<li class=""> <a href=""> 商品规格 </a> </li>
+					<li class=""> <a href=""> 图片空间 </a> </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="layoutRight" class="ncsc-layout-right">
+		<div class="ncsc-path">
+			<i class="icon-desktop"></i>商家管理中心
+			<i class="icon-angle-right"></i>商品
+			<i class="icon-angle-right"></i>商品发布
+		</div>
+		<div class="main-content" id="mainContent">
+			{__CONTENT__}
+		</div>
+	</div>
+</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//浮动导航  waypoints.js
+		$("#sidebar,#mainContent").waypoint(function(event, direction) {
+			$(this).parent().toggleClass('sticky', direction === "down");
+			event.stopPropagation();
+		});
+	});
+
+	// 搜索商品不能为空
+	$('input[nctype="search_submit"]').click(function(){
+		if ($('input[nctype="search_text"]').val() == '') {
+			return false;
+		}
+	});
+</script>
+{include file="common/footer" /} 
+<div id="tbox">
+	<div class="btn" id="msg">
+		<a href=""><i class="msg"><em>11</em></i>站内消息</a>
+	</div>
+	<div class="btn" id="gotop" style="display:none;">
+		<i class="top"></i><a href="javascript:void(0);">返回顶部</a>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="main-content" id="mainContent">
+    <div class="alert mt10" style="clear:both;">
+        <ul class="mt5">
+            <li>1、符合以下任何一种条件的订单即为有效订单：1）采用在线支付方式支付并且已付款；2）采用当面交易方式支付并且交易已完成</li>
+            <li>2、以下关于订单和订单商品当月统计数据的依据为：从月始到月末的有效订单</li>
+        </ul>
+    </div>
+    <div class="tabmenu">
+        <ul class="tab pngFix">
+            <li class="normal"><a  href="{:url('SellerCenter/achievement_search')}">公司业绩</a></li>
+            <li class="active"><a  href="{:url('SellerCenter/achievement_person')}">个人业绩</a></li>
+        </ul>
+    </div>
+    <form method="get" action="index.php" target="_self">
+        <table class="search-form">
+            <input type="hidden" name="act" value="statistics_sale" />
+            <input type="hidden" name="op" value="sale" />
+            <tr>
+                <td class="tr">
+                    <div class="fr">
+                        <label class="submit-border"><input type="submit" class="submit" value="搜索" /></label>
+                    </div>
+                    <div class="fr">
+                        <select name="order_type" id="order_type" class="querySelect">
+                            <option value="" selected>请选择</option>
+                            <option value="10" >销售员名称</option>
+                            <option value="20" >销售员编号</option>
+                            <option value="30" >销售员手机</option>
+                        </select>
+                        <input type="text">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table class="ncsc-default-table">
+        <thead>
+        <tr nc_type="table_header">
+            <th class="w30">&nbsp;</th>
+            <th class="w50">&nbsp;</th>
+            <th coltype="editable" column="goods_name" checker="check_required" inputwidth="80px">销售员名称</th>
+            <th class="w100">联系电话</th>
+            <th class="w100">月销售额</th>
+            <th class="w80">月销售量</th>
+            <th class="w100">待返利金额</th>
+            <th class="w100">已返利金额</th>
+            <th class="w120">操作</th>
+        </tr>
+        <tr>
+            <td class="tc"><input type="checkbox" id="all" class="checkall"/></td>
+            <td colspan="20"><label for="all" >全选</label>
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <!--模板-->
+        <tr>
+            <th class="tc"><input type="checkbox" class="checkitem tc"  value="100085"/></th>
+            <th colspan="20">销售排名：1</th>
+        </tr>
+        <tr>
+            <td class="trigger"><i class="tip icon-plus-sign" nctype="ajaxGoodsList" data-comminid="100085" title=""></i></td>
+            <td><div class="pic-thumb"><a href="" ><img src=""/></a></div></td>
+            <td class="tl"><dl class="goods-name">
+                <dt style="max-width: 450px !important;">
+                    <a href="#1" >驴布</a></dt>
+                <dd>销售员编号：ZXCKAO#1231</dd>
+                </dd>
+            </dl></td>
+            <td><span>13233003610</span></td>
+            <td><span>&yen;4899.00</span></td>
+            <td><span >4988件</span></td>
+            <td><span>&yen;4899.00</span></td>
+            <td><span>&yen;4899.00</span></td>
+            <td class="nscs-table-handle">
+                <span><a href="{:url('SellerCenter/achievement_explicit')}" class="btn-blue"><i class="icon-edit"></i><p>查看详情</p></a></span>
+            </td>
+        </tr>
+
+        </tbody>
+        <tfoot>
+        <tr>
+            <th class="tc"><input type="checkbox" id="all2" class="checkall"/></th>
+            <th colspan="10"><label for="all2">全选</label>
+            </th>
+        </tr>
+        <tr>
+            <td colspan="20"><div class="pagination"> <ul><li><span>首页</span></li><li><span>上一页</span></li><li><span class="currentpage">1</span></li><li><span>下一页</span></li><li><span>末页</span></li></ul> </div></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+</body>
+</html>

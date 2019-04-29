@@ -1,0 +1,75 @@
+{include file="open/header" /}
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('advert/index')}">广告管理</a></li>
+			<li class="active"><a href="{:url('advert/position_add')}">编辑广告位</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:url('advert/position_edit_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">广告位名称</label>
+					<div class="controls">
+						<input type="text" name="name" value="{$data.name}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">广告位简介</label>
+					<div class="controls">
+					<textarea name="intro" id="intro" style='width: 15%; height: 80px;'>{$data.intro}</textarea>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">类别</label>
+					<div class="controls">
+						<!-- <input type="text" placeholder="图片/文字" > -->
+						<select name="type">
+					        	<option value="1" {if condition="$data['type'] eq 1"}selected="selected"{/if}>文字</option>
+					        	<option value="2" {if condition="$data['type'] eq 2"}selected="selected"{/if}>图片</option>
+							</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">展示方式</label>
+					<div class="controls">
+						<label class="radio inline" for="active_true">
+							<input type="radio" {if condition="$data['display'] eq 1"} checked="checked" {/if} name="display" value="1" >可以发布多条广告并随机展示
+							</label>
+							<label class="radio inline" for="active_false">
+							<input type="radio" {if condition="$data['display'] eq 2"} checked="checked" {/if} name="display" value="2" >只允许发布并展示一条广告
+						</label>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">默认图片</label>
+					<div class="controls">
+						<div class="input-append input-avatar">
+							<input type="text" name="default_content" value="{$data['default_content']}" id="adv_pic">
+							<input type="file" name="advert" value="" onchange="set_name(this)">
+							<button class="btn btn-info" type="button">浏览</button>
+						</div>
+						&nbsp;&nbsp;&nbsp;&nbsp;当没有广告展示时使用的默认图片
+					</div>
+				</div>
+				
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="id" value="{$data['position_id']}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script>
+	function set_name(obj){
+		var input = $(obj);
+		if (input.val() != '') {
+			$("#adv_pic").val(input.val());
+		};
+	}
+	</script>
+</body>
+</html>

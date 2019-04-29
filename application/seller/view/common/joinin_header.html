@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+<title>太阳健康 - 商家入驻</title>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="__PUBLIC__/css/base.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/css/joinin.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+body { _behavior: url(__PUBLIC__/css/csshover.htc);}</style>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+	<script src="__PUBLIC__/js/html5shiv.min.js"></script>
+	<script src="__PUBLIC__/js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 6]>
+<script src="__PUBLIC__/js/IE6_PNG.js"></script>
+<script>
+	DD_belatedPNG.fix('.pngFix');
+</script>
+<![endif]-->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui/jquery.ui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validation.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/dialog/dialog.js" id="dialog_js" charset="utf-8"></script>
+</head>
+<body>
+	<div class="header">
+		<h2 class="header_logo"><a href="{:url('index/index')}"><img src="__PUBLIC__/images/logo.png" class="pngFix"></a></h2>
+		<ul class="header_menu">
+			<li class=""><a href="" class="joinin" ><i></i>分公司入驻</a></li>
+			<li class=""><a href="{:url('seller_login/index')}" class="login"><i></i>公司管理中心</a></li>
+			<li class=""><a href="javascript:void(0)" class="faq"><i></i>帮助服务指南</a></li>
+		</ul>
+	</div>
+	<div class="header_line"><span></span></div>
+	<script type="text/javascript">
+		function show_list(t_id){
+			var obj = $(".sidebar dl[show_id='"+t_id+"']");
+			var show_class=obj.find("dt i").attr('class');
+			if(show_class=='hide') {
+				obj.find("dd").show();
+				obj.find("dt i").attr('class','show');
+			}else{
+				obj.find("dd").hide();
+				obj.find("dt i").attr('class','hide');
+			}
+		}
+	</script>

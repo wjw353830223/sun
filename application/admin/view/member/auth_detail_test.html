@@ -1,0 +1,90 @@
+{include file="open/header" /}
+<style>
+    .pic{
+        width: 240px;
+        height: 151px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href=''>实名认证</a></li>
+        <li class="active"><a>查看详情</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:url('member/examine_union_auth')}">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">姓名</label>
+                <div class="controls">
+                    <input type="text" name="auth_name" value="互联网"/>
+                    <span class="form-required"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">身份证号</label>
+                <div class="controls">
+                    <input type="text" name="id_card" value="341126197709218366"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">银行预留电话</label>
+                <div class="controls">
+                    <input type="text"  name="phone_no" value="13552535506" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">银行卡号</label>
+                <div class="controls">
+                    <input type="text"  name="acc_no" value="6221558812340000" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">贷记卡背面cvn2码</label>
+                <div class="controls">
+                    <input type="text"  name="card_cvn2" value="123" placeholder="123"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">贷记卡背面有效期</label>
+                <div class="controls">
+                    <input type="text"  name="expired" value="2311" placeholder="2311"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">审核状态</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <select  name="auth_state" class="auth_state"  disabled >
+                <option type="text" value="1" {if condition="$member_auth.auth_state == 1"}selected{/if}>同意</option>
+                <option type="text" value="2" {if condition="$member_auth.auth_state == 2"}selected{/if}>拒绝</option>
+                </select>
+            </div>
+            <div class="control-group" id="reason" {if condition="$member_auth.auth_state == 0"} style="display:none;" {/if}>
+            <label class="control-label">拒绝理由</label>
+            <div class="controls">
+                <textarea name="reason" rows="5" cols="57"  disabled>{$member_auth.reason}</textarea>
+            </div>
+</div>
+        </fieldset>
+        <div class="form-actions">
+            <input type="hidden" name="ma_id" value="{$member_auth.ma_id}">
+            <button type="submit" class="btn btn-primary js-ajax-submit" >检测</button>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript">
+    $('.auth_state').change(function(){
+        $(this).val() == 2 ? $('#reason').css('display','block') : $('#reason').css('display','none');
+    });
+</script>
+<script>
+    $(function(){
+        $('.pic').hover(function(){
+            $(this).removeClass('pic');
+        },function(){
+            $(this).addClass('pic');
+        });
+    });
+</script>
+</body>
+</html>

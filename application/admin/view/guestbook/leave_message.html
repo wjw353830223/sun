@@ -1,0 +1,40 @@
+{include file="open/header" /}
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:void(0)">留言问题管理</a></li>
+    </ul>
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th width="50">ID</th>
+                <th>问题</th>
+                <th>回答</th>
+                <th style="width: 50px;">ip地址</th>
+                <th style="width: 150px;">留言时间</th>
+                <th width="120">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach name="message" item="vo"}
+            <tr>
+                <td>{$vo.message_id}</td>
+                <td>{$vo.message_question}</td>
+                <td>{$vo.message_answer}</td>
+                <td>{$vo.message_ip}</td>
+                <td>{:date('Y-m-d H:i',$vo.message_time)}</td>
+                <td>
+                    <a href="{:url('guestbook/del_message',['id'=>$vo.message_id])}" class="js-ajax-delete">删除</a>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

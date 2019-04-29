@@ -1,0 +1,63 @@
+{include file="open/header" /}
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('member/auth')}">实名认证</a></li>
+    </ul>
+    <form class="well form-search" method="post" action="{:url('member/auth')}">
+        会员账号：
+        <input type="text" name="member_mobile" style="width: 200px;" value="{:input('request.member_mobile')}" placeholder="会员账号">
+        审核状态：
+        <select name="auth_state" style="width: 100px;">
+            <option value="" {if condition="empty($Think.get.seller_state)"} selected {/if}>请选择</option>
+            <option value="0" {if condition="$Think.get.seller_state === 0"} selected {/if}>等待审核</option>
+            <option value="1" {if condition="$Think.get.seller_state === 1"} selected {/if}>审核通过</option>
+            <option value="2" {if condition="$Think.get.seller_state === 2"} selected {/if}>审核未通过</option>
+        </select>
+        <input type="submit" class="btn btn-primary" value="搜索" />
+        <a class="btn btn-danger" href="{:url('member/auth')}">清空</a>
+    </form>
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th width="50">ID</th>
+                <th>会员昵称</th>
+                <th>会员账号</th>
+                <th>认证姓名</th>
+                <th>身份证号</th>
+                <th>申请时间</th>
+                <th>认证状态</th>
+                <th width="180">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach name="member_auth" item="vo"}
+            <tr>
+                <td align="center">{$vo.ma_id}</td>
+                <td>{$vo.member_name}</td>
+                <td>{$vo.member_mobile}</td>
+                <td>{$vo.auth_name}</td>
+                <td>{$vo.id_card}</td>
+                <td>{:date('Y-m-d H:i:s',$vo.apply_time)}</td>
+                <td>
+                    {switch $vo.auth_state}
+                        {case value="1"}审核通过{/case}
+                        {case value="2"}审核未通过{/case}
+                        {default/}等待审核
+                    {/switch}
+                </td>
+                <td>
+                    <a href="{:url('member/auth_detail',['id'=>$vo['ma_id']])}">查看详情</a>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div class="main-content" id="mainContent">
+        <div class="alert mt10" style="clear:both;">
+            <ul class="mt5">
+                <li>1、符合以下任何一种条件的订单即为有效订单：1）采用在线支付方式支付并且已付款；2）采用当面交易方式支付并且交易已完成</li>
+                <li>2、以下关于订单和订单商品当月统计数据的依据为：从月始到月末的有效订单</li>
+            </ul>
+        </div>
+        <div class="tabmenu">
+            <ul class="tab pngFix">
+                <li class="active"><a  href="{:url('SellerCenter/achievement_search')}">公司业绩</a></li>
+                <li class="normal"><a  href="{:url('SellerCenter/achievement_person')}">个人业绩</a></li>
+            </ul>
+        </div>
+        <form method="get" action="" target="_self">
+            <table class="search-form">
+                <input type="hidden" name="act" value="statistics_sale" />
+                <input type="hidden" name="op" value="sale" />
+                <tr>
+                    <td class="tr">
+                        <div class="fr">
+                            <label class="submit-border"><input type="submit" class="submit" value="查看" /></label>
+                        </div>
+                        <div class="fr" style="margin-right:20px;">
+                            <select name="order_type"  class="querySelect">
+                                <option value="" selected>本公司</option>
+                                <option value="10" >晋中分部</option>
+                                <option value="20" >太原分部</option>
+                                <option value="30" >运城分部</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div class="alert alert-info mt10" style="clear:both;">
+            <ul class="mt5">
+                <li>
+    	            <span class="w210 fl h30" style="display:block;">
+    		            <i title="公司当月有效订单的总金额" class="tip icon-question-sign"></i>
+                        当月下单金额：<strong>0.00元</strong>
+    	            </span>
+                    <span class="w210 fl h30" style="display:block;">
+                        <i title="公司当月有效订单的客户总数" class="tip icon-question-sign"></i>
+                        当月下单客户数：<strong>0</strong>
+                    </span>
+                    <span class="w210 fl h30" style="display:block;">
+                        <i title="公司拥有销售员总数" class="tip icon-question-sign"></i>
+                        销售员总数：<strong>3</strong>
+                    </span>
+                    <span class="w210 fl h30" style="display:block;">
+                        <i title="公司当月有效订单的总订单数" class="tip icon-question-sign"></i>
+                        当月下单量：<strong>0</strong>
+                    </span>
+
+                </li>
+                <li>
+                    <span class="w210 fl h30" style="display:block;">
+                        <i title="公司当月有效订单的总产品数量" class="tip icon-question-sign"></i>
+                        当月下单商品数：<strong>0</strong>
+                    </span>
+                    <span class="w210 fl h30" style="display:block;">
+                        <i title="公司拥有商品的总数（仅计算商品种类，不统计库存）" class="tip icon-question-sign"></i>
+                        产品总数：<strong>3</strong>
+                    </span>
+                </li>
+                <li>
+                <span class="w210 fl h30" style="display:block;">
+                        <i title="个人已返利金额" class="tip icon-question-sign"></i>
+                        已返利金额：<strong>180.00</strong>
+                </span>
+                <span class="w210 fl h30" style="display:block;">
+                        <i title="个人待返利金额" class="tip icon-question-sign"></i>
+                        待返利金额：<strong>480.00</strong>
+                </span>
+                <span class="w210 fl h30" style="display:block;">
+                        <i title="个人总返利金额" class="tip icon-question-sign"></i>
+                        总返利金额：<strong>660.00</strong>
+                </span>
+                </li>
+            </ul>
+            <div style="clear:both;"></div>
+        </div>
+
+        <div id="container"></div>
+        <div class="h30 cb">&nbsp;</div>
+        <script type="text/javascript" src="__PUBLIC__/js/highcharts.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/js/jquery.poshytip.min.js"></script>
+        <script>
+            $(function(){
+                //Ajax提示
+                $('.tip').poshytip({
+                    className: 'tip-yellowsimple',
+                    showTimeout: 1,
+                    alignTo: 'target',
+                    alignX: 'center',
+                    alignY: 'top',
+                    offsetY: 5,
+                    allowTipHover: false
+                });
+
+                $('#container').highcharts({
+                    "xAxis":{
+                        "categories":["8-1","8-2","8-3","8-4","8-5","8-6","8-7","8-8","8-9","8-10","8-11","8-12","8-13","8-14","8-15","8-16","8-17","8-18","8-19","8-20","8-21","8-22","8-23","8-24","8-25","8-26","8-27","8-28","8-29","8-30","8-31"]
+                    },
+                    "legend":{"enabled":false},
+                    "series":[{"name":"下单金额","data":[18,0,20,0,0,5,0,0,0,20,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,6,0,0,0,0,7]}],
+                    "title":{"text":"<b>当月业绩查看<\/b>", "x":-20},
+                    "chart":{"type":"line"},
+                    "colors":["#058DC7","#ED561B","#8bbc21","#0d233a"],
+                    "credits":{"enabled":false},
+                    "exporting":{"enabled":false},
+                    "yAxis":{"title":{"text":"下单金额"}}});
+            });
+        </script>
+    </div>
+</body>
+</html>

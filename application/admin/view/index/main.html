@@ -1,0 +1,281 @@
+{include file="open/header" /} 
+<style>
+.home_info li em {
+	float: left;
+	width: 120px;
+	font-style: normal;
+}
+li {
+	list-style: none;
+}
+</style>
+</head>
+<body>
+	<div class="wrap">
+		<div id="home_toptip"></div>
+		<div class="title">管理中心</div>
+		<div class="contentWarp">
+			<div class="contentWarp_item">
+				<div class="section_select">
+					<div class="item item_price">
+						<i class="icon"><img src="__PUBLIC__/images/1.png" width="71" height="74"></i>
+						<div class="desc">
+							<div class="tit"><!----><em>¥</em>
+								{if condition="$data['today_order_amount']"}
+									{$data['today_order_amount']}
+								{else/}
+									0.00
+								{/if}
+								<!----></div>
+							<span>今日销售总额</span>
+						</div>
+					</div>
+					<div class="item item_order">
+						<i class="icon"><img src="__PUBLIC__/images/2.png"></i>
+						<div class="desc">
+							<div class="tit">{$data['today_order_count']}</div>
+							<span>今日订单总数</span>
+						</div>
+						<i class="icon"></i>
+					</div>
+					<div class="item item_comment">
+						<i class="icon"><img src="__PUBLIC__/images/3.png" width="90" height="86"></i>
+						<div class="desc">
+							<div class="tit">{$data['message']}</div>
+							<span>今日留言数</span>
+						</div>
+					</div>
+					<div class="item item_flow">
+						<i class="icon"><img src="__PUBLIC__/images/4.png" width="86"></i>
+						<div class="desc">
+							<div class="tit">{$data['store']}</div>
+							<span>店铺数量</span>
+						</div>
+						<i class="icon"></i>
+					</div>
+				</div>
+				<div class="section user_section">
+					<div class="sc_title">
+						<i class="sc_icon"></i>
+						<h3>个人会员信息</h3>
+						<cite>（单位：个）</cite>
+					</div>
+					<div class="sc_warp">
+						<div class="user_item user_today_new">
+							<div class="num">{$data['today_member_count']}</div>
+							<span class="tit">今日新增</span>
+						</div>
+						<div class="user_item user_yest_new">
+							<div class="num">{$data['yesterday_member_count']}</div>
+							<span class="tit">昨日新增</span>
+						</div>
+						<div class="user_item user_month_new">
+							<div class="num">{$data['month_member_count']}</div>
+							<span class="tit">本月新增</span>
+						</div>
+						<div class="user_item user_total">
+							<div class="num">{$data['member_count']}</div>
+							<span class="tit">会员总数</span>
+						</div>
+					</div>
+				</div>
+				<div class="section goods_section">
+					<div class="sc_title">
+						<i class="sc_icon"></i>
+						<h3>会员关系</h3>
+						<cite>（单位：个）</cite>
+					</div>
+					<div class="sc_warp">
+						<div class="goods_item">
+							<div class="tit">有绑定关系：<a href="javascript:void(0)">{$data['bind_member']}</a></div>
+							<div class="number">
+								<div class="st">有健康报告：<a href="javascript:void(0)">{$data['have_report_num']}</a></div>
+								<div class="xn">无健康报告：<a href="javascript:void(0)">{$data['no_report_num']}</a></div>
+							</div>
+						</div>
+						<div class="goods_item">
+							<div class="tit">无绑定关系：<a href="javascript:void(0)">{$data['no_bind_member']}</a></div>
+							<div class="number">
+								<div class="st">有健康报告：<a href="javascript:void(0)">{$data['health_count']}</a></div>
+								<div class="xn">无健康报告：<a href="javascript:void(0)">{$data['no_health_count']}</a></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="section goods_section">
+					<div class="sc_title">
+						<i class="sc_icon"></i>
+						<h3>商品一览</h3>
+						<cite>（单位：件）</cite>
+					</div>
+					<div class="sc_warp">
+						<div class="goods_item">
+							<div class="tit">自营商品</div>
+							<div class="number">
+								<div class="st">实体：<a href="goods.php?act=list&amp;self=1">197</a></div>
+								<div class="xn">虚拟：<a href="goods.php?act=list&amp;extension_code=virtual_card&amp;self=1">0</a></div>
+							</div>
+						</div>
+						<div class="goods_item">
+							<div class="tit">商家商品</div>
+							<div class="number">
+								<div class="st">实体：<a href="goods.php?act=list&amp;merchants=1">90</a></div>
+								<div class="xn">虚拟：<a href="goods.php?act=list&amp;extension_code=virtual_card&amp;merchants=1">0</a></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="contentWarp_item">
+				<div class="section_order_select">
+					<ul>
+						<li>
+							<a href="{:url('order/trade',['order_state'=>0])}">
+								<i class="ice ice_w"></i>
+								<div class="t">已取消订单</div>
+								<span class="number">{$data['cancel']}</span>
+							</a>
+						</li>
+						<li>
+							<a href="{:url('order/trade',['order_state'=>10])}">
+								<i class="ice ice_d"></i>
+								<div class="t">待支付订单</div>
+								<span class="number">{$data['pay']}</span>
+							</a>
+						</li>
+						<li>
+							<a href="{:url('order/trade',['order_state'=>20])}">
+								<i class="ice ice_n"></i>
+								<div class="t">待发货订单</div>
+								<span class="number">{$data['wait']}</span>
+							</a>
+						</li>
+						<li>
+							<a href="{:url('order/trade',['order_state'=>30])}">
+								<i class="ice ice_q"></i>
+								<div class="t">已发货订单</div>
+								<span class="number">{$data['deliver']}</span>
+							</a>
+						</li>
+						<li>
+							<a href="{:url('order/trade',['order_state'=>40])}">
+								<i class="ice ice_f"></i>
+								<div class="t">已成交订单数</div>
+								<span class="number">{$data['receive']}</span>
+							</a>
+						</li>
+						<li>
+							<a href="{:url('order/trade',['order_state'=>50])}">
+								<i class="ice ice_y"></i>
+								<div class="t">已完成订单</div>
+								<span class="number">{$data['finish']}</span>
+							</a>
+						</li>
+						<li>
+							<a href="#1">
+								<i class="ice ice_b"></i>
+								<div class="t">用户退款申请</div>
+								<span class="number">0</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="clearboth"></div>
+				<div class="section section_order_count">
+					<div class="sc_title">
+						<i class="sc_icon"></i>
+						<h3>订单统计</h3>
+						<div class="filter_date">
+							<a href="javascript:;" onclick="set_statistical_chart(this, 'order', 'week')" class="active">七天</a>
+							<a href="javascript:;" onclick="set_statistical_chart(this, 'order', 'month')">一月</a>
+							<a href="javascript:;" onclick="set_statistical_chart(this, 'order', 'year')">半年</a>
+						</div>
+					</div>
+					<div class="sc_warp">
+						<div id="order_main" style="height: 274px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;"></div>
+					</div>
+				</div>
+				<div class="section section_total_count">
+					<div class="sc_title">
+						<i class="sc_icon"></i>
+						<h3>销售统计</h3>
+						<div class="filter_date">
+							<a href="javascript:;" onclick="set_statistical_chart(this, 'sale', 'week')" class="active">七天</a>
+							<a href="javascript:;" onclick="set_statistical_chart(this, 'sale', 'month')">一月</a>
+							<a href="javascript:;" onclick="set_statistical_chart(this, 'sale', 'year')">半年</a>
+						</div>
+					</div>
+					<div class="sc_warp">
+						<div id="total_main" style="height: 274px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="clearboth"></div>
+		</div>
+
+		<div class="well section">
+			<i class="sc_icon"></i>
+			<h4>系统信息</h4>
+			<span class="stop" title="收起详情"></span>
+			<div class="clearboth"></div>
+		</div>
+		<div class="home_info">
+			<table cellpadding="0" cellspacing="0" class="system_table">
+				<tbody>
+				<tr>
+					<td class="gray_bg">服务器操作系统:</td>
+					<td>{:PHP_OS}</td>
+					<td class="gray_bg">Web 服务器:</td>
+					<td>{$_SERVER["SERVER_SOFTWARE"]}</td>
+				</tr>
+				<tr>
+					<td class="gray_bg">PHP 版本:</td>
+					<td>{:PHP_VERSION}</td>
+					<td class="gray_bg">MySQL 版本:</td>
+					<td>{$data['mysql']}</td>
+				</tr>
+				<tr>
+					<td class="gray_bg">安全模式:</td>
+					<td>{$data['safe_mode']}</td>
+					<td class="gray_bg">安全模式GID:</td>
+					<td>{$data['safe_mode_gid']}</td>
+				</tr>
+				<tr>
+					<td class="gray_bg">Socket 支持:</td>
+					<td>{$data['sockets']}</td>
+					<td class="gray_bg">时区设置:</td>
+					<td>{$data['time']}</td>
+				</tr>
+				<tr>
+					<td class="gray_bg">GD 版本:</td>
+					<td>{$data['gd']}</td>
+					<td class="gray_bg">PHP运行方式:</td>
+					<td>{:php_sapi_name()}</td>
+				</tr>
+				<tr>
+					<td class="gray_bg">文件上传的最大大小:</td>
+					<td>{$data['file']}</td>
+					<td class="gray_bg">剩余空间:</td>
+					<td>{$data['extra']}</td>
+				</tr>
+				<tr>
+					<td class="gray_bg">执行时间限制:</td>
+					<td>{$data['run_time']}</td>
+					<td class="gray_bg">菜单图标素材地址:</td>
+					<td><a href="http://www.thinkcmf.com/font/icons" target="_blank">Font Awesome</a></td>
+				</tr>
+				<tr>
+					<td class="gray_bg">编码:</td>
+					<td>UTF-8</td>
+					<td class="gray_bg">在线API文档</td>
+					<td><a href="http://doc.healthywo.com/" target="_blank">常仁在线文档</a></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script src="__PUBLIC__/js/highcharts.js"></script>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script src="__PUBLIC__/js/main.js"></script>
+</body>
+</html>

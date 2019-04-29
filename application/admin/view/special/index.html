@@ -1,0 +1,49 @@
+{include file="open/header" /}
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('special/index')}">专题管理</a></li>
+			<li><a href="{:url('special/add')}">添加专题</a></li>
+		</ul>
+		<form method="post" class="js-ajax-form">
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th width="50">ID</th>
+						<th width="270">标题</th>
+						<th>专题图</th>
+						<th>专题简介</th>
+						<th width="120">更新时间</th>
+						<th width="80">状态</th>
+						<th width="120">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{foreach name="lists" item="vo"}
+					<tr>
+						<td>{$vo.special_id}</td>
+						<td>{$vo.special_title}</td>
+						<td><img src="{$vo.special_image}" width="25" height="25" /></td>
+						<td>{$vo.special_desc}</td>
+						<td>{:date('Y-m-d H:i',(int)$vo.special_modify_time)}</td>
+						<td>{$vo.special_state == 1 ? '下架' : '正常'}</td>
+						<td>
+							<a href="{:url('special/edit',array('id'=>$vo['special_id']))}">编辑</a> |
+							{if condition="$vo['special_state'] eq 1"}
+							<a href="{:url('special/unlock',array('id'=>$vo['special_id']))}" class="js-ajax-dialog-btn" data-msg="您确定要上架此版本吗">正常</a> |
+							{else/}
+							<a href="{:url('special/lock',array('id'=>$vo['special_id']))}" class="js-ajax-dialog-btn" data-msg="您确定要下架此版本吗">下架</a> |
+							{/if}
+							<a href="{:url('special/delete',array('id'=>$vo['special_id']))}" class="js-ajax-delete">删除</a>
+						</td>
+					</tr>
+					{/foreach}
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js?v="></script>
+</body>
+</html>

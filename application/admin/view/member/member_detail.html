@@ -1,0 +1,114 @@
+{include file="open/header" /}
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:void(0)">会员详情</a></li>
+    </ul>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <tr><th colspan="2">会员详情</th></tr>
+            <tr>
+                <td colspan="2">会员状态：
+                    {switch name="member.member_state"}
+                        {case value="0"}关闭{/case}
+                        {case value="1"}开启{/case}
+                    {/switch}
+                </td>
+            </tr>
+            <tr>
+                <td>会员头像：
+                    {if condition="$member.member_avatar"}
+                        <img width="25" height="25" src="{$member.member_avatar|strexists='http' ? $member.member_avatar : '__UPLOAD__/avatar/'.$member.member_avatar}" alt=""></td>
+                    {else/}
+                        <img width="25" height="25" src="__PUBLIC__/images/headicon.png" />
+                    {/if}
+                <td>会员账号：{$member.member_mobile}</td>
+            </tr>
+            <tr>
+                <td>会员昵称：{if condition="isset($member.member_name)"}{$member.member_name}{else/}未设置{/if}</td>
+                <td>真实姓名: {if condition="isset($member.true_name)"}{$member.true_name}{else/}未设置{/if}</td>
+            </tr>
+            <tr>
+                <td>性别：
+                    {if condition="isset($member.member_sex)"}
+                        {switch name="member.member_sex"}
+                            {case value="1"}男{/case}
+                            {case value="2"}女{/case}
+                            {default/}未设置
+                        {/switch}
+                    {else/}
+                        未设置
+                    {/if}
+                </td>
+                <td>年龄：{if condition="isset($member.member_age)"}{$member.member_age}{else/}未设置{/if}</td>
+            </tr>
+            <tr>
+                <td>身高：{if condition="isset($member.member_height)"}{$member.member_height}cm{else/}未设置{/if}</td>
+                <td>体重：{if condition="isset($member.member_weight)"}{$member.member_weight}kg{else/}未设置{/if}</td>
+            </tr>
+            <tr>
+                <td>职业：
+                    {if condition="isset($member.profession)"}
+                        {switch name="member.profession"}
+                            {case value="1"}国家公务员{/case}
+                            {case value="2"}专业技术人员{/case}
+                            {case value="3"}职员{/case}
+                            {case value="4"}企业管理人员{/case}
+                            {case value="5"}工人{/case}
+                            {case value="6"}农民{/case}
+                            {case value="7"}学生{/case}
+                            {case value="8"}现役军人'{/case}
+                            {case value="9"}自由职业者{/case}
+                            {case value="10"}个体经营者{/case}
+                            {case value="11"}退(离)休人员{/case}
+                            {default/}未设置
+                        {/switch}
+                    {else/}
+                        未设置
+                    {/if}
+                </td>
+                <td>医保类型：
+                    {if condition="isset($member.profession)"}
+                        {switch name="member.profession"}
+                            {case value="1"}城镇职工医保{/case}
+                            {case value="2"}新农合医保{/case}
+                            {case value="3"}其他{/case}
+                            {default/}未设置
+                        {/switch}
+                    {else/}
+                        未设置
+                    {/if}
+                </td>
+            </tr>
+            <tr style="border-top:1px solid RGB(221,221,221)"><th colspan="2">会员账户信息</th></tr>
+            <tr>
+                <td>预存款可用金额：<b style="color:red;">￥{$member.av_predeposit}</b></td>
+                <td>预存款冻结金额：<b style="color:red;">￥{$member.freeze_predeposit}</b></td>
+            </tr>
+            <tr>
+                <td>积分：{$member.points}</td>
+                <td>冻结积分：{$member.freeze_points}</td>
+            </tr>
+            <tr>
+                <td>等级：<b style="color:red;">{$member.grade_name}</b></td>
+                <td>经验：{$member.experience}</td>
+            </tr>
+            <tr style="border-top:1px solid RGB(221,221,221)"><th colspan="2">会员登录信息</th></tr>
+            <tr>
+                <td colspan="2">注册时间：{:date("Y-m-d H:i:s",$member.member_time)}</td>
+            </tr>
+            <tr>
+                <td>上次登录时间：{:date("Y-m-d H:i:s",$member.login_time)}</td>
+                <td>登录次数：{$member.login_num}</td>
+            </tr>
+        </tr>
+        </thead>
+    </table>
+    <div class="form-actions">
+        <a class="btn" href="javascript:history.back(-1);">返回</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+{include file="open/header" /} 
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('advert/index')}">广告位管理</a></li>
+			<li><a href="{:url('advert/index',array('id'=>$data.position.position_id))}">广告管理</a></li>
+			<li><a href="{:url('advert/advert_add',array('id'=>$data.position.position_id))}">添加广告</a></li>
+			<li class="active"><a href="{:url('advert/advert_edit',array('id'=>$data.position.position_id))}">编辑广告</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:url('advert/advert_edit_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">广告名称</label>
+					<div class="controls">
+						<input type="text" name="title" value="{$data.title}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">所属广告位</label>
+					<div class="controls">
+						<input type="text" placeholder="{$data.position.name}" disabled>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">类型</label>
+					<div class="controls">
+						<select name="type" onchange="url_change(this)">
+							<option value="pic" {if condition="$data.type == 'pic'"} selected {/if}>仅图片展示</option>
+							<option value="product" {if condition="$data.type == 'product'"} selected {/if}>跳转商品详情</option>
+							<option value="url" {if condition="$data.type == 'url'"} selected {/if}>跳转链接</option>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">开始时间</label>
+					<div class="controls">
+						<input type="text" name="start_time" value="{:date('Y-m-d H:i:s',$data.start_time)}" class="js-datetime date">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">结束时间</label>
+					<div class="controls">
+						<input type="text" name="end_time" value="{:date('Y-m-d H:i:s',$data.end_time)}" class="js-datetime date">
+					</div>
+				</div>
+				<div class="control-group" id="adv_pic_url"{if condition="$data.type == 'pic' || $data.type == 'product'"}
+					 style="display: none" {/if}>
+					<label class="control-label">广告链接地址</label>
+					<div class="controls">
+						<input type="text" name="adv_pic_url" value="{$data.content.adv_pic_url}" >
+					</div>
+				</div>
+				<div class="control-group" id="adv_share_url" {if condition="$data.type == 'pic' || $data.type == 'product'"}
+				style="display: none" {/if}>
+					<label class="control-label">分享链接地址</label>
+					<div class="controls">
+						<input type="text" name="adv_share_url" value="{$data.content.adv_share_url}" >
+					</div>
+				</div>
+				<div class="control-group" id="product"{if condition="$data.type == 'pic' || $data.type == 'url'"}
+					 style="display: none" {/if}>
+					<label class="control-label">选择跳转商品</label>
+					<div class="controls">
+						<select name="goods_commonid">
+							<option value="0">请选择商品</option>
+							{foreach name="goods" item="val"}
+							<option value="{$val['goods_commonid']}" {if condition="isset($data.content.goods_commonid) && $data.content.goods_commonid == $val['goods_commonid']"} selected {/if}>{$val['goods_name']}</option>
+							{/foreach}
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">图片</label>
+					<div class="controls">
+						<div class="input-append input-avatar">
+							<input type="text" name="adv_pic" value="{$data.content.adv_pic}" id="adv_pic">
+							<input type="file" name="advert" value="" onchange="set_name(this)">
+							<button class="btn btn-info" type="button">浏览</button>
+						</div>
+					</div>
+				</div>
+				
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="id" value="{$data.position.position_id}" />
+				<input type="hidden" name="advert_id" value="{$data.advert_id}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function set_name(obj){
+			var input = $(obj);
+			if (input.val() != '') {
+				$("#adv_pic").val(input.val());
+			}
+		}
+
+		function url_change(obj){
+			var type = $(obj).val();
+			if(type === 'pic'){
+				$('#adv_share_url').hide();
+				$('#adv_pic_url').hide();
+				$('#product').hide();
+			}else if(type === 'product'){
+                $('#adv_share_url').hide();
+                $('#adv_pic_url').hide();
+                $('#product').show();
+			}else if(type === 'url'){
+                $('#adv_share_url').show();
+                $('#adv_pic_url').show();
+                $('#product').hide();
+			}
+		}
+	</script>
+</body>
+</html>

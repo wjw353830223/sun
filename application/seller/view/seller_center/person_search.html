@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="tabmenu">
+    <ul class="tab pngFix">
+        <li class="active"><a  href="">员工查看</a></li>
+    </ul>
+    <a href="#1" class="ncsc-btn ncsc-btn-green" title="发布新商品" onclick="adderess()">添加员工</a>
+</div>
+<form method="get" action="">
+    <table class="search-form">
+        <tr>
+            <td>&nbsp;</td>
+            <th> <select name="search_type">
+                <option value="0" selected="selected">销售员姓名</option>
+                <option value="1" >销售员编号</option>
+                <option value="2" >销售员手机号</option>
+            </select>
+            </th>
+            <td class="w160"><input type="text" class="text w150" name="keyword" value=""/></td>
+            <td class="tc w70"><label class="submit-border">
+                <input type="submit" class="submit" value="搜索" />
+            </label></td>
+        </tr>
+    </table>
+</form>
+<table class="ncsc-default-table">
+    <thead>
+    <tr nc_type="table_header">
+        <th class="w30">&nbsp;</th>
+        <th class="w50">&nbsp;</th>
+        <th coltype="editable" column="goods_name" checker="check_required" inputwidth="230px">销售员姓名</th>
+        <th class="w100">所属公司</th>
+        <th class="w100">加入日期</th>
+        <th class="w100">用户状态</th>
+        <th class="w120">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th class="tc"><input type="checkbox" class="checkitem tc"  value="100085"/></th>
+        <th colspan="20">销售员编号：0000178</th>
+    </tr>
+    <tr>
+        <td class="trigger"><i class="tip icon-plus-sign" nctype="ajaxGoodsList" data-comminid="100085" title=""></i></td>
+        <td><div class="pic-thumb"><img src=""/></div></td>
+        <td class="tl"><dl class="goods-name">
+            <dt style="max-width: 450px !important;">
+                <a href="#1">驴布</a></dt>
+            <dd>联系方式：13459879874</dd>
+        </dl></td>
+        <td><p>山西省</p><p>晋中分部</p></td>
+        <td><span >2017-8-9</span></td>
+        <td>正常</td>
+        <td class="nscs-table-handle">
+            <span>
+                <a href="#1" class="btn-blue" onclick="adderess()" ><i class="icon-edit"></i>
+                    <p>编辑</p>
+                </a>
+            </span>
+            <span>
+                <a href="{:url('SellerCenter/achievement_explicit')}" class="btn-green"><i class="icon-search"></i>
+                    <p>查看</p>
+                </a></span>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="20"><div class="pagination"> <ul><li><span>首页</span></li><li><span>上一页</span></li><li><span class="currentpage">1</span></li><li><span>下一页</span></li><li><span>末页</span></li></ul> </div></td>
+    </tr>
+    </tfoot>
+</table>
+<div class="add_person">
+    <div class="dialog_wrapper ui-draggable" style="z-index: 1100; position: absolute; width: 550px; left: 200px; top: 70px;overflow: auto">
+        <div class="dialog_body" style="position: relative;">
+            <h3 class="dialog_head">
+            <span class="dialog_title">
+                <span class="dialog_title_icon">新增员工</span>
+            </span>
+                <span class="dialog_close_button" onclick="closea()">X</span>
+            </h3>
+            <div class="dialog_content" style="margin: 0px; padding: 0px;">
+                <div class="eject_con">
+                    <div id="warning" class="alert alert-error"></div>
+                    <form method="post" action="" target="_parent">
+                        <dl>
+                            <dt><i class="required">*</i>真实姓名：</dt>
+                            <dd>
+                                <input type="text" class="text" name="seller_name" value="">
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt><i class="required">*</i>身份证号：</dt>
+                            <dd>
+                                <input type="text" class="text" name="age" value="">
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt><i class="required">*</i>手机号：</dt>
+                            <dd><input name="contacts_phone" type="text">
+                                <span></span>
+                                <input type="button" value="获取验证码" class="icode" onclick="settime(this)" style="height:28px;">
+                            </dd>
+                        </dl>
+                        <script>
+                            var countdown=60;
+                            function settime(obj) {
+                                if (countdown == 0) {
+                                    obj.removeAttribute("disabled");
+                                    obj.value="免费获取验证码";
+                                    countdown = 60;
+                                    return;
+                                } else {
+                                    obj.setAttribute("disabled", true);
+                                    obj.value="重新获取（" + countdown + "）";
+                                    countdown--;
+                                }
+                                setTimeout(function() {
+                                            settime(obj) }
+                                        ,1000)
+                            }
+                        </script>
+                        <dl>
+                            <dt><i class="required">*</i>验证码：</dt>
+                            <dd><input name="icode" type="text" class="w100">
+                                <span></span>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt><i class="required">*</i>职位：</dt>
+                            <dd><select class="w150">
+                                    <option>销售员</option>
+                                    <option>库管员</option>
+                                    <option>销售兼库管员</option>
+                                </select>
+                            </dd>
+                        </dl>
+                        <div class="bottom">
+                            <label class="submit-border"><input type="submit" nctype="address_add_submit" class="submit" value="保存"></label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="dialog_manage_screen_locker" style="position: absolute; top: 0px; left: 0px; background-color: transparent; opacity: 0; z-index: 999; width: 1345px; height: 953px;"></div>
+</div>
+
+
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="position: absolute; top: 209px; left: 566.5px; z-index: 2; display: none;">
+    <div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
+        <a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="<上月">
+            <span class="ui-icon ui-icon-circle-triangle-w">&lt;上月</span>
+        </a>
+        <a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="下月>">
+            <span class="ui-icon ui-icon-circle-triangle-e">下月&gt;</span>
+        </a>
+        <div class="ui-datepicker-title">
+            <select class="ui-datepicker-month" data-handler="selectMonth" data-event="change">
+                <option value="0">一</option>
+                <option value="1">二</option>
+                <option value="2">三</option>
+                <option value="3">四</option>
+                <option value="4">五</option>
+                <option value="5">六</option>
+                <option value="6" selected="selected">七</option>
+                <option value="7">八</option>
+                <option value="8">九</option>
+                <option value="9">十</option>
+                <option value="10">十一</option>
+                <option value="11">十二</option>
+            </select>
+            <select class="ui-datepicker-year" data-handler="selectYear" data-event="change">
+                <option value="1967">1967</option>
+                <option value="1968">1968</option>
+                <option value="1969">1969</option>
+                <option value="1970">1970</option>
+                <option value="1971">1971</option>
+                <option value="1972">1972</option>
+                <option value="1973">1973</option>
+                <option value="1974">1974</option>
+                <option value="1975">1975</option>
+                <option value="1976">1976</option>
+                <option value="1977">1977</option>
+                <option value="1978">1978</option>
+                <option value="1979">1979</option>
+                <option value="1980">1980</option>
+                <option value="1981">1981</option>
+                <option value="1982">1982</option>
+                <option value="1983">1983</option>
+                <option value="1984">1984</option>
+                <option value="1985">1985</option>
+                <option value="1986">1986</option>
+                <option value="1987">1987</option>
+                <option value="1988">1988</option>
+                <option value="1989">1989</option>
+                <option value="1990">1990</option>
+                <option value="1991">1991</option>
+                <option value="1992">1992</option>
+                <option value="1993">1993</option>
+                <option value="1994">1994</option>
+                <option value="1995">1995</option>
+                <option value="1996">1996</option>
+                <option value="1997">1997</option>
+                <option value="1998">1998</option>
+                <option value="1999">1999</option>
+                <option value="2000">2000</option>
+                <option value="2001">2001</option>
+                <option value="2002">2002</option>
+                <option value="2003">2003</option>
+                <option value="2004">2004</option>
+                <option value="2005">2005</option>
+                <option value="2006">2006</option>
+                <option value="2007">2007</option>
+                <option value="2008">2008</option>
+                <option value="2009">2009</option>
+                <option value="2010">2010</option>
+                <option value="2011">2011</option>
+                <option value="2012">2012</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017" selected="selected">2017</option>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+            </select>
+        </div>
+    </div>
+    <table class="ui-datepicker-calendar">
+        <thead>
+        <tr>
+            <th><span title="星期一">一</span></th>
+            <th><span title="星期二">二</span></th>
+            <th><span title="星期三">三</span></th>
+            <th><span title="星期四">四</span></th>
+            <th><span title="星期五">五</span></th>
+            <th class="ui-datepicker-week-end"><span title="星期六">六</span>
+            </th><th class="ui-datepicker-week-end"><span title="星期日">日</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="5" data-year="2017">
+                <a class="ui-state-default ui-priority-secondary" href="#">26</a>
+            </td>
+            <td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="5" data-year="2017"><a class="ui-state-default ui-priority-secondary" href="#">27</a></td><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="5" data-year="2017">
+            <a class="ui-state-default ui-priority-secondary" href="#">28</a>
+        </td>
+            <td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="5" data-year="2017">
+                <a class="ui-state-default ui-priority-secondary" href="#">29</a>
+            </td>
+            <td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="5" data-year="2017">
+                <a class="ui-state-default ui-priority-secondary" href="#">30</a>
+            </td>
+            <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2017">
+                <a class="ui-state-default" href="#">1</a>
+            </td>
+            <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2017">
+                <a class="ui-state-default" href="#">2</a>
+            </td>
+        </tr>
+        <tr>
+            <td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017">
+                <a class="ui-state-default" href="#">3</a>
+            </td>
+            <td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017">
+                <a class="ui-state-default" href="#">4</a>
+            </td>
+            <td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017">
+                <a class="ui-state-default" href="#">5</a>
+            </td>
+            <td class="  ui-datepicker-current-day" data-handler="selectDay" data-event="click" data-month="6" data-year="2017">
+                <a class="ui-state-default ui-state-active" href="#">6</a>
+            </td>
+            <td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017">
+                <a class="ui-state-default" href="#">7</a>
+            </td>
+            <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2017">
+                <a class="ui-state-default" href="#">8</a>
+            </td>
+            <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">9</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">10</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">11</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">12</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">13</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">14</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">15</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">16</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">17</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">18</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">19</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">20</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">21</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">22</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">23</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">24</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">25</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">26</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">27</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">28</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">29</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">30</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2017"><a class="ui-state-default" href="#">31</a></td><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="7" data-year="2017"><a class="ui-state-default ui-priority-secondary" href="#">1</a></td><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="7" data-year="2017"><a class="ui-state-default ui-priority-secondary" href="#">2</a></td><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="7" data-year="2017"><a class="ui-state-default ui-priority-secondary" href="#">3</a></td><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="7" data-year="2017"><a class="ui-state-default ui-priority-secondary" href="#">4</a></td><td class=" ui-datepicker-week-end ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="7" data-year="2017"><a class="ui-state-default ui-priority-secondary" href="#">5</a></td><td class=" ui-datepicker-week-end ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="7" data-year="2017"><a class="ui-state-default ui-priority-secondary" href="#">6</a></td></tr></tbody></table></div>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/jquery-ui/themes/ui-lightness/jquery.ui.css"  />
+<script type="text/javascript">
+    $(function(){
+        $('#query_start_date').datepicker({dateFormat: 'yy-mm-dd'});
+        $('#query_end_date').datepicker({dateFormat: 'yy-mm-dd'});
+        /*$('.checkall_s').click(function(){
+         var if_check = $(this).attr('checked');
+         $('.checkitem').each(function(){
+         if(!this.disabled)
+         {
+         $(this).attr('checked', if_check);
+         }
+         });
+         $('.checkall_s').attr('checked', if_check);
+         });
+         $('#skip_off').click(function(){
+         url = location.href.replace(/&skip_off=\d*!/g,'');
+         window.location.href = url + '&skip_off=' + ($('#skip_off').attr('checked') ? '1' : '0');
+         });*/
+    });
+</script>
+<script>
+    $(function(){
+        $(".add_person").hide();
+    })
+    function adderess(){
+        $(".add_person").show();
+    }
+    function closea(){
+        $(".add_person").hide();
+    }
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/home_index.js" charset="utf-8"></script>
+</body>
+</html>

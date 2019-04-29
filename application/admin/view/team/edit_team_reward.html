@@ -1,0 +1,51 @@
+{include file="open/header" /}
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('team/team_reward')}">团队奖励列表</a></li>
+        <li class="active"><a>修改团队奖励</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:url('team/edit_team_reward')}">
+        <fieldset>
+            <input type="hidden" name="reward_id" value="{$data.reward_id}">
+            <div class="control-group">
+                <label class="control-label">团队人数</label>
+                <div class="controls">
+                    <input type="text" name="team_number" value="{$data.team_number}" required />
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">月固定返还积分</label>
+                <div class="controls">
+                    <input type="text" name="mouth_refund_points" value="{$data.mouth_refund_points}">
+                    <span class="form-required"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">团队达标返还积分</label>
+                <div class="controls">
+                    <input type="text" name="fixed_refund_points" value="{$data.fixed_refund_points}">
+                    <span class="form-required"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">团队奖励状态</label>
+                <div class="controls">
+                    <select name="reward_state">
+                        <option value="1" {if condition="$data.reward_state == 1"} selected {/if}>开启</option>
+                        <option value="0" {if condition="$data.reward_state == 0"} selected {/if}>关闭</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
+            <a class="btn" href="javascript:history.back(-1);">返回</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

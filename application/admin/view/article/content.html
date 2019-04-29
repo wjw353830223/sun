@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>资讯详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <script src="__PUBLIC__/js/jquery.js"></script>
+    <script src="__PUBLIC__/js/jquery.sha1.js"></script>
+    <script src="__PUBLIC__/js/IOS.sha1.js"></script>
+    
+    <script>
+        //在页面未加载完毕之前显示的loading Html自定义内容
+        var urls = '__PUBLIC__/images/welcome.gif';
+        var _LoadingHtml = '<div id="loadingDiv" style="background-color: white;width:100%;min-width:360px;height:100%;overflow:hidden;position:fixed;"><div style=" height:863px;background-image:url('+urls+');background-repeat: no-repeat;background-position: center center;"></div></div>';
+        //呈现loading效果
+        document.write(_LoadingHtml);
+        document.onreadystatechange = completeLoading;
+        //加载状态为complete时移除loading效果
+        function completeLoading() {
+            if (document.readyState == "complete") {
+                var loadingMask = document.getElementById('loadingDiv');
+                loadingMask.parentNode.removeChild(loadingMask);
+            }
+        }
+    </script>
+    <style>
+        *{
+            margin:0;padding:0;
+        }
+        .container{
+            min-width:320px;
+            margin-left:20px;
+            margin-right: 20px;
+            overflow: hidden;
+        }
+        .header{
+            margin-top:20px;
+        }
+        .header .headline{
+            font-size: 32px;
+            color:#333333;
+            font-weight: bold;
+            font-family: 黑体;
+        }
+        .title{
+            height:30px;
+            margin-top: 20px;
+            color:gray;
+        }
+        .title .writer{
+            font-size:24px;
+            float:left;
+        }
+        .title .writer .writer-content{
+            display:inline;
+            font-family:黑体;
+        }
+        .title .view{
+            float:right;
+            
+        }
+        .title .view .view-image{         
+            width:80px;
+            background:url('__PUBLIC__/images/browse@2x.png') no-repeat center left;
+        }
+        .title .view .view-image span{
+            margin-right:20px;
+            margin-left:20px;   
+        }
+        .container .content{
+            margin-top:28px;
+            font-size: 24px;
+            color:#333333;
+            line-height: 30px;
+            font-family: 宋体;
+        }
+        .footer{
+            height:98px;
+            margin-top:20px;
+            margin-bottom: 20px;
+        }
+        .footer p{
+            color:rgb(161,161,161);
+        }
+        .footer .foot-a{
+            border-bottom: 2px solid rgb(242,242,242);
+            padding-bottom: 20px;
+        }
+        .footer .foot-b{
+            border-top: 2px solid rgb(242,242,242);
+            padding-top: 20px;
+            text-align: center;
+            margin-top:20px;
+        }
+        @media screen and (max-width:360px){
+            .container .same-size{font-size:10px;}
+            .container .foot-content{font-size:10px;}
+            .header .headline{font-size:20px;}
+        }
+        @media screen and (min-width:360px){
+            .container .same-size{font-size:12px}
+            .container .foot-content{font-size:12px;}
+            .header .headline{ font-size:22px;  }
+        }
+        @media screen and (min-width:400px){
+            .container .same-size{font-size:14px}
+            .container .foot-content{font-size: 14px;}
+            .header .headline{ font-size:24px;  }
+        }
+        @media screen and (min-width:480px){
+            .container .same-size{font-size:16px}
+            .container .foot-content{font-size:16px;}
+            .header .headline{  font-size:26px;  }
+        }
+        @media screen and (min-width:560px){
+            .container .same-size{font-size:18px}
+            .container .foot-content{font-size:18px;}
+            .header .headline{  font-size:28px;  }
+        }
+        @media screen and (min-width:600px){
+            .container .same-size{font-size:19px}
+            .container .foot-content{font-size: 19px;}
+            .header .headline{  font-size:29px;  }
+        }
+        @media screen and (min-width:640px){
+            .container .same-size{font-size:20px}
+            .container .foot-content{font-size: 20px;}
+            .header .headline{  font-size:30px; }
+        }
+    </style>
+
+    <script src="__PUBLIC__/js/content.js"></script>
+
+</head>
+<body>
+    <div  class="container">
+        <div class="header">
+            <p class="headline">{$title}</p>
+        </div>
+        <div class="title">
+            <div class="writer same-size">
+                <p><span>{:date('Y-m-d H:i',$time)}</span></p>
+            </div>
+            <!-- <div class="view">
+                <div  class="view-image">
+                    <span id="view-math" class="same-size">1000+</span>
+                </div>
+            </div> -->
+            
+        </div>
+        <div class="content same-size">
+           {$content}
+        </div>
+        <div class="footer">
+            <p class="foot-content foot-b">-THE END-</p>
+        </div>
+    </div>
+    <div style="display:none">
+        <p id="uniqid_code">{$uniqid_code}</p>
+    </div>
+    <script type="text/javascript">
+        $(function(){
+           
+            //检测浏览器类型
+            var uniqid_code = $('#uniqid_code').text();
+            var ctype="wap";
+            //获取时间戳
+            var date= Math.round(new Date().getTime()/1000);
+           /*加密*/
+            var  fields=[{name:"client_type",value:ctype},{name:"_timestamp",value:date},{name:"uniqid_code",value:uniqid_code}];
+            fields.sort(function(a,b){return a.name > b.name});
+            var sha1 = $.sha1($.param(fields));
+            $.ajax({
+                type:"post",
+                url:"{$host_url}/api/article/change_view_nums",
+                data:{client_type:ctype,_timestamp:date,uniqid_code:uniqid_code,signature:sha1},
+                dataType : 'json',
+                success: function(data){
+                    if(data==undefined){
+                        $(".view")[0].css("display","none");
+                    }else{  
+                        $("#view-math").text(data.view_nums);
+                    }
+                }
+            })
+
+        })
+    </script>
+</body>
+</html>
+

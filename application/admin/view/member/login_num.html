@@ -1,0 +1,168 @@
+{include file="open/header" /}
+<style>
+    .page td{
+        padding:4px 10px;
+        border:1px solid #ddd;
+    }
+    .page td a{
+        cursor: pointer;
+    }
+    .page td a:hover{
+        text-decoration: none;
+        color:#1abc9c;
+    }
+    .table{
+        width:50%;
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>登录次数</th>
+            <th>人数</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach name="login_num" item="vo" key="k"}
+            <tr>
+                <td align="center">{$k}</td>
+                <td>{$login_num[$k]}（人）</td>
+            </tr>
+        {/foreach}
+        </tbody>
+    </table>
+    <table class="page">
+        <tr>
+            <td>共 <span class="totalNum"></span>条数据</td>
+            <td><a class="firstPage">首页</a></td>
+            <td><a class="prevPage">上一页</a></td>
+            <td>共<span class="current_Num">1</span>/<span class="totalPage"></span>页</td>
+            <td><a class="nextPage">下一页</a></td>
+            <td><a class="endPage">尾页</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+<script>
+    pretendDevide();
+    function pretendDevide(){
+        // 每页显示的条数
+        var everyPageNum = 20;
+        // 当前的页数
+        var current_Num = 1;
+        // 拿到所有已选设备组成的数组
+        var tbodyNode = $(".table td").toArray();
+        // 获取数组的长度
+        var arrayLengrh = tbodyNode.length;
+        // 设置总条数
+        $(".totalNum").text(arrayLengrh);
+        // 获取总页数
+        var totalPageNum = Math.ceil(arrayLengrh/everyPageNum);
+        // 显示总页数
+        $(".totalPage").text(totalPageNum);
+        // 如果数组大小大于20
+        if(arrayLengrh > 20){
+            $(".table td").show();
+            // 则把后面的全部隐藏
+            $(".table td:gt(19)").hide();
+            $('table.page').css('display','block');
+        }else{
+            // 小于二十个也可以显示
+            $(".table td").show();
+            $('table.page').css('display','none');
+        }
+        // 点击下一页按钮绑定触发事件
+        $(".nextPage").click(function(){
+            // 判断当期页码是否大于最大页码，如果大于等于，则不触发下一页
+            if(current_Num >= totalPageNum){
+                return false;
+            }else{
+                // 执行下一页
+                //当前页码加1
+                current_Num += 1;
+                //显示当前页码
+                $(".current_Num").text(current_Num);
+                // 让所有tr隐藏出来
+                $(".table td").hide();
+                //获取该页显示的起始范围和结束范围
+                var start = everyPageNum*(current_Num - 1);
+                var end = everyPageNum*current_Num;
+                // 判断在start和end中间的显示，其余隐藏
+                for(var i = start;i < end;i++){
+                    $(".table td").eq(i).show();
+                }
+            }
+        });
+
+        // 点击上一页按钮触发事件
+        $(".prevPage").click(function(){
+            // 判断当期页码是否小于等于0，如果小于等于，则不触发上一页
+            if(current_Num <= 1){
+                return false;
+            }else{
+                // 执行上一页
+                //当前页码减1
+                current_Num -= 1;
+                //显示当前页码
+                $(".current_Num").text(current_Num);
+                // 让所有tr隐藏出来
+                $(".table td").hide();
+                //获取该页显示的起始范围和结束范围
+                var start = everyPageNum*(current_Num - 1);
+                var end = everyPageNum*current_Num;
+                // 判断在start和end中间的显示，其余隐藏
+                for(var i = start;i < end;i++){
+                    $(".table td").eq(i).show();
+                }
+            }
+        });
+
+        // 点击尾页按钮绑定事件
+        $(".endPage").click(function(){
+            // 判断当期页码是否大于最大页码，如果大于等于，则不触发尾页
+            if(current_Num >= totalPageNum){
+                return false;
+            }else{
+                // 执行尾页
+                //当前页码赋值为最大页码
+                current_Num = totalPageNum;
+                //显示当前页码
+                $(".current_Num").text(current_Num);
+                // 让所有tr隐藏出来
+                $(".table td").hide();
+                //获取该页显示的起始范围和结束范围
+                var start = everyPageNum*(current_Num - 1);
+                var end = everyPageNum*current_Num;
+                // 判断在start和end中间的显示，其余隐藏
+                for(var i = start;i < end;i++){
+                    $(".table td").eq(i).show();
+                }
+            }
+        });
+
+        // 跳转首页firstPage
+        $(".firstPage").click(function(){
+            // 判断当期页码是否小于等于1
+            if(current_Num <= 1){
+                return false;
+            }else{
+                //当前页码赋值为最小页码
+                current_Num = 1;
+                //显示当前页码
+                $(".current_Num").text(current_Num);
+                // 让所有tr隐藏出来
+                $(".table td").hide();
+                //获取该页显示的起始范围和结束范围
+                var start = everyPageNum*(current_Num - 1);
+                var end = everyPageNum*current_Num;
+                // 判断在start和end中间的显示，其余隐藏
+                for(var i = start;i < end;i++){
+                    $(".table td").eq(i).show();
+                }
+            }
+        });
+    }
+</script>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="tabmenu">
+    <ul class="tab pngFix">
+        <li class="normal"><a  href="{:url('SellerCenter/order_setting')}">地址库</a></li>
+        <li class="active"><a  href="{:url('SellerCenter/order_logistics')}">默认物流公司</a></li>
+    </ul>
+</div>
+<form method="POST" id='express_form' action="index.php?act=store_deliver_set&op=express" onsubmit="ajaxpost('express_form', '', '', 'onerror');return false;">
+    <input value="ok" name="form_submit" type="hidden">
+    <table class="ncsc-default-table" >
+        <thead>
+        <tr>
+            <th class="w20"></th>
+            <th colspan="4" class="tm">物流公司</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="29">
+                顺丰快递</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="40">
+                圆通快递</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="41">
+                韵达快递</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="44">
+                中通快递</label></td>
+        </tr>
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="2">
+                包裹平邮</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="4">
+                传喜物流</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="3">
+                CCES</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="7">
+                德邦物流</label></td>
+        </tr>
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="5">
+                DHL快递</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="6">
+                大田物流</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="8">
+                EMS</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="9">
+                EMS国际</label></td>
+        </tr>
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="12">
+                凡客如风达</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="11">
+                FedEx(国际)</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="10">
+                飞康达</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="15">
+                共速达</label></td>
+        </tr>
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="13">
+                港中能达</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="14">
+                挂号信</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="17">
+                华宇物流</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="16">
+                汇通快递</label></td>
+        </tr>
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="18">
+                佳吉快运</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="20">
+                急先达</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="19">
+                佳怡物流</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="21">
+                快捷速递</label></td>
+        </tr>
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="22">
+                龙邦快递</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="24">
+                联昊通</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="23">
+                联邦快递</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="27">
+                全日通</label></td>
+        </tr>
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="26">
+                全峰快递</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="25">
+                全一快递</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="28">
+                申通快递</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="30">
+                速尔快递</label></td>
+        </tr>
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="33">
+                天地华宇</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="32">
+                天天快递</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="31">
+                TNT快递</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="35">
+                USPS</label></td>
+        </tr>
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="34">
+                UPS快递</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="39">
+                新蛋物流</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="38">
+                希伊艾斯</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="37">
+                信丰物流</label></td>
+        </tr>
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="36">
+                新邦物流</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="42">
+                邮政包裹</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="43">
+                优速快递</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="45">
+                中铁快运</label></td>
+        </tr>
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="46">
+                宅急送</label></td>
+            <td class="tl"><label>
+                <input type="checkbox" name="cexpress[]"  value="47">
+                中邮物流</label></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="20" class="bottom"><label class="submit-border"><input class="submit" type="submit" value="保存" onclick="a()"></label></td>
+        </tr>
+        </tfoot>
+    </table>
+</form>
+</body>
+</html>

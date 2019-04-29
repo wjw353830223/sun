@@ -1,0 +1,72 @@
+{include file="common/joinin_header" /} 
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui/i18n/zh-CN.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/jquery-ui/themes/ui-lightness/jquery.ui.css"  />
+<div class="breadcrumb">
+	<span class="icon-home"></span><span><a href="#">首页</a></span> <span class="arrow">></span> <span>开通公司分部申请</span>
+</div>
+<div class="main">
+	<div class="sidebar">
+		<div class="title">
+			<h3>商家入驻申请</h3>
+		</div>
+		<div class="content">
+			<dl show_id="99">
+				<dt onclick="show_list('99');" style="cursor: pointer;"> <i class="hide"></i>入驻流程</dt>
+				<dd style="display:none;">
+					<ul>
+						<li><i></i><a href="index.php?act=show_help&op=index&t_id=99&help_id=101" target="_blank">签署入驻协议</a></li>
+						<li><i></i><a href="index.php?act=show_help&op=index&t_id=99&help_id=102" target="_blank">商家信息提交</a></li>
+						<li><i></i><a href="index.php?act=show_help&op=index&t_id=99&help_id=103" target="_blank">总部审核</a></li>
+						<li><i></i><a href="index.php?act=show_help&op=index&t_id=99&help_id=104" target="_blank">合作融资</a></li>
+						<li><i></i><a href="index.php?act=show_help&op=index&t_id=99&help_id=105" target="_blank">分部开通管理</a></li>
+					</ul>
+				</dd>
+			</dl>
+			<dl>
+				<dt class="{eq name='step' value='1'}current{/eq}"> <i class="hide"></i>签署入驻协议</dt>
+			</dl>
+			<dl show_id="0">
+				<dt onclick="show_list('0');" style="cursor: pointer;"> <i class="show"></i>提交申请</dt>
+				<dd>
+					<ul>
+						<li class=""><i></i>公司资质信息</li>
+						<li class=""><i></i>财务资质信息</li>
+						<li class=""><i></i>公司经营信息</li>
+					</ul>
+				</dd>
+			</dl>
+			<dl>
+				<dt class="{eq name='step' value='4'}current{/eq}"> <i class="hide"></i>合同签订及缴费</dt>
+			</dl>
+			<dl>
+				<dt> <i class="hide"></i>分部开通管理</dt>
+			</dl>
+		</div>
+		<div class="title">
+			<h3>平台联系方式</h3>
+		</div>
+		<div class="content">
+			<ul>
+				<li>电话：400-100-2918</li>
+				<li>邮箱：sxcr@changrentech.com‍</li>
+			</ul> 
+		</div>
+	</div>
+	<div class="right-layout">
+		<div class="joinin-step">
+			<ul>
+				<li class="step1 current"><span>签订入驻协议</span></li>
+				<li class=""><span>公司资质信息</span></li>
+				<li class=""><span>财务资质信息</span></li>
+				<li class=""><span>公司经营信息</span></li>
+				<li class=""><span>合同签订及缴费</span></li>
+				<li class="step6"><span>分部开通管理</span></li>
+			</ul>
+		</div>
+		<div class="joinin-concrete">
+			<!-- 协议 -->
+			{__CONTENT__}
+		</div>
+	</div>
+</div>
+{include file="common/footer" /} 

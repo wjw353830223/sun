@@ -1,0 +1,48 @@
+{include file="open/header" /}
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('role/index')}">角色管理</a></li>
+			<li><a href="{:url('role/add')}">添加角色</a></li>
+			<li class="active"><a>编辑角色</a></li>
+		</ul>
+		<form class="form-horizontal js-ajax-form" action="{:url('role/edit_post')}" method="post">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">角色名称</label>
+					<div class="controls">
+						<input type="text" name="name" value="{$data.name}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">角色描述</label>
+					<div class="controls">
+						<textarea name="remark" rows="2" cols="20" style="height: 100px; width: 500px;">{$data.remark}</textarea>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">状态</label>
+					<div class="controls">
+						{php}$active_true_checked=($data['status']==1)?"checked":"";{/php}
+						<label class="radio inline" for="active_true">
+							<input type="radio" name="status" value="1" {$active_true_checked} id="active_true"/>开启
+						</label>
+						{php}$active_false_checked=($data['status']==0)?"checked":"";{/php}
+						<label class="radio inline" for="active_false">
+							<input type="radio" name="status" value="0" id="active_false"{$active_false_checked}>禁用
+						</label>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="id" value="{$data.role_id}"/>
+				<button type="submit" class="btn btn-primary  js-ajax-submit">保存</button>
+				<a class="btn" href="javascript:history.back(-1);">删除</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

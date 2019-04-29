@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>专题系列</title>
+    <meta content="测试原生app与h5 通过js交互" name="description"/>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="full-screen" content="yes">
+    <meta name="browsermode" content="application">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-page-mode" content="app">
+    <link rel="stylesheet" href="css/special.css"/>
+    <script src="js/flexible_css.debug.js"></script>
+    <script src="js/flexible.debug.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="special-banner">
+            <img src="img/special-banner.png"/>
+        </div>
+        <ul class="special-shop-list">
+            <li class="shop-list">
+                <div class="special-shop shop-img-left">
+                    <img class="shop-img-big" src="img/shop-ql-big.png"/>
+                    <img class="shop-img-small" src="img/shop-ql-small.png"/>
+                </div>
+                <div class="shop-explain-left">
+                    <p class="explain-title">绮露家纺 宜家四件套</p>
+                    <p class="explain-body">绮露家纺 QL-TJ1706宜家四件套花期如梦佳品</p>
+                    <p class="explain-price"><span class="coin">￥</span><span class="num">456</span></p>
+                    <input type="hidden" name="goods_commonid" value="43">
+                </div>
+            </li>
+
+            <li class="shop-list">
+                <div class="shop-explain-right">
+                    <p class="explain-title">红厨奶锅&nbsp;HONCOOK</p>
+                    <p class="explain-body">红厨16cm红色奶锅&nbsp;不粘锅&nbsp;泡面锅&nbsp;辅食&nbsp;复底牛奶锅&nbsp;燃气电池炉&nbsp;小汤锅</p>
+                    <p class="explain-price"><span class="coin">￥</span><span class="num">239</span></p>
+                    <input type="hidden" name="goods_commonid" value="17">
+                </div>
+                <div class="special-shop shop-img-right">
+                    <img class="shop-img-big" src="img/shop-ng-big.png"/>
+                    <img class="shop-img-small" src="img/shop-ng-small.png"/>
+                </div>
+            </li>
+
+            <li class="shop-list">
+                <div class="special-shop shop-img-left">
+                    <img class="shop-img-big" src="img/shop-jb-big.png"/>
+                    <img class="shop-img-small" src="img/shop-jb-small.png"/>
+                </div>
+                <div class="shop-explain-left">
+                    <p class="explain-title">石岛金杯&nbsp;（金字塔）</p>
+                    <p class="explain-body">石岛金杯 G021.4304 完美冷切口，耐急冷急热</p>
+                    <p class="explain-price"><span class="coin">￥</span><span class="num">21</span></p>
+                    <input type="hidden" name="goods_commonid" value="165">
+                </div>
+                <div style="clear: both"></div>
+            </li>
+
+            <li class="shop-list">
+                <div class="shop-explain-right">
+                    <p class="explain-title">传枫&nbsp;家用立式吸尘器</p>
+                    <p class="explain-body">传枫&nbsp;家用立式吸尘器便携式，吸尘器推杆红色GHA-585</p>
+                    <p class="explain-price"><span class="coin">￥</span><span class="num">699</span></p>
+                    <input type="hidden" name="goods_commonid" value="27">
+                </div>
+                <div class="special-shop shop-img-right">
+                    <img class="shop-img-big" src="img/shop-cf-big.png"/>
+                    <img class="shop-img-small" src="img/shop-cf-small.png"/>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="app-download">
+        <div class="download-body">
+            <img src="img/logo.png">
+            <span id="downloadButton">下载APP</span>
+        </div>
+    </div>
+
+    <script src="js/jquery.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script type="text/javascript" src="//res.cdn.openinstall.io/openinstall.js"></script>
+    <script src="js/special.js"></script>
+    <script>
+        $(function(){
+            var shareData = {
+                title: $('title').text(),
+                desc:$("meta[name=description]").attr('content'),
+                link: location.href,
+                imgUrl:location.protocol + "//" + location.hostname + '/special/' +$(".special-banner img").attr("src")
+            };
+            app_share(shareData);
+        });
+    </script>
+</body>
+</html>

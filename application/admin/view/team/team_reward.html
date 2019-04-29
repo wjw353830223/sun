@@ -1,0 +1,55 @@
+{include file="open/header" /}
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('team/team_reward')}">团队奖励列表</a></li>
+        <li><a href="{:url('team/add_team_reward')}">添加团队奖励</a></li>
+    </ul>
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th width="50">ID</th>
+                <th>团队人数</th>
+                <th>月固定返还积分</th>
+                <th>团队达标返还积分</th>
+                <th>创建时间</th>
+                <th>团队状态</th>
+                <th width="200">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach name="team_award" item="vo"}
+            <tr>
+                <td>{$vo.reward_id}</td>
+                <td>{$vo.team_number}</td>
+                <td>{$vo.mouth_refund_points}</td>
+                <td>{$vo.fixed_refund_points}</td>
+                <td>{:date("Y-m-d H:i:s",$vo.create_time)}</td>
+                <td>
+                    {if condition="$vo.reward_state == 1"}
+                    开启
+                    {elseif condition="$vo.reward_state == 0"}
+                    关闭
+                    {/if}
+                </td>
+                <td>
+                    {if condition="$vo.reward_state == 1"}
+                    <a href="{:url('team/update_state',['id'=>$vo.reward_id,'reward_state'=>0])}" class="js-ajax-dialog-btn" data-msg="确定要修改么？">关闭</a> |
+                    {elseif condition="$vo.reward_state == 0"}
+                    <a href="{:url('team/update_state',['id'=>$vo.reward_id,'reward_state'=>1])}" class="js-ajax-dialog-btn" data-msg="确定要修改么？">开启</a> |
+                    {/if}
+                    <a href="{:url('team/edit_team_reward',['id'=>$vo.reward_id])}">编辑</a> |
+                    <a href="{:url('team/delete',['id'=>$vo.reward_id])}" class="js-ajax-delete">删除</a>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

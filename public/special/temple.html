@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>征集问答</title>
+  <meta name="viewport" content="width=device-width,user-scalable=no,viewport-fit=cover">
+  <meta content="寺庙 海空 大师 静安寺 问答" name="description" />
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta content="yes" name="apple-touch-fullscreen">
+  <meta content="telephone=no,email=no" name="format-detection">
+  <meta name="screen-orientation" content="portrait">
+  <meta name="full-screen" content="yes">
+  <meta name="browsermode" content="application">
+  <meta name="x5-orientation" content="portrait">
+  <meta name="x5-fullscreen" content="true">
+  <meta name="x5-page-mode" content="app">
+  <link rel="stylesheet" href="css/temple.css?v=1026" />
+  <script src="js/flexible_css.debug.js?v=1026"></script>
+  <script src="js/flexible.debug.js?v=1026"></script>
+  <script type="text/javascript">
+      function textCounter(field, countfield, maxlimit) {
+          if (field.value.length > maxlimit) {
+              field.value = field.value.substring(0, maxlimit);
+          } else {
+              countfield.value = maxlimit - field.value.length;
+          }
+      }
+  </script>
+</head>
+
+<body>
+<div class="container">
+  <div class="temple-title">
+    <img class="title-banner" src="./img/temple-banner.png" alt="">
+  </div>
+  <form name="temple" action="">
+    <div class="temple-form">
+      <textarea name="question" class="problem-content" placeholder="你想问海空师父什么问题" onKeyDown="textCounter(question,remLen,40);" onKeyUp="textCounter(question,remLen,40);" id="message_question"></textarea>
+      <div class="tip">
+        <p>还可以输入<input name="remLen" type="text" value="40" class="font-count">个文字</p>
+        <div class="answer-radios">
+          <input name="sex" type="checkbox" onchange="check(this)" class="answer-radio" /><label>我要回答</label>
+        </div>
+      </div>
+      <div class="answer-hide">
+        <textarea class="answer-content" name="answer" placeholder="你提的问题可以自己作回答" onKeyDown="textCounter(answer,remLen1,40);" onKeyUp="textCounter(answer,remLen1,40);" id="message_answer"></textarea>
+        <div class="tip">
+          <p>还可以输入<input name="remLen1" type="text" value="40" class="font-count">个文字</p>
+        </div>
+      </div>
+      <div class="submits" onclick="submit_message()">
+        <input type="button" value="提交" class="temple-submit" />
+        <i class="temple-robot"></i>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+  <div class="tips-modal"></div>
+  <div class="tips-body">
+    <p class="tips-content">问题字数不能超过40个字</p>
+    <input type="button" class="tips-button" value="确认">
+  </div>
+
+</body>
+
+<script src="js/jquery.js?v=1026"></script>
+<script>
+    $(function(){
+        $("form").submit(function(event){ return false; });
+    });
+
+    function submit_message(){
+        var message_question = $('#message_question').val();
+        var message_answer = $('#message_answer').val();
+        var url = 'http://api.healthywo.com/open/message/leave_message';
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: {message_question: message_question, message_answer: message_answer},
+            success: function (data) {
+                if (data.code === '200') {
+                    $('.tips-content').text(data.msg);
+                    var bdheight = $('.tips-body').height()/2;
+                    $('.tips-modal').show();
+                    $('.tips-body').css({'margin-top':-bdheight+'px','display':'block'});
+                } else {
+                    $('.tips-content').text(data.msg);
+                  var bdheight = $('.tips-body').height()/2;
+                  $('.tips-modal').show();
+                  $('.tips-body').css({'margin-top':-bdheight+'px','display':'block'});
+                }
+            }
+        });
+    }
+
+    $('.tips-button').on('click',function () {
+      $('.tips-modal').hide();
+      $('.tips-body').hide();
+      location.reload();
+    });
+
+    function check(obj){
+        if($(obj).attr('checked') === 'checked'){
+            $('.answer-hide').css('display',"block");
+        }else{
+            $('.answer-hide').css('display',"none");
+        }
+    }
+</script>
+
+</html>

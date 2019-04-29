@@ -1,0 +1,46 @@
+{include file="open/header" /} 
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('role/index')}">支付方式</a></li>
+		</ul>
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th>支付方式</th>
+					<th width="140" align="left">状态</th>
+					<th width="120">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{foreach name="lists" item="vo"}
+				<tr>
+					<td>{$vo.payment_name}({$vo.payment_code})</td>
+					<td>
+						{if condition="$vo['payment_state'] eq 1"}
+							开启中
+						{else /} 
+							关闭中
+						{/if}
+					</td>
+					<td>
+						{if condition="$vo['payment_id'] eq 1 or $vo['payment_id'] eq 5"}
+							<font color="#cccccc">编辑</font> |
+						{else}
+							<a href="{:url('role/edit')}">编辑</a> |
+						{/if}
+						{if condition="$vo['payment_state'] eq 1"}
+							<a href="{:url('payment/lock',['id' => $vo['payment_id']])}" class="js-ajax-dialog-btn" data-msg="您确定要关闭此支付方式吗？">关闭</a> 
+						{else /} 
+							<a href="{:url('payment/unlock',['id' => $vo['payment_id']])}" class="js-ajax-dialog-btn" data-msg="您确定要开启此支付方式吗？">开启</a> 
+						{/if}
+					</td>
+				</tr>
+				{/foreach}
+			</tbody>
+		</table>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

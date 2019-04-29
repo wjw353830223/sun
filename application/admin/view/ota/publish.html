@@ -1,0 +1,114 @@
+{include file="open/header" /}
+</head>
+<body>
+	<form class="container" onsubmit="return submitPublish();" enctype="multipart/form-data">
+    <h4>发布固件</h4>
+    <div class="form-group">
+        <label for="name">固件名</label>
+        <input class="form-control" id="name" name="name" placeholder="固件名" required/>
+        <p class="help-block">为该固件版本起个名字，用于区分。</p>
+    </div>
+    <div class="form-group">
+        <label for="version">固件版本</label>
+        <input type="number" class="form-control" id="version" name="version" placeholder="固件版本" required/>
+        <p class="help-block">只有客户端版本小于该版本才会更新。</p>
+    </div>
+    <div class="form-group">
+        <label for="file">选择固件</label>
+        <input type="file" id="file" name="file" required/>
+        <p class="help-block">选择固件安装包。</p>
+    </div>
+    <div class="form-group">
+        <label for="proId">选择产品类型</label>
+        <select class="form-control" id="proId" name="proId">
+            <option value="0">地面机器人</option>
+            <option value="1">桌面机器人</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="appType">选择客户端应用</label>
+        <select class="form-control" id="appType" name="appType">
+            <option value="0">单片机</option>
+            <option value="1">安卓launcher</option>
+            <option value="2">其他应用</option>
+        </select>
+    </div>
+    <div class="form-group app-id-area" style="display: none;">
+        <label for="appId">应用ID</label>
+        <input class="form-control" id="appId" placeholder="应用ID"/>
+    </div>
+    <div class="form-group">
+        <label><input type="checkbox" id="allowCheckbox"/>只允许指定设备更新</label>
+    </div>
+    <div class="form-group allow-area" style="display: none;">
+        <input class="form-control allow-client-id" placeholder="设备唯一标志"/>
+    </div>
+    <button class="btn btn-default publish-btn" data-loading-text="正在发布...">发布</button>
+</form>
+
+<script th:inline="javascript" type="text/javascript">
+
+    $(function () {
+
+        $('#appType').on('change', function () {
+            $('.app-id-area').css('display', $(this).val() === '2' ? 'block' : 'none');
+        });
+
+        $('#allowCheckbox').on('change', function () {
+            $('.allow-area').css('display', $(this).prop('checked') ? 'block' : 'none');
+        });
+
+        $(document).on('keydown', '.allow-client-id', function (e) {
+            let keyCode = e.keyCode;
+            if (keyCode === 8) {
+                let $siblings = $(this).siblings();
+                if ($(this).val() === '' && $siblings.length > 0) {
+                    $(this).remove();
+                    $siblings.last()[0].focus();
+                    e.preventDefault();
+                }
+            } else if (keyCode === 13) {
+                $('.allow-area').append('<input class="form-control allow-client-id" placeholder="设备唯一标志"/>');
+                $(this).siblings().last()[0].focus();
+                e.preventDefault();
+            }
+        });
+
+    });
+
+    let submitPublish = function () {
+        let $btn = $('.publish-btn').button('loading');
+        let formData = new FormData($('.container')[0]);
+        let appType = $('#appType').val();
+        formData.append('appId', appType === '0' || appType === '1' ? appType : $.trim($('#appId').val()));
+        if ($('#allowCheckbox').prop('checked')) {
+            let $allows = $('.allow-client-id'), allows = [];
+            for (let i = 0; i < $allows.length; i++) {
+                let allow = $.trim($allows.eq(i).val());
+                allow && allows.push(allow);
+            }
+            allows.length > 0 && formData.append('allows', allows.join(','));
+        }
+        $.ajax({
+            url: 'publish',
+            data: formData,
+            type: 'post',
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        }).fail(function (data) {
+            alert(data.msg);
+        }).done(function (data) {
+            if (data.code == 1) {
+                alert('发布成功');
+            } else {
+            	alert(data.msg);
+        	}
+        }).always(function () {
+            $btn.button('reset');
+        });
+        return false;
+    };
+</script>
+</body>
+</html>

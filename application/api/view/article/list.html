@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>咨询详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- 引入 Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <link href="__PUBLIC__/css/index.css" rel="stylesheet">
+</head>
+<body>
+    <div  class="container">
+        <div class="col-xs-12 header">
+            <p class="headline" style="font-family: 宋体;">{$title}</p>
+        </div>
+        <div class="col-xs-10 data" >
+                <p>{:date('Y-m-d H:i:s',$time)}</p>
+        </div>
+        <div class="col-xs-2 view" >
+            <div style="width:100px">
+                <img src="__PUBLIC__/images/browse@2x.png">
+                <span >22</span>
+            </div>
+        </div>
+
+        <div class="col-xs-12 content" style="font-family: 宋体;">
+            <p>
+            {$content}
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>

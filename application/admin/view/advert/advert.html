@@ -1,0 +1,68 @@
+{include file="open/header" /}
+
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('advert/index')}">广告位管理</a></li>
+			<li class="active"><a href="{:url('advert/index',array("id"=>$position_id))}">广告管理</a></li>
+			<li><a href="{:url('advert/advert_add',array('id'=>$position_id))}">添加广告</a></li>
+		</ul>
+		<form class="js-ajax-form" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="100">ID</th>
+						<th>广告名称</th>
+						<th>所属广告位</th>
+						<th width="100">类型</th>
+						<th width="170">开始时间</th>
+						<th width="170">结束时间</th>
+						<th width="130">操作</th>
+					</tr>
+				</thead>
+				{foreach name="lists" item="vo"}
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo['advert_id']}"></td>
+					<td><a>{$vo.advert_id}</a></td>
+					<td>{$vo.title}</td>
+					<td>{$vo.position.name}</td>
+					<td>
+						{switch name='$vo.type'}
+							{case value='pic'}仅图片展示 {/case}
+							{case value='product'}跳转商品详情 {/case}
+							{case value='url'}跳转链接 {/case}
+						{/switch}
+					</td>
+					<td>{:date('Y-m-d H:i',$vo.start_time)}</td>
+					<td>{:date('Y-m-d H:i',$vo.end_time)}</td>
+					<td>
+						<a href="{:url('advert/advert_edit',array('id'=>$vo['advert_id']))}">编辑</a> |
+						<a href="{:url('advert/advert_delete',array('id'=>$vo['advert_id'],'position_id'=>$position_id))}" class="js-ajax-delete">删除</a>
+					</td>
+				</tr>
+				{/foreach}
+			</table>
+			<div class="table-actions">
+			    <input type="hidden" name="position_id" value="{$position_id}"/>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:url('advert/advert_delete')}" data-subcheck="true" data-msg="你确定删除吗？">删除</button>
+			</div>
+			<div class="pagination"></div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

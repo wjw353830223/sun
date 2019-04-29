@@ -1,0 +1,37 @@
+{include file="open/header" /}
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('team/team_index')}">团队业绩查看</a></li>
+    </ul>
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>团队名称</th>
+                <th>创建人昵称</th>
+                <th>本日业绩</th>
+                <th>本月业绩</th>
+                <th>全部业绩</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{$data.team_name}</td>
+                <td>{$data.member_name}</td>
+                <td>{$data.day_amount}</td>
+                <td>{$data.month_amount}</td>
+                <td>{$data.total_amount}</td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <div style="clear:both;"></div>
+    <div class="form-actions">
+        <a class="btn" href="{:url('team/team_index')}">返回</a>
+    </div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

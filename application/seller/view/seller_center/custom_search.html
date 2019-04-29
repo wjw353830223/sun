@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="tabmenu">
+    <ul class="tab pngFix">
+        <li class="active"><a  href="">客户查看</a></li>
+    </ul>
+</div>
+<form method="get" action="index.php">
+    <table class="search-form">
+        <input type="hidden" name="act" value="store_goods_online" />
+        <input type="hidden" name="op" value="index" />
+        <tr>
+            <td>&nbsp;</td>
+            <th>
+                <select name="search_type">
+                    <option value="0" selected="selected">客户名称</option>
+                    <option value="1" >销售员</option>
+                    <option value="2" >客户手机号</option>
+                </select>
+            </th>
+            <td class="w160"><input type="text" class="text w150" name="keyword" value=""/></td>
+            <td class="tc w70"><label class="submit-border">
+                <input type="submit" class="submit" value="搜索" />
+            </label></td>
+        </tr>
+    </table>
+</form>
+<table class="ncsc-default-table">
+    <thead>
+    <tr nc_type="table_header">
+        <th class="w30">&nbsp;</th>
+        <th class="w50">&nbsp;</th>
+        <th coltype="editable" column="goods_name" checker="check_required" inputwidth="80px">客户姓名</th>
+        <th class="w50">客户电话</th>
+        <th class="w100">性别</th>
+        <th class="w100">消费金额</th>
+        <th class="w100">销售负责人</th>
+        <th class="w100">所属公司</th>
+        <th class="w120">操作</th>
+    </tr>
+    <tr>
+        <td class="tc"><input type="checkbox" id="all" class="checkall"/></td>
+        <td colspan="20"><label for="all" >全选</label>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <!--模板-->
+    <tr>
+        <th class="tc"><input type="checkbox" class="checkitem tc"  value="100085"/></th>
+        <th colspan="20">用户名：zsas484635769</th>
+    </tr>
+    <tr>
+        <td class="trigger"><i class="tip icon-plus-sign" nctype="ajaxGoodsList" data-comminid="100085" title=""></i></td>
+        <td><div class="pic-thumb"><a href="" ><img src=""/></a></div></td>
+        <td class="tl"><dl class="goods-name">
+            <dt style="max-width: 450px !important;">
+                <a href="" >张三分</a></dt>
+            <dd>地址：一个不知名的犄角旮旯</dd>
+            </dd>
+        </dl></td>
+        <td><span>13453223166</span></td>
+        <td><span>男</span></td>
+        <td><span>&yen;7843613.00</span></td>
+        <td><span >驴布</span></td>
+        <td class="bdl" rowspan="1">
+            <p >山西省</p>
+            <p >晋中分公司</p>
+        </td>
+        <td class="nscs-table-handle" style="text-align: center">
+            <span><a href="{:url('SellerCenter/custom_explicit')}" class="btn-blue"><i class="icon-edit"></i><p>查看客户详情</p></a></span>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <th class="tc"><input type="checkbox" id="all2" class="checkall"/></th>
+        <th colspan="10"><label for="all2">全选</label>
+        </th>
+    </tr>
+    <tr>
+        <td colspan="20"><div class="pagination"> <ul><li><span>首页</span></li><li><span>上一页</span></li><li><span class="currentpage">1</span></li><li><span>下一页</span></li><li><span>末页</span></li></ul> </div></td>
+    </tr>
+    </tfoot>
+</table>
+</body>
+</html>

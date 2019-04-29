@@ -1,0 +1,68 @@
+{include file="open/header" /}
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('family/index')}">家庭列表</a></li>
+		</ul>
+		<form class="well form-search" method="post" action="{:url('family/index')}">
+			家庭ID：
+			<input type="text" name="family_id" style="width: 100px;" value="{:input('request.family_id')}" placeholder="请输入家庭ID">
+			关键字：
+			<input type="text" name="keyword" style="width: 200px;" value="{:input('request.keyword')}" placeholder="请输入家庭名称或拥有者名称">
+			机器人码：
+			<input type="text" name="robot_imei" style="width: 200px;" value="{:input('request.robot_imei')}" placeholder="请输入机器人IMEI">
+			<input type="submit" class="btn btn-primary" value="搜索" />
+			<a class="btn btn-danger" href="{:url('family/index')}">清空</a>
+		</form>
+		<form method="post" class="js-ajax-form">
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th width="50">ID</th>
+						<th>家庭名称</th>
+						<th>拥有者(账号)</th>
+						<th>成员数量</th>
+						<th width="180">创建日期</th>
+						<th width="200">机器人码</th>
+						<th width="70">状态</th>
+						<th width="120">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{foreach name="list" item="vo"}
+					<tr>
+						<td align="center">{$vo.family_id}</td>
+						<td>{$vo['family_name']}</td>
+						<td>{$vo['member_name']} &nbsp;&nbsp;({$vo['member_mobile']})</td>
+						<td><a href="{:url('family/member',array('family_id'=>$vo['family_id']))}">{$vo.member_count}&nbsp;&nbsp;&nbsp;人</a></td>
+						<td>{:date('Y-m-d H:i',$vo.add_time)}</td>
+						<td>{$vo.robot_imei}</td>
+						<td>{if condition="$vo['state'] eq 1"}启用{else/}关闭{/if}</td>
+						<td>
+							{if condition="$vo['state'] eq 1"}
+								<a href="{:url('family/edit',array('family_id'=>$vo['family_id'],'state'=>'0'))}" class="js-ajax-dialog-btn">关闭</a> |
+							{else/}
+								<a href="{:url('family/edit',array('family_id'=>$vo['family_id'],'state'=>'1'))}" class="js-ajax-dialog-btn">启用</a> |
+							{/if}
+							{if condition="$vo['robot_imei'] eq ''"}
+								<a href="{:url('family/bind',array('family_id'=>$vo['family_id']))}">绑定</a>
+							{else/}
+								<a href="{:url('family/unbind',array('family_id'=>$vo['family_id']))}">换绑</a>
+							{/if}
+							{if condition="$vo['robot_imei'] eq ''"}
+								<a href="#"></a>
+							{else/}
+								|<a href="{:url('family/remove_bind',array('family_id'=>$vo['family_id']))}" class="js-ajax-dialog-btn">解绑</a>
+							{/if}
+						</td>
+					</tr>
+					{/foreach}
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,541 @@
+{include file="open/header" /}
+<style type="text/css">
+.pic-list li {
+	margin-bottom: 5px;
+}
+.input_sevice ul{
+	margin-left:0;
+}
+.input_sevice ul li{
+	list-style: none;
+	float: left;
+	margin-left:20px;
+	width:250px;
+}
+li span {
+	display: inline-block;
+	vertical-align: top;
+}
+strong {
+	font-weight: bold;
+}
+.radio-btn input[type="radio"], .check-box input[type="checkbox"] {
+	visibility: hidden;
+}
+/*Custom checkbox*/
+.check-box {
+	width:14px;
+	height:14px;
+	cursor: pointer;
+	display: inline-block;
+	margin: 2px 7px 0 0;
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 0 1px #ccc;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background: rgb(255, 255, 255);
+	background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(246, 246, 246, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
+	background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+	background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+	background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=0);
+	border: 1px solid #ccc;
+}
+.check-box i {
+	background: url('__PUBLIC__/images/check_mark.png') no-repeat center center;
+	position: absolute;
+	left: 2px;
+	bottom: -17px;
+	width: 12px;
+	height: 12px;
+	opacity: .5;
+	-webkit-transition: all 400ms ease-in-out;
+	-moz-transition: all 400ms ease-in-out;
+	-o-transition: all 400ms ease-in-out;
+	transition: all 400ms ease-in-out;
+	-webkit-transform:rotateZ(-180deg);
+	-moz-transform:rotateZ(-180deg);
+	-o-transform:rotateZ(-180deg);
+	transform:rotateZ(-180deg);
+}
+.checkedBox {
+	-moz-box-shadow: inset 0 0 5px 1px #ccc;
+	-webkit-box-shadow: inset 0 0 5px 1px #ccc;
+	box-shadow: inset 0 0 5px 1px #ccc;
+	border-bottom-color: #fff;
+}
+.checkedBox i {
+	bottom: 2px;
+	-webkit-transform:rotateZ(0deg);
+	-moz-transform:rotateZ(0deg);
+	-o-transform:rotateZ(0deg);
+	transform:rotateZ(0deg);
+}
+input[type="radio"]{
+	margin:0;
+}
+li span{
+	margin-left:10px;
+}
+	.goods_prefix ul{
+		margin:0;
+	}
+	.goods_prefix ul li {
+		list-style: none;
+		margin-bottom: 8px;
+	}
+</style>
+<script type="text/html" id="photos-item-wrapper">
+	<li id="savedimage{id}">
+		<input id="photo-{id}" type="hidden" name="photos_url[]" value="{filepath}">
+		<input id="photo-{id}" type="hidden" name="img_id[]" value="{id}">
+		<input id="photo-{id}" type="hidden" name="img_id[]" value="{id}"> 
+		<input id="photo-{id}-name" type="text" name="photos_alt[]" value="{name}" style="width: 160px;" title="图片名称">
+		<img id="photo-{id}-preview" src="{img_url}" style="height:36px;width: 36px;" onclick="parent.image_preview_dialog(this.src);">
+		<a href="javascript:upload_one_image('图片上传','#photo-{id}');">替换</a>
+		<a href="javascript:(function(){$('#savedimage{id}').remove();})();">移除</a>
+	</li>
+</script>
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('product/index')}">产品列表</a></li>
+			<li class="active"><a href="{:url('product/add')}" target="_self">添加产品</a></li>
+		</ul>
+		<form action="{:url('product/add_post')}" method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						<tr>
+							<th width="80">商品区域</th>
+							<td>
+								<select name="module_id" onchange="get_cate(this)">
+									<option value="">请选择商品区域</option>
+									{foreach name="module" item="val"}
+										<option value="{$val.module_id}">{$val.module_name}</option>
+									{/foreach}
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th width="80">商品分类</th>
+							<td>
+								<select name="gc_id">
+									<option value="0">请选择商品分类</option>
+
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th width="80">商品名称</th>
+							<td>
+								<input type="text" style="width:200px;" name="goods_name" id="title" required value="" placeholder="请输入商品名称"/>
+								<span class="form-required">*</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="80">商品价格</th>
+							<td>
+								<input type="text" style="width:200px;" name="goods_price" id="goods_price"  value="" placeholder="请输入商品价格"/>
+								<span class="form-required">*</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="80">成本价格</th>
+							<td>
+								<input type="text" style="width:200px;" name="cost_price" id="cost_price"  value="" placeholder="请输入成本价格"/>
+								<span class="form-required">*</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="80">市场价格</th>
+							<td>
+								<input type="text" style="width:200px;" name="market_price" id="market_price" placeholder="请输入市场价格"/>
+								<span class="form-required">*</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="80">产品销量</th>
+							<td>
+								<input type="text" style="width:200px;" name="goods_salenum" id="goods_salenum" placeholder="请输入产品销量"/>
+								<span class="form-required">*</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="110">赠送消费积分数</th>
+							<td>
+								<input type="text" style="width:200px;" name="goods_present" id="goods_present" placeholder="请输入赠送消费积分数"/>
+								<span class="form-required">购买该商品时赠送的积分数</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="80">赠送经验值</th>
+							<td>
+								<input type="text" style="width:200px;" name="goods_experience" id="goods_experience" placeholder="请输入赠送经验值"/>
+								<span class="form-required">购买该商品时赠送的经验值</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="80">赠送上级积分</th>
+							<td>
+								<input type="text" style="width:200px;" name="goods_parent_points" id="goods_parent_points" placeholder="赠送上级积分"/>
+								<span class="form-required">购买该商品时赠送的上级消费者的积分</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="80">商品属性</th>
+							<td class="goods_prefix">
+								<ul matype="specUl">
+									<li>
+										<input type="text" matype="specPrefix" mbtype="default1" name="specName[default1]" value=""  placeholder="默认规格" />
+										<input class="btn btn-primary js-ajax-submit" type="button" matype="specValueAdd" value="新增规格值" onclick="">
+										<span matype="specAdd1" style="display:none;">
+											<input class="input input1 w60" type="text"  placeholder="规格值名称"  maxlength="40">
+											<input class="btn btn-primary js-ajax-submit" type="button" matype="specAddSubmit" value="确认" onclick="">
+											<input class="btn btn-primary js-ajax-submit" type="button" matype="specAddCancel" value="取消" onclick="">
+										</span>
+										<input class="btn btn-primary js-ajax-submit" type="button" matype="specAdd" value="新增规格" onclick="">
+									</li>
+								</ul>
+							</td>
+						</tr>
+						<tr  id="priceSetting" style="display: none">
+							<th width="80">库存</th>
+							<td>
+
+							</td>
+						</tr>
+						<tr>
+							<th>商品简介</th>
+							<td>
+								<textarea name="goods_description" id="description" style="width: 98%; height: 50px;resize: none;" placeholder="请填写商品简介"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<th width="80">服务</th>
+							<td class="input_sevice">
+								<ul>
+									{foreach name="server" key="k" item="vo"}
+										<li><input type="checkbox" name="goods_server[]" value="{$k}"><span>{$vo}</span></li>
+									{/foreach}
+								</ul>
+								<script>
+									$(function(){
+										$('input[name="goods_server[]"]').wrap('<div class="check-box"><i></i></div>');
+										$.fn.toggleCheckbox = function () {
+											this.attr('checked', !this.attr('checked'));
+										};
+										var a=0;
+										$('.check-box').on('click', function () {
+											$(this).find(':checkbox').toggleCheckbox();
+											$(this).toggleClass('checkedBox');
+											if($(this).find(':checkbox').attr('checked') =="checked"){
+												a++;
+											}else{
+												a--;
+											}
+											if(a>4){
+												alert("最多选择4条服务！！");
+												a--;
+												$(this).find(':checkbox').toggleCheckbox();
+												$(this).toggleClass('checkedBox');
+											}
+										});
+									})
+								</script>
+							</td>
+						</tr>
+						<tr>
+							<th width="80">是否扫码</th>
+							<td class="input_sevice">
+								<ul>
+									<li><input type="radio" name="is_scan_code" value="1" checked><span>是</span></li>
+									<li><input type="radio" name="is_scan_code" value="0"><span>否</span></li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th>商品规格</th>
+							<td id="keywords"><input type="text" name="goods_spec[]" value="" style="width: 100px" placeholder="请输入参数">&nbsp;&nbsp;:&nbsp;&nbsp;<input type="text" name="goods_desc[]" value="" style="width: 200px" placeholder="请输入参数详情"> <input class="btn btn-primary js-ajax-submit" type="button" value="添加" onclick="add_file()"></td>
+							<script>
+								var file_to=0;
+						        function add_file()
+						        {
+						            //添加一行
+						            $("#keywords").append("<div id='file_"+file_to+"' style='border:none;margin-top:5px;'><td><input type='text' name='goods_spec[]' value='' style='width: 100px' placeholder='请输入参数''>&nbsp;&nbsp;:&nbsp;&nbsp;</td><td><input type='text' value='' style='width: 200px' name='goods_desc[]' placeholder='请输入参数详情'></td><td> <input type='button' class='btn btn-primary js-ajax-submit' value='删除' id='' onclick='del_file("+file_to+")'></td></div>");
+						            file_to++;
+						        }
+						        function del_file(file_id)
+						        {
+						            $("#file_"+file_id).remove();
+						        }
+							</script>
+						</tr>
+						<tr id="storages"><!-- style="display: none" -->
+							<th width="80">商品库存</th>
+							<td>
+								<input type="text" style="width:200px;" name="goods_storage" id="goods_storage"  value="" placeholder="请输入库存"/>
+
+								<span class="form-required"></span>
+							</td>
+						</tr>
+						<tr>
+							<th>商品内容</th>
+							<td>
+								<script type="text/plain" id="content" name="content"></script>
+							</td>
+						</tr>
+						<tr>
+							<th>相册图集</th>
+							<td>
+								<ul id="photos" class="pic-list unstyled"></ul>
+								<a href="javascript:upload_multi_image('图片上传','#photos','photos-item-wrapper');" class="btn btn-small">选择图片</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="span3">
+					<table class="table table-bordered">
+						<tr>
+							<th><b>缩略图</b></th>
+						</tr>
+						<tr>
+							<td>
+								<div style="text-align: center;">
+									<input type="hidden" name="thumb" id="thumb" value="">
+									<a href="javascript:upload_one_image('图片上传','#thumb');">
+										<img src="__PUBLIC__/images/default-thumbnail.png" id="thumb-preview" width="135" style="cursor: hand" />
+									</a>
+									<input type="button" class="btn btn-small" onclick="$('#thumb-preview').attr('src','__PUBLIC__/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+				<a class="btn" href="{:url('product/index')}">返回</a>
+			</div>
+		</form>
+	</div>
+	
+	<script type="text/javascript">
+		//编辑器路径定义
+		var editorURL = GV.WEB_ROOT;
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/goods.js"></script>
+	<script type="text/javascript">
+        function get_cate(obj){
+            var value = $(obj).val();
+            $.ajax({
+                url:"/admin/product/cate_class",
+                data:{module_id:value},
+                type:'post',
+                success:function(data){
+					$('select[name="gc_id"]').html(data);
+                }
+            });
+        }
+	</script>
+    <script type="text/javascript" src="__PUBLIC__/js/goods_add.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".js-ajax-close-btn").on('click', function(e) {
+				e.preventDefault();
+				Wind.use("artDialog", function() {
+					art.dialog({
+						id : "question",
+						icon : "question",
+						fixed : true,
+						lock : true,
+						background : "#CCCCCC",
+						opacity : 0,
+						content : "您确定需要关闭当前页面嘛？",
+						ok : function() {
+							setCookie("refersh_time", 1);
+							window.close();
+							return true;
+						}
+					});
+				});
+			});
+			/////---------------------
+			Wind.use('validate', 'ajaxForm', 'artDialog', function() {
+				//javascript
+
+				//编辑器
+				editorcontent = new baidu.editor.ui.Editor();
+				editorcontent.render('content');
+				try {
+					editorcontent.sync();
+				} catch (err) {
+				}
+				//增加编辑器验证规则
+				jQuery.validator.addMethod('editorcontent', function() {
+					try {
+						editorcontent.sync();
+					} catch (err) {
+					}
+					return editorcontent.hasContents();
+				});
+                var form = $('form.js-ajax-forms');
+				//ie处理placeholder提交问题
+				if ($.browser && $.browser.msie) {
+					form.find('[placeholder]').each(function() {
+						var input = $(this);
+						if (input.val() == input.attr('placeholder')) {
+							input.val('');
+						}
+					});
+				}
+
+				var formloading = false;
+				//表单验证开始
+				form.validate({
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//是否在敲击键盘时验证
+					onkeyup : false,
+					//当鼠标掉级时验证
+					onclick : false,
+					//验证错误
+					showErrors : function(errorMap, errorArr) {
+						//errorMap {'name':'错误信息'}
+						//errorArr [{'message':'错误信息',element:({})}]
+						try {
+							$(errorArr[0].element).focus();
+							art.dialog({
+								id : 'error',
+								icon : 'error',
+								lock : true,
+								fixed : true,
+								background : "#CCCCCC",
+								opacity : 0,
+								content : errorArr[0].message,
+								cancelVal : '确定',
+								cancel : function() {
+									$(errorArr[0].element).focus();
+								}
+							});
+						} catch (err) {
+						}
+					},
+					//验证规则
+					rules : {
+						'gc_id' : {
+							required : 1
+						},
+						'goods_name' : {
+							required : 1
+						},
+						'goods_description' : {
+						    required : 1
+						},
+						'photos_alt' : {
+						    required : 1
+						}
+					},
+					//验证未通过提示消息
+					messages : {
+						'gc_id' : {
+							required : '请输入商品分类'
+						},
+						'goods_name' : {
+							required : '请输入商品名称'
+						},
+                        'goods_description' : {
+                            required : "请输入商品简介"
+                        },
+                        'photos_alt' : {
+                            required : "相册图集不能为空"
+                        }
+					},
+					//给未通过验证的元素加效果,闪烁等
+					highlight : false,
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//验证通过，提交表单
+					submitHandler : function(forms) {
+						if (formloading)
+							return;
+						$(forms).ajaxSubmit({
+							url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+							dataType : 'json',
+							beforeSubmit : function(arr, $form, options) {
+								formloading = true;
+							},
+							success : function(data, statusText, xhr, $form) {
+								formloading = false;
+								if (data.code == 1) {
+									setCookie("refersh_time", 1);
+									//添加成功
+									Wind.use("artDialog", function() {
+										art.dialog({
+											id : "succeed",
+											icon : "succeed",
+											fixed : true,
+											lock : true,
+											background : "#CCCCCC",
+											opacity : 0,
+											content : data.msg,
+											button : [ {
+												name : '继续添加？',
+												callback : function() {
+													reloadPage(window);
+													return true;
+												},
+												focus : true
+											}, {
+												name : '返回列表页',
+												callback : function() {
+													location = "{:url('product/index')}";
+													return true;
+												}
+											} ]
+										});
+									});
+								} else {
+									artdialog_alert(data.msg);
+								}
+							}
+						});
+					}
+				});
+			});
+			////-------------------------
+		});
+		
+	</script>
+    <script>
+        function avatar_upload(obj){
+            var id = $(obj).attr('id');
+            Wind.css("jcrop");
+            Wind.use("ajaxfileupload","jcrop","noty",function(){
+                $.ajaxFileUpload({
+                    url:"{:url('product/uploads')}",
+                    secureuri:false,
+                    fileElementId:id,
+                    dataType: 'json',
+                    success: function (data){
+                        if(data.code == 1){
+                            $('.'+id).val(data.file);
+                        }else{
+                            artdialog_alert(data.msg);
+                        }
+                    },
+                    error: function (data, status, e){}
+                });
+            });
+            return false;
+        }
+    </script>
+</body>
+</html>

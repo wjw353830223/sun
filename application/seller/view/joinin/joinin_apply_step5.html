@@ -1,0 +1,179 @@
+
+ <div class="explain"><i></i>入驻申请已经提交，请等待管理员审核</div>
+<table border="0" cellpadding="0" cellspacing="0" class="all">
+  <tbody>
+    <tr>
+      <th>付款清单列表</th>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2"><table border="0" cellpadding="0" cellspacing="0" class="type">
+          <tbody>
+            <tr>
+              <td class="w80">收费标准：</td>
+              <td class="w250 tl">100.00元/年 ( 系统默认 )</td>
+              <td class="w80">开店时长：</td>
+              <td class="tl">2 年</td>
+            </tr>
+            <tr>
+              <td class="w80">店铺分类：</td>
+              <td class="tl">服装鞋包</td>
+              <td class="w80">开店保证金：</td>
+              <td class="tl">0 元</td>
+            </tr>
+            <tr>
+              <td>应付金额：</td>
+              <td class="tl" colspan="3">200.00 元</td>
+            </tr>
+          </tbody>
+        </table></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="20">&nbsp;</td>
+    </tr>
+  </tfoot>
+</table>
+ <div class="bottom"><a href="" class="btn">缴纳费用</a>
+ </div>
+<script type="text/javascript" src="http://www.shopnc.com/data/resource/js/common_select.js" charset="utf-8"></script> 
+<script type="text/javascript">
+$(document).ready(function(){
+	gcategoryInit("gcategory");
+
+    jQuery.validator.addMethod("seller_name_exist", function(value, element, params) { 
+        var result = true;
+        $.ajax({  
+            type:"GET",  
+            url:'http://www.shopnc.com/shop/index.php?act=store_joinin&op=check_seller_name_exist',  
+            async:false,  
+            data:{seller_name: $('#seller_name').val()},  
+            success: function(data){  
+                if(data == 'true') {
+                    $.validator.messages.seller_name_exist = "卖家账号已存在";
+                    result = false;
+                }
+            }  
+        });  
+        return result;
+    }, '');
+
+    $('#form_store_info').validate({
+        errorPlacement: function(error, element){
+            element.nextAll('span').first().after(error);
+        },
+        rules : {
+            seller_name: {
+                required: true,
+                maxlength: 50,
+                seller_name_exist: true
+            },
+            store_name: {
+                required: true,
+                maxlength: 50,
+                remote : 'http://www.shopnc.com/shop/index.php?act=store_joinin&op=checkname'
+            },
+            sg_id: {
+                required: true
+            },
+            sc_id: {
+                required: true
+            },
+            store_class: {
+                required: true,
+                min: 1
+            }
+        },
+        messages : {
+            seller_name: {
+                required: '请填写卖家用户名',
+                maxlength: jQuery.validator.format("最多{0}个字")
+            },
+            store_name: {
+                required: '请填写店铺名称',
+                maxlength: jQuery.validator.format("最多{0}个字"),
+                remote : '店铺名称已存在'
+            },
+            sg_id: {
+                required: '请选择店铺等级'
+            },
+            sc_id: {
+                required: '请选择店铺分类'
+            },
+            store_class: {
+                required: '请选择经营类目',
+                min: '请选择经营类目'
+            }
+        }
+    });
+
+    $('#btn_select_category').on('click', function() {
+        $('#gcategory').show();
+        $('#btn_select_category').hide();
+        $('#gcategory_class1').val(0).nextAll("select").remove();
+    });
+
+    $('#btn_add_category').on('click', function() {
+        var tr_category = '<tr class="store-class-item">';
+        var category_id = '';
+        var category_name = '';
+        var class_count = 0;
+        var validation = true;
+        var i = 1;
+        $('#gcategory').find('select').each(function() {
+            if(parseInt($(this).val(), 10) > 0) {
+                var name = $(this).find('option:selected').text();
+                tr_category += '<td>';
+                tr_category += name;
+                if ($('#gcategory > select').size() == i) {
+                    //最后一级显示分佣比例
+                    tr_category += ' (分佣比例：' + $(this).find('option:selected').attr('data-explain') + '%)';
+                }
+                tr_category += '</td>';
+                category_id += $(this).val() + ',';
+                category_name += name + ',';
+                class_count++;
+            } else {
+                validation = false;
+            }
+            i++;
+        });
+        if(validation) {
+            for(; class_count < 3; class_count++) {
+                tr_category += '<td></td>';
+            }
+            tr_category += '<td><a nctype="btn_drop_category" href="javascript:;">删除</a></td>';
+            tr_category += '<input name="store_class_ids[]" type="hidden" value="' + category_id + '" />';
+            tr_category += '<input name="store_class_names[]" type="hidden" value="' + category_name + '" />';
+            tr_category += '</tr>';
+            $('#table_category').append(tr_category);
+            $('#gcategory').hide();
+            $('#btn_select_category').show();
+            select_store_class_count();
+        } else {
+            showError('请选择分类');
+        }
+    });
+
+    $('#table_category').on('click', '[nctype="btn_drop_category"]', function() {
+        $(this).parent('td').parent('tr').remove();
+        select_store_class_count();
+    });
+
+    // 统计已经选择的经营类目
+    function select_store_class_count() {
+        var store_class_count = $('#table_category').find('.store-class-item').length;
+        $('#store_class').val(store_class_count);
+    }
+
+    $('#btn_cancel_category').on('click', function() {
+        $('#gcategory').hide();
+        $('#btn_select_category').show();
+    });
+
+    $('#btn_apply_store_next').on('click', function() {
+        $('#form_store_info').submit();
+    });
+});
+</script> 

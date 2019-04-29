@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="main-content" id="mainContent">
+    <div class="tabmenu">
+        <ul class="tab pngFix">
+            <li class="active"><a  href="#1">个人业绩详情</a></li>
+        </ul>
+    </div>
+    <form method="get" action="index.php" target="_self">
+        <table class="search-form">
+            <input type="hidden" name="act" value="statistics_sale" />
+            <input type="hidden" name="op" value="sale" />
+            <tr>
+                <td class="tr">
+                    <div class="fr">
+                        <label class="submit-border"><input type="submit" class="submit" value="搜索" /></label>
+                    </div>
+                    <div class="fr">
+                        <select name="order_type" id="order_type" class="querySelect">
+                            <option value="" selected>请选择</option>
+                            <option value="10" >销售员名称</option>
+                            <option value="20" >销售员编号</option>
+                            <option value="30" >销售员手机</option>
+                        </select>
+                        <input type="text">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+        <div class="alert alert-info mt10" style="clear:both;">
+            <ul class="mt5">
+                <li>
+                    <span class="w210 fl h30" style="display:block;">
+                            <i title="名字" class="tip icon-question-sign"></i>
+                           销售员姓名：<strong>驴布</strong>
+                    </span>
+                    <span class="w210 fl h30" style="display:block;">
+                            <i title="编号" class="tip icon-question-sign"></i>
+                           销售员编号：<strong>14784978431</strong>
+                    </span>
+                    <span class="w210 fl h30" style="display:block;">
+                            <i title="个人联系电话" class="tip icon-question-sign"></i>
+                            联系电话：<strong>13233003610</strong>
+                    </span>
+                    <span class="w210 fl h30" style="display:block;">
+                            <i title="个人所属公司名称" class="tip icon-question-sign"></i>
+                            所属公司：<strong>山西省</strong><strong>晋中分部</strong>
+                    </span>
+                    <span class="w210 fl h30" style="display:block;">
+                            <i title="个人基本资料" class="tip icon-question-sign"></i>
+                            入职时间：<strong>2017.8.1</strong>
+                    </span>
+                    <span class="w210 fl h30" style="display:block;">
+                            <i title="个人当月有效订单的总金额" class="tip icon-question-sign"></i>
+                            当月销售金额：<strong>0.00元</strong>
+                    </span>
+                    <span class="w210 fl h30" style="display:block;">
+                            <i title="个人当月有效订单的总订单数" class="tip icon-question-sign"></i>
+                            当月下单量：<strong>0</strong>
+                    </span>
+
+                </li>
+                <li>
+                        <span class="w210 fl h30" style="display:block;">
+                            <i title="个人当月有效订单的总产品数量" class="tip icon-question-sign"></i>
+                            当月销售产品数：<strong>0</strong>
+                        </span>
+                </li>
+                <li>
+                    <span class="w210 fl h30" style="display:block;">
+                            <i title="个人已返利金额" class="tip icon-question-sign"></i>
+                            已返利金额：<strong>180.00</strong>
+                    </span>
+                    <span class="w210 fl h30" style="display:block;">
+                            <i title="个人待返利金额" class="tip icon-question-sign"></i>
+                            待返利金额：<strong>480.00</strong>
+                    </span>
+                    <span class="w210 fl h30" style="display:block;">
+                            <i title="个人总返利金额" class="tip icon-question-sign"></i>
+                            总返利金额：<strong>660.00</strong>
+                    </span>
+                </li>
+            </ul>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+    <div id="container"></div>
+    <div id="statlist" class="">
+        <table class="ncsc-default-table">
+            <thead>
+            <tr class="sortbar-array">
+                <th class="align-center">订单编号</th>
+                <th class="align-center">产品类型</th>
+                <th class="align-center">买家</th>
+                <th class="align-center">下单金额</th>
+                <th class="align-center">下单时间</th>
+                <th class="align-center">订单状态</th>
+            </tr>
+            </thead>
+            <tbody id="datatable">
+            <tr>
+                <!--<td colspan="20" class="norecord"><div class="warning-option"><i class="icon-warning-sign"></i><span>暂无符合条件的数据记录</span></div></td>-->
+                <td>948941516874</td>
+                <td>小活宝</td>
+                <td>张三分</td>
+                <td>&yen;4888.0</td>
+                <td>2017-8-7</td>
+                <td>待返利</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="h30 cb">&nbsp;</div>
+    <script type="text/javascript" src="__PUBLIC__/js/highcharts.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.poshytip.min.js"></script>
+    <script>
+        $(function(){
+            //Ajax提示
+            $('.tip').poshytip({
+                className: 'tip-yellowsimple',
+                showTimeout: 1,
+                alignTo: 'target',
+                alignX: 'center',
+                alignY: 'top',
+                offsetY: 5,
+                allowTipHover: false
+            });
+
+            $('#container').highcharts({
+                "xAxis":{
+                    "categories":["8-1","8-2","8-3","8-4","8-5","8-6","8-7","8-8","8-9","8-10","8-11","8-12","8-13","8-14","8-15","8-16","8-17","8-18","8-19","8-20","8-21","8-22","8-23","8-24","8-25","8-26","8-27","8-28","8-29","8-30","8-31"]
+                },
+                "series":[{"name":"下单金额","data":[18,0,20,0,0,5,0,0,0,20,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,6,0,0,0,0,7]},
+                             {"name":"销售产品数量","data":[2,0,4,0,0,9,0,0,0,4,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,6,0,0,0,0,8]}],
+                "title":{"text":"<b>当月业绩查看<\/b>", "x":-20},
+                "chart":{"type":"line"},
+                "colors":["#058DC7","#ED561B","#8bbc21","#0d233a"],
+                "credits":{"enabled":false},
+                 "exporting":{"enabled":false},
+                "yAxis":{"title":{"text":"下单金额以及销售量"}}});
+        });
+    </script>
+</div>
+</body>
+</html>

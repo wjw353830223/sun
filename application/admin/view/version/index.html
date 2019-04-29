@@ -1,0 +1,53 @@
+{include file="open/header" /}
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('version/index')}">版本管理</a></li>
+			<li><a href="{:url('version/add')}">版本添加</a></li>
+		</ul>
+		<form method="post" class="js-ajax-form">
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th width="50">ID</th>
+						<th width="70">版本</th>
+						<th width="70">版本号</th>
+						<th width="70">系统类型</th>
+						<th>升级说明</th>
+						<th width="120">创建时间</th>
+						<th width="70">是否强制</th>
+						<th width="120">状态</th>
+						<th width="120">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{foreach name="lists" item="vo"}
+					<tr>
+						<td>{$vo.version_id}</td>
+						<td>{$vo.version}</td>
+						<td>{$vo.version_code}</td>
+						<td>{$vo.os_type == 1 ? 'Android' : 'IOS'}</td>
+						<td>{:str_cut($vo.version_desc,200)}{if condition="strlen($vo.version_desc) gt 200"}<a href="javascript:artdialog_content('{$vo.version_desc}')">[更多]</a>{/if}</td>
+						<td>{:date('Y-m-d H:i',(int)$vo.create_time)}</td>
+						<td>{$vo.is_force == 1 ? '是' : '否'}</td>
+						<td>{$vo.status == 1 ? '正常' : '下架'}</td>
+						<td>
+							<a href="{:url('version/edit',array('id'=>$vo['version_id']))}">编辑</a> |
+							{if condition="$vo['status'] eq 1"}
+							<a href="{:url('version/lock',array('id'=>$vo['version_id']))}" class="js-ajax-dialog-btn" data-msg="您确定要下架此版本吗">下架</a> |
+							{else/}
+							<a href="{:url('version/unlock',array('id'=>$vo['version_id']))}" class="js-ajax-dialog-btn" data-msg="您确定要上架此版本吗">上架</a> |
+							{/if}
+							<a href="{:url('version/delete',array('id'=>$vo['version_id']))}" class="js-ajax-delete">删除</a>
+						</td>
+					</tr>
+					{/foreach}
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js?v="></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'FZZZHONGHJW';
+  src: url('../../static/font/FZZZHONGHJW.TTF') format('truetype');
+  /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+}
+
+@font-face {
+  font-family: 'HelveticaNeue-Medium';
+  src: url('../../static/font/HelveticaNeue-Medium.otf') format('OpenType');
+  /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+}

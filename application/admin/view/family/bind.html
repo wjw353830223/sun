@@ -1,0 +1,33 @@
+{include file="open/header" /}
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('family/index')}">家庭列表</a></li>
+			<li class="active"><a>绑定机器人</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:url('family/bind_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">家庭名称</label>
+					<div class="controls">
+						<span class="form-required">{$family_name}</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">机器人IMEI</label>
+					<div class="controls">
+						<input type="text" name="robot_imei" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="family_id" value="{$family_id}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">绑定</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

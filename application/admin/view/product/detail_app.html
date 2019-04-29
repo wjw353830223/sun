@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="description" content="{$goods_description}">
+    <title>太阳健康 - {$goods_name}</title>
+    <!-- <link href="__PUBLIC__/css/detail_app.css" rel="stylesheet"> -->
+    <script>
+        //在页面未加载完毕之前显示的loading Html自定义内容
+        var _LoadingHtml = '<div id="loadingDiv" style="background-color: white;width:100%;min-width:320px;height:100%;overflow:hidden;position:fixed;z-index:100"><div style=" height:863px;background-image:url(http://static.healthywo.com/welcome.gif-original);background-repeat: no-repeat;background-position: center center;"></div></div>';
+        //呈现loading效果
+        document.write(_LoadingHtml);
+        document.onreadystatechange = completeLoading;
+        //加载状态为complete时移除loading效果
+        function completeLoading() {
+            if (document.readyState == "complete") {
+                var loadingMask = document.getElementById('loadingDiv');
+                loadingMask.parentNode.removeChild(loadingMask);
+            }
+        }
+    </script>
+</head>
+<style type="text/css">
+    *{
+        margin:0;
+        padding:0;
+        list-style:none;
+        border:0;
+        font-family: "microsoft yahei", Arial;
+    }
+    .clearboth{
+        clear: both;
+    }
+
+    /*全局布局*/
+    .all{
+        width:100%;
+        min-width:320px;
+        margin:0 auto;
+        background-color: rgb(242,242,242);
+    }
+
+    /*banner样式*/
+    .all .img_gallery{
+        width:100%;
+        min-width:320px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .all .img_gallery .main_img{
+        width:100%;
+    }
+    .all .img_gallery .main_img ul li img{
+        width:100%;
+    }
+
+    /*文字介绍样式*/
+    .all .detail_text{
+        width:100%;
+        min-width: 320px;
+        background-color: white;
+        border:1px solid white;
+    }
+    .all .detail_text .text_content{
+        margin:40px 30px 40px 30px;
+    }
+    .all .detail_text .text_content .goods_name{
+        font-size:45px;
+        color:rgb(51,51,51)
+        display: inline-block;
+        float:left;
+    }
+    .all .detail_text .text_content .goods_price{
+        font-size: 39px;
+        color: rgb(242,130,2);
+        display: inline-block;
+        float:right;
+    }
+    .all .detail_text .text_content .goods_price span{
+        font-size: 54px;
+    }
+    .all .detail_text .text_content .goods_description{
+        clear: both;
+        padding-top: 38px;
+        font-size: 39px;
+        color:rgb(152,152,152);
+        font-weight: 100;
+    }
+
+    /*服务样式设置*/
+    .all .detail_service{
+        width:100%;
+        margin-top:20px;
+        background-color: white;
+        padding-bottom: 26px;
+    }
+    .all .detail_service .service_header{
+        height:80px;
+        border-bottom: 1px solid rgb(242,242,242);
+    }
+    .all .detail_service .service_header p{
+        margin-left: 30px;
+        font-size: 42px;
+        line-height: 80px;
+    }
+    .all .detail_service .service_list{
+        width:100%;
+    }
+    .all .detail_service ul{
+        margin-left:-10px;
+    }
+    .all .detail_service ul li{
+        width:450px;
+        float:left;
+        margin-top:30px;
+        margin-left:40px;
+        font-size: 39px;
+        color:rgb(93,93,93);
+        font-weight: 100;
+    }
+    .all .detail_service ul li span{
+        display: inline-block;
+        float:left;
+        line-height: 57px;
+        margin-left:20px;
+    }
+    .all .detail_service ul li img{
+        float:left;
+        width:57px;
+    }
+
+    /*详情页面*/
+    .detail_app{
+        width:100%;
+        min-width:320px;
+        margin-top:25px;
+    }
+    .detail_app img{
+        width:100%;
+        min-width:320px;
+        margin-top:-5px;
+    }
+
+    /*产品参数*/
+    .detail_spec{
+        width:100%;
+        min-width:320px;
+        margin-top:20px;
+        padding-bottom: 160px;
+        background-color: white;
+    }
+    .detail_spec .spec_header{
+        height:80px;
+        border-bottom: 1px solid rgb(242,242,242);
+    }
+    .detail_spec .spec_header p{
+        margin-left: 30px;
+        font-size: 42px;
+        line-height: 80px;
+    }
+    .detail_spec .goods_spec{
+        margin-left:30px;
+    }
+    .detail_spec .goods_spec tr{
+        display:block;
+        margin-top:30px;
+    }
+    .detail_spec .goods_spec tr .goods_title{
+        width:220px;
+        font-size: 39px;
+        color:rgb(102,102,102)
+    }
+    .detail_spec .goods_spec tr .goods_number{
+        font-size: 39px;
+        color:rgb(51,51,51)
+    }
+
+    /*APP下载*/
+    .app_download{
+        width:100%;
+        min-width:320px;
+        background-color: rgba(51,51,51,0.9);
+        position: fixed;
+        bottom: 0;
+        padding-bottom: 30px;
+        padding-top: 30px;
+    }
+    .app_download img{
+        float:left;
+        margin-left:55px;
+        height:81px;
+    }
+    .app_download h4{
+        margin-left:25px;
+        float:left;
+        font-size: 48px;
+        color:white;
+        line-height: 80px;
+        font-weight:500;
+    }
+    .app_download p{
+        margin-right:40px;
+        float:right;
+        padding:20px 15px 20px 15px;
+        background-color:rgb(39,169,250);
+        border-radius:10px;
+    }
+    .app_download p a{
+        text-decoration: none;
+        font-size: 36px;
+        color: white;
+    }
+
+    /*
+    /!*轮播图样式*!/
+    .img_gallery{
+        border-top:1px solid #d7d7d7;
+        position:relative;
+    }
+    .main_img{
+        position:relative;
+        overflow:hidden;
+    }
+    .main_img ul{
+        width:100%;
+        position:absolute;
+        top:0;
+        left:0
+    }
+    .main_img li{
+        float:left;
+        width:100%;
+    }
+    .main_img li img{
+        display:block;
+        width:100%;
+    }
+
+    /!*轮播图按钮样式*!/
+    div.point{
+        position:absolute;
+        bottom:33px;
+        left:50%;
+        z-index:999;
+        width:140px;
+        height:21px;
+        margin:0 0 0 -50px;
+    }
+    div.point a{
+        float:left;
+        width:21px;
+        height:21px;
+        margin:0;
+        padding:0;
+        background:url(img/btn_main_img.png) 0 0 no-repeat;
+        display:block;
+        text-indent:-1000px
+    }
+    div.point a.on{
+        background-position:0 -21px
+    }
+    #btn_prev,#btn_next{
+        z-index:11111;
+        position:absolute;
+        width:73px!important;
+        height:74px!important;
+        top:50%;
+        margin-top:-37px;
+        display:none;
+    }
+    #btn_prev{
+        background:url(img/hover_left.png) no-repeat left top;
+        left:100px;
+    }
+    #btn_next{
+        background:url(img/hover_right.png) no-repeat right top;
+        right:100px;
+    }*/
+</style>
+<body>
+
+    <div class="app_download">
+        <img src="__PUBLIC__/images/logo-app.png">
+        <h4>太阳健康</h4>
+        <p><a id="downloadButton" href="#">下载APP</a></p>
+        <div class="clearboth"></div>
+    </div>
+
+    <div class="all">
+
+        <!--banner轮播图-->
+        <div class="img_gallery">
+            <div class="point">
+            </div>
+            <div class="main_img">
+                <ul id="banner_img">
+                    <li><img src="{$goods_image}"></li>
+                </ul>
+                <a href="javascript:;" id="btn_prev"></a>
+                <a href="javascript:;" id="btn_next"></a>
+            </div>
+        </div>
+
+        <!--产品文字介绍-->
+        <div class="detail_text">
+            <div class="text_content">
+                <p class="goods_name">{$goods_name}</p>
+                <p class="goods_price">￥<span id="goods_price">{$goods_price}</span></p>
+                <p class="goods_description">{$goods_description}</p>
+            </div>
+        </div>
+
+       <!-- 产品服务-->
+        <div class="detail_service">
+            <div class="service_header">
+                <p>服务</p>
+            </div>
+            <div class="service_list">
+                <ul class="service">
+                {foreach name="goods_service" item="vo"}
+                    {switch name="vo"}
+                        {case value="0"}<li><img src='__PUBLIC__/images/deliver.png'><span>全国包邮闪电发货</span></li>{/case}
+                        {case value="1"}<li><img src='__PUBLIC__/images/deliver.png'><span>专业营养师在线指导</span></li>{/case}
+                        {case value="2"}<li><img src='__PUBLIC__/images/deliver.png'><span>云端数据库监控</span></li>{/case}
+                        {case value="3"}<li><img src='__PUBLIC__/images/deliver.png'><span>1比1积分升级赠送</span></li>{/case}
+                        {case value="4"}<li><img src='__PUBLIC__/images/deliver.png'><span>3比1积分赠送</span></li>{/case}
+                    {/switch}
+                {/foreach}
+                </ul>
+                <div class="clearboth"></div>
+            </div>
+        </div>
+
+        <!--详情页面-->
+        <div class="detail_app">
+        {foreach name="goods_body" item="vo"}
+            <img src="{$vo}">
+        {/foreach}
+        </div>
+
+        <!--详细参数-->
+        <div class="detail_spec">
+            <div class="spec_header">
+                <p >详细参数</p>
+            </div>
+            <table class="goods_spec">
+                {foreach name="spec_data" item="vo"}
+                <tr><td class='goods_title'>{$vo.title}:</td><td class='goods_number'>{$vo.content}</td></tr>
+                {/foreach}
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script src="__PUBLIC__/js/jquery.sha1.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="/static/js/detail_app.js"></script>
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/static/js/html5shiv.min.js"></script>
+    <script src="/static/js/respond.min.js"></script>
+    <![endif]-->
+    <!--[if IE 6]>
+    <script src="/static/js/IE6_PNG.js"></script>
+    <script>
+        DD_belatedPNG.fix('.pngFix');
+    </script>
+    <![endif]-->
+    <script type="text/javascript" src="//res.cdn.openinstall.io/openinstall.js"></script>
+    <script type="text/javascript">
+        //openinstall初始化，初始化时将与openinstall服务器交互，应尽可能早的调用
+        /*web页面向app传递的json数据(json string/js Object)，应用被拉起或是首次安装时，通过相应的android/ios api可以获取此数据*/
+        var data = OpenInstall.parseUrlParams();//openinstall.js中提供的工具函数，解析url中的所有查询参数
+        //开发者也可通过其他方式设置绑定数据
+        //var data = "{\"testKey\":\"testValue\"}";//可以是json string
+        //var data = {"testKey":"testValue"};//也可以是js Object
+        var m = new OpenInstall({
+            /*appKey必选参数，openinstall平台为每个应用分配的ID*/
+            appKey : 'uxtva4'
+            /*可选参数，自定义android平台的apk下载文件名，只有apk在openinstall托管时才有效；个别andriod浏览器下载时，中文文件名显示乱码，请慎用中文文件名！*/
+            //apkFileName : "OpenInstallDemo-v2-1.1.1.apk",
+        }, data);
+
+
+        //用法1：如app已安装，进入网页立即拉起app；用户点击某个按钮时再开始安装app
+        /*通过scheme拉起app(如果已在openinstall平台开启scheme启动功能)*/
+        m.schemeWakeup();
+        /*用户点击某个按钮时(假定按钮id为downloadButton)，安装app;*/
+        document.getElementById("downloadButton").onclick = function() {
+            m.install();
+        }
+
+        //用法2：用户点击某个按钮拉起app，等待设定时间后app尚未拉起，再安装app
+        /*用户点击某个按钮时，安装app*/
+        //document.getElementById('downloadButton').onclick=function(){
+        //   //500毫秒后app尚未拉起，将安装app，可自定义超时时间，单位为毫秒
+        //   m.wakeupOrInstall({timeout:500});
+        //}
+    </script>
+</body>
+</html>

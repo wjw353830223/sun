@@ -1,0 +1,33 @@
+{include file="open/header" /}
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('family/index')}">家庭列表</a></li>
+			<li class="active"><a>绑定手表</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:url('family/watch_add')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">会员名称</label>
+					<div class="controls">
+						<input type="text" name="" value="{$member_name}" disabled="disabled">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">手表IMEI</label>
+					<div class="controls">
+						<input type="text" name="watch_imei" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="member_id" value="{$member_id}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">绑定</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

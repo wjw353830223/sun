@@ -1,0 +1,138 @@
+{include file="open/header" /}
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('grade/index')}">等级列表</a></li>
+        <li class="active"><a>编辑等级</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:url('grade/edit_grade')}">
+        <fieldset>
+            <input type="hidden" name="grade_id" value="{$grade.grade_id}">
+            <div class="control-group">
+                <label class="control-label">等级身份</label>
+                <div class="controls">
+                    <select name="grade_type" id="grade_type">
+                        <option value="1" {if condition="$grade.grade_type == 1"} selected {/if}>普通会员</option>
+                        <option value="2" {if condition="$grade.grade_type == 2"} selected {/if}>消费商</option>
+                    </select>
+                    <span class="form-required"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">等级图标</label>
+                <div class="controls">
+                    <div class="input-append input-avatar">
+                        <input type="text" name="grade_img" value="{$grade.grade_img}" id="grade_img">
+                        <input type="file" name="avatar" value="" onchange="avatar_upload(this)" id="avatar_uploder">
+                        <button class="btn btn-info" type="button">浏览</button>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">等级</label>
+                <div class="controls">
+                    <input type="text" name="grade" value="{$grade.grade}" required />
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">等级名称</label>
+                <div class="controls">
+                    <input type="text" name="grade_name" value="{$grade.grade_name}" required />
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group" id="grade_points" {if condition="$grade.grade_type == 2"} style="display: none" {/if}>
+                <label class="control-label">升级所需经验</label>
+                <div class="controls">
+                    <input type="text" name="grade_points" value="{$grade.grade_points}">
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group" id="grade_parent_points" {if condition="$grade.grade_type == 2"} style="display: none" {/if}>
+                <label class="control-label">奖励上级积分</label>
+                <div class="controls">
+                    <input type="text" name="grade_parent_points" value="{$grade.grade_parent_points}" required>
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">等级最低消费额</label>
+                <div class="controls">
+                    <input type="text" name="grade_min_expend" value="{$grade.grade_min_expend}">
+                    <span class="form-required"></span>
+                </div>
+            </div>
+            <div class="control-group" id="grade_expend_present" {if condition="$grade.grade_type == 2"} style="display: none" {/if}>
+                <label class="control-label">满足最低消费额奖励积分</label>
+                <div class="controls">
+                    <input type="text" name="grade_expend_present" value="{$grade.grade_expend_present}">
+                    <span class="form-required"></span>
+                </div>
+            </div>
+            <div class="control-group" id="team_min_amount" {if condition="$grade.grade_type == 1"} style="display: none" {/if}>
+                <label class="control-label">团队最低消费额</label>
+                <div class="controls">
+                    <input type="text" name="team_min_amount" value="{$grade.team_min_amount}">
+                    <span class="form-required"></span>
+                </div>
+            </div>
+            <div class="control-group" id="team_present_points" {if condition="$grade.grade_type == 1"} style="display: none" {/if}>
+                <label class="control-label">团队返积分</label>
+                <div class="controls">
+                    <input type="text" name="team_present_points" value="{$grade.team_present_points}">
+                    <span class="form-required"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">等级状态</label>
+                <div class="controls">
+                    <select name="grade_state" required>
+                        <option value="1" {if condition="$grade.grade_state == 1"} selected {/if}>开启</option>
+                        <option value="0" {if condition="$grade.grade_state == 0"} selected {/if}>关闭</option>
+                    </select>
+                    <span class="form-required"></span>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">修改</button>
+            <a class="btn" href="javascript:history.back(-1);">返回</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript">
+    $('#grade_type').on('change',function(){
+        $('#grade_points').css('display', $(this).val() === '1' ? 'block' : 'none');
+        $('#grade_parent_points').css('display', $(this).val() === '1' ? 'block' : 'none');
+        $('#grade_expend_present').css('display', $(this).val() === '1' ? 'block' : 'none');
+        $('#team_min_amount').css('display', $(this).val() === '2' ? 'block' : 'none');
+        $('#team_present_points').css('display', $(this).val() === '2' ? 'block' : 'none');
+    });
+    function avatar_upload(obj){
+        var $fileinput=$(obj);
+        Wind.css("jcrop");
+        Wind.use("ajaxfileupload","jcrop","noty",function(){
+            $.ajaxFileUpload({
+                url:"{:url('grade/upload')}",
+                secureuri:false,
+                fileElementId:'avatar_uploder',
+                dataType: 'json',
+                success: function (data){
+                    if(data.code == 1){
+                        $('#grade_img').val(data.file);
+                    }else{
+                        artdialog_alert(data.msg);
+                    }
+
+                },
+                error: function (data, status, e){}
+            });
+        });
+        return false;
+    }
+</script>
+</body>
+</html>

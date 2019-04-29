@@ -1,0 +1,76 @@
+{include file="open/header" /} 
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('version/index')}">版本管理</a></li>
+			<li><a href="{:url('version/add')}">版本添加</a></li>
+			<li class="active"><a>编辑版本</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:url('version/edit_post')}">
+			<fieldset>
+				
+				<div class="control-group">
+					<label class="control-label">版本</label>
+					<div class="controls">
+						<select name="version" id="">
+							<option value="0">请选择</option>
+							{foreach name="version_list" item="vo"}
+							<option value="{$vo}" {$vo == $data['version'] ?= 'selected="selected"'}>{$vo}</option>
+							{/foreach}
+						</select>
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">版本号</label>
+					<div class="controls">
+						<input type="text" name="version_code" value="{$data.version_code}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">下载地址</label>
+					<div class="controls">
+						<input type="text" name="download_url" value="{$data.download_url}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">升级说明</label>
+					<div class="controls">
+						<textarea name="version_desc" rows="7">{$data.version_desc}</textarea>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">系统类型</label>
+					<div class="controls">
+						<label class="radio inline" for="active_true">
+							<input type="radio" name="os_type" value="1" {$data['os_type'] == 1 ?= 'checked=""'}>Android
+						</label>
+						<label class="radio inline" for="active_false">
+							<input type="radio" name="os_type" value="2" {$data['os_type'] == 2 ?= 'checked=""'}>IOS
+						</label>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">是否强制</label>
+					<div class="controls">
+						<label class="radio inline" for="active_true">
+							<input type="radio" name="is_force" value="1" {if condition="$data['is_force'] eq 1"}checked=""{/if}>是
+						</label>
+						<label class="radio inline" for="active_false">
+							<input type="radio" name="is_force" value="0" {if condition="$data['is_force'] eq 0"}checked=""{/if}>否
+						</label>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="version_id" value="{$data.version_id}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

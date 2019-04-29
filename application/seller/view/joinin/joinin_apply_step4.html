@@ -1,0 +1,111 @@
+<!-- 店铺信息 -->
+<div id="apply_store_info" class="apply-store-info">
+  <div class="alert">
+    <h4>注意事项：</h4>
+    公司经营类目为代理区域分类，请根据实际运营情况选择。</div>
+  <form id="form_store_info" action="index.php?act=store_joinin&amp;op=step4" method="post">
+    <table border="0" cellpadding="0" cellspacing="0" class="all">
+      <thead>
+        <tr>
+          <th colspan="20">公司经营信息</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="w150"><i>*</i>绑定公司账号：</th>
+          <td><input id="seller_name" name="seller_name" type="text" class="w200">
+            <span></span>
+            <p class="emphasis">选择用户账号绑定为公司账号，此账号为日后登录并管理商家中心时使用，注册后不可修改，请牢记。</p></td>
+        </tr>
+        <tr>
+          <th><i>*</i>公司分类：</th>
+          <td><select name="sc_id" id="sc_id">
+              <option value="">请选择</option>
+              <option value="2">省级分公司代理</option>
+              <option value="3">二级分公司代理</option>
+                                        </select>
+            <span></span>
+            <p class="emphasis">请根据您所经营的内容认真选择店铺分类，注册后商家不可自行修改。</p></td>
+        </tr>
+        <tr>
+            <th><i>*</i>公司所属区域：</th>
+            <td class="address"><input id="sc_address" name="sc_address" type="hidden" value="" >
+                <select class="address_1"style="display:none"><option>-请选择-</option><option value="1">北京</option><option value="2">天津</option><option value="3">河北省</option><option value="4">山西省</option><option value="5">内蒙古自治区</option><option value="6">辽宁省</option><option value="7">吉林省</option><option value="8">黑龙江省</option><option value="9">上海</option><option value="10">江苏省</option><option value="11">浙江省</option><option value="12">安徽省</option><option value="13">福建省</option><option value="14">江西省</option><option value="15">山东省</option><option value="16">河南省</option><option value="17">湖北省</option><option value="18">湖南省</option><option value="19">广东省</option><option value="20">广西壮族自治区</option><option value="21">海南省</option><option value="22">重庆</option><option value="23">四川省</option><option value="24">贵州省</option><option value="25">云南省</option><option value="26">西藏自治区</option><option value="27">陕西省</option><option value="28">甘肃省</option><option value="29">青海省</option><option value="30">宁夏回族自治区</option><option value="31">新疆维吾尔自治区</option><option value="32">台湾省</option><option value="33">香港特别行政区</option><option value="34">澳门特别行政区</option><option value="35">海外</option></select>
+                <select class="address_2" id="province" class="province"></select>
+                <select class="address_2" id="city" class="city"></select>
+                <select class="address_2" id="area" class="area"></select>
+                <span></span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="20">&nbsp;</td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+  <!-- <div class="bottom"><a id="btn_apply_store_next" href="javascript:;" class="btn">提交申请</a> -->
+  <div class="bottom"><a href="{:url('joinin/step5')}" class="btn">提交申请</a>
+  </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/home_index.js" charset="utf-8"></script>
+<script>
+    $(function(){
+        $("#sc_id").change(function(){
+            var opt=$("#sc_id").val();
+            if(opt==2){
+                $(".address_1").css("display","block");
+                $(".address_2").css("display","none");
+            }else if(opt==3){
+                $(".address_1").css("display","none");
+                $(".address_2").css("display","inline-block");
+            }
+        });
+    })
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+	gcategoryInit("gcategory");
+    jQuery.validator.addMethod("seller_name_exist", function(value, element, params) { 
+        var result = true;
+        $.ajax({  
+            type:"GET",  
+            url:'http://www.shopnc.com/shop/index.php?act=store_joinin&op=check_seller_name_exist',  
+            async:false,  
+            data:{seller_name: $('#seller_name').val()},  
+            success: function(data){  
+                if(data == 'true') {
+                    $.validator.messages.seller_name_exist = "卖家账号已存在";
+                    result = false;
+                }
+            }  
+        });  
+        return result;
+    }, '');
+
+    $('#form_store_info').validate({
+        errorPlacement: function(error, element){
+            element.nextAll('span').first().after(error);
+        },
+        rules : {
+            seller_name: {
+                required: true,
+                maxlength: 50,
+                seller_name_exist: true
+            },
+            sc_id: {
+                required: true
+            },
+        },
+        messages : {
+            seller_name: {
+                required: '请填写卖家用户名',
+                maxlength: jQuery.validator.format("最多{0}个字")
+            },
+            sc_id: {
+                required: '请选择店铺分类'
+            },
+        }
+    });
+});
+</script> 

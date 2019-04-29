@@ -1,0 +1,48 @@
+{include file="open/header" /}
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('family/index')}">家庭列表</a></li>
+			<li><a href="{:url('family/add')}">添加家庭</a></li>
+			<li class="active"><a>编辑家庭信息</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:url('family/edit_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">家庭名称</label>
+					<div class="controls">
+						<input type="text" name="family_name" value="{$data.family_name}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">拥有者</label>
+					<div class="controls">
+						<input type="text" name="member_name" value="{$data.member_name}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">状态</label>
+					<div class="controls">
+						{php}$active_true_checked=($data['state']==1)?"checked":"";{/php}
+						<label class="radio inline" for="active_true">
+							<input type="radio" name="state" value="1" {$active_true_checked} id="active_true"/>开启
+						</label>
+						{php}$active_false_checked=($data['state']==0)?"checked":"";{/php}
+						<label class="radio inline" for="active_false">
+							<input type="radio" name="state" value="0" id="active_false"{$active_false_checked}>禁用
+						</label>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="family_id" value="{$family_id}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

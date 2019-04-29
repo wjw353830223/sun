@@ -1,0 +1,185 @@
+{include file="open/header" /} 
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('product/index')}">产品列表</a></li>
+			<li><a href="{:url('product/add')}" target="_self">添加产品</a></li>
+		</ul>
+		<form class="well form-search" method="get" action="{:url('product/index')}">
+			商品名称：
+			<input type="text" name="goods_name" style="width: 200px;" value="{:input('request.goods_name')}" placeholder="商品名称">
+			分区选择：
+			<select name="module_id" onchange="get_cate(this)">
+				<option value="">请选择</option>
+				{foreach name="module" item="val"}
+					<option value="{$val.module_id}" {if condition="$Think.get.module_id === 0"} selected {/if}>{$val.module_name}</option>
+				{/foreach}
+			</select>
+			分类选择：
+			<select name="gc_id">
+				<option value="">请选择</option>
+				{foreach name="goods_class" item="val"}
+				<option value="{$val.gc_id}" {if condition="$Think.get.gc_id === 0"} selected {/if}>{$val.gc_name}</option>
+				{/foreach}
+			</select>
+			<input type="submit" class="btn btn-primary" value="搜索" />
+			<a class="btn btn-danger" href="{:url('product/index')}">清空</a>
+		</form>
+		<form class="js-ajax-form" action="" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="15">ID</th>
+						<th >排序</th>
+						<th width="80">商品名称</th>
+						<th width="80">商品区域</th>
+						<th width="80">商品分类</th>
+						<th width="50">是否扫码</th>
+						<th width="50">商品图片</th>
+						<th width="80">商品价格</th>
+						<th width="80">成本价格</th>
+						<th width="80">市场价格</th>
+						<th width="80">赠送积分数</th>
+						<th width="80">赠送经验值</th>
+						<th width="80">赠送上级积分值</th>
+						<th width="50">销售数量</th>
+						<th width="50">商品库存</th>
+						<th width="50">首页新品</th>
+						<th width="100">发布时间</th>
+						<th width="120">操作</th>
+					</tr>
+				</thead>
+				{foreach name="lists" item="vo"}
+				<tr>
+                    <td><b>{$vo.goods_commonid}</b></td>
+                    <td width="15"><input name="listorders[{$vo.goods_commonid}]" class="input input-order" type="text" size="5" value="{$vo.list_order}"></td>
+                    <td>{$vo.goods_name}</td>
+                    <td>{$vo.module_name}</td>
+                    <td>{$vo.gc_name}</td>
+                    <td>
+						{if condition="$vo.is_scan_code == 1"}
+							是
+						{else} 否  {/if}
+					</td>
+
+					<td><img width="25" height="25" src="{$vo.goods_image ? '__UPLOAD__/product/'.$vo.goods_image : '__PUBLIC__/images/headicon.png'}" /></td>
+
+					<td>{$vo.goods_price}</td>
+					<td>{$vo.cost_price}</td>
+					<td>{$vo.market_price}</td>
+					<td>{$vo.goods_present}</td>
+					<td>{$vo.goods_experience}</td>
+					<td>{$vo.goods_parent_points}</td>
+					<td>{$vo.goods_salenum}</td>
+					<td>{$vo.goods_storage}</td>
+					<td>{if condition="$vo.is_new == 1"}
+						<a href="{:url('product/new_state',['id'=>$vo.goods_commonid,'state'=>0])}" class="js-ajax-dialog-btn">是</a>
+						{else/}
+						<a href="{:url('product/new_state',['id'=>$vo.goods_commonid,'state'=>1])}" class="js-ajax-dialog-btn">否</a>
+						{/if}
+					</td>
+					<td>{:date('Y-m-d H:i',$vo['goods_addtime'])}</td>
+					<td>
+						<a href="{:url('product/edit',array('gc_id'=>$vo['goods_commonid']))}">编辑</a> |
+						{if condition="$vo.status == 1"}
+						<a href="{:url('product/update_state',['id'=>$vo.goods_commonid,'state'=>0])}" class="js-ajax-dialog-btn">下架</a>
+						{else/}
+						<a href="{:url('product/update_state',['id'=>$vo.goods_commonid,'state'=>1])}" class="js-ajax-dialog-btn">上架</a>
+						{/if}
+						|
+						<a href="{:url('product/delete',array('goods_commonid'=>$vo['goods_commonid']))}" class="js-ajax-delete">删除</a>
+					</td>
+				</tr>
+				{/foreach}
+			</table>
+			<div class="table-actions">
+				<notempty name="term">
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:url('product/listorders')}">排序</button>
+				</notempty>
+			</div>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:url('AdminPost/index')}";
+			}
+		}
+        function get_cate(obj){
+            var value = $(obj).val();
+            $.ajax({
+                url:"/admin/product/cate_class",
+                data:{module_id:value},
+                type:'post',
+                success:function(data){
+                    var html = '<option value=" ">请选择</option>'+data;
+                    $('select[name="gc_id"]').html(html);
+                }
+            });
+        }
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量复制
+				$('.js-articles-copy').click(function(e) {
+					var ids=[];
+					$("input[name='ids[]']").each(function() {
+						if ($(this).is(':checked')) {
+							ids.push($(this).val());
+						}
+					});
+					if (ids.length == 0) {
+						art.dialog.through({
+							id : 'error',
+							icon : 'error',
+							content : '您没有勾选信息，无法进行操作！',
+							cancelVal : '关闭',
+							cancel : true
+						});
+						return false;
+					}
+					
+					ids= ids.join(',');
+					art.dialog.open("/index.php/admin/article/header?ids="+ ids, {
+						title : "批量复制",
+						width : "300px"
+					});
+				});
+				//批量移动
+				$('.js-articles-move').click(function(e) {
+					var ids=[];
+					$("input[name='ids[]']").each(function() {
+						if ($(this).is(':checked')) {
+							ids.push($(this).val());
+						}
+					});
+					
+					if (ids.length == 0) {
+						art.dialog.through({
+							id : 'error',
+							icon : 'error',
+							content : '您没有勾选信息，无法进行操作！',
+							cancelVal : '关闭',
+							cancel : true
+						});
+						return false;
+					}
+					
+					ids= ids.join(',');
+					art.dialog.open("/index.php/admin/article/move?old_term_id=1&ids="+ ids, {
+						title : "批量移动",
+						width : "300px"
+					});
+				});
+			});
+		});
+	</script>
+</body>
+</html>

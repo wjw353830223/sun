@@ -1,0 +1,133 @@
+<div class="ncsc-index">
+	<div class="top-container">
+		<div class="basic-info">
+			<dl class="ncsc-seller-info">
+				<dt class="seller-name">
+					<h3>xqd890608</h3>
+					<h5>(用户名：xqd890608)</h5>
+				</dt>
+				<dd class="store-logo">
+					<p><img src="__PUBLIC__/images/default_store_logo.gif"></p>
+				</dd>
+				<dd class="seller-permission">管理权限：<strong>管理员</strong></dd>
+				<dd class="seller-last-login">最后登录：<strong>2017-08-28 10:41</strong> </dd>
+				<dd class="store-name">公司名称：<strong>测试分部</strong></dd>
+				<dd class="store-grade">公司类别：<strong>省级</strong></dd>
+				<dd class="store-validity">有效期：<strong>不限制</strong> </dd>
+			</dl>
+		</div>
+	</div>
+	<div class="seller-cont">
+		<div class="container type-a">
+			<div class="hd">
+				<h3>公司事项提醒</h3>
+				<h5>您需要关注的待处理事项</h5>
+			</div>
+		<div class="content">
+			<dl class="focus">
+				<dt>机器人库存情况：</dt>
+				<dd title="已发布/可传商品"><em id="nc_goodscount">6</em>&nbsp;/&nbsp;100</dd>
+				<dt>衍生品库存情况：</dt>
+				<dd><em id="nc_imagecount">80</em>&nbsp;/&nbsp;500</dd>
+			</dl>
+			<ul>
+				<li><a style="cursor:pointer " class="num">调货申请 <strong id="nc_online">5</strong></a></li>
+				<!--<li><a style="cursor:pointer " class="num">返利申请 <strong id="nc_offline">1</strong></a></li>-->
+				<li><a style="cursor:pointer ">未发货列表 <strong id="nc_lockup"></strong></a></li>
+				<!--<li><a style="cursor:pointer ">入驻申请 <strong id="nc_consult"></strong></a></li>-->
+			</ul>
+		</div>
+	</div>
+	<div class="container type-b">
+		<div class="hd">
+			<h3>公司帮助</h3>
+			<h5></h5>
+		</div>
+		<div class="content">
+			<ul>
+				<li><a target="_blank" style="cursor:pointer " title="规则体系">规则体系</a></li>
+				<li><a target="_blank" style="cursor:pointer " title="商品管理">产品管理</a></li>
+				<li><a target="_blank" style="cursor:pointer " title="促销方式">促销方式</a></li>
+				<li><a target="_blank" style="cursor:pointer " title="订单及售后">订单及售后</a></li>
+				<li><a target="_blank" style="cursor:pointer " title="店铺续约">合作续约</a></li>
+				<li><a target="_blank" style="cursor:pointer " title="入驻流程">入驻流程</a></li>
+			</ul>
+			<dl>
+				<dt>平台联系方式</dt>
+				<dd>电话：400-100-2918</dd>
+				<dd>邮箱：crkj@changrentech.com‍</dd>
+			</dl>
+		</div>
+	</div>
+	<div class="container type-a">
+		<div class="hd">
+			<h3>交易提示</h3>
+			<h5>您需要立即处理的交易订单</h5>
+		</div>
+		<div class="content">
+			<dl class="focus">
+				<dt>订单管理：</dt>
+				<dd><a style="cursor:pointer ">交易中的订单 <strong id="nc_progressing"></strong></a></dd>
+			</dl>
+			<ul>
+				<li><a style="cursor:pointer ">待支付 <strong id="nc_payment"></strong></a></li>
+				<li><a style="cursor:pointer ">待收货 <strong id="nc_delivery"></strong></a></li>
+				<li><a style="cursor:pointer "> 待激活 <strong id="nc_refund_lock"></strong></a></li>
+				<li><a style="cursor:pointer "> 待返利 <strong id="nc_refund"></strong></a></li>
+				<li><a style="cursor:pointer "> 已返利 <strong id="nc_return_lock"></strong></a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="container type-c">
+		<div class="hd">
+			<h3>销售情况统计</h3>
+			<h5>按周期统计公司的订单量和订单金额</h5>
+		</div>
+		<div class="content">
+			<table class="ncsc-default-table">
+				<thead>
+				<tr>
+					<th class="w50">项目</th>
+					<th>订单量</th>
+					<th class="w100">订单金额</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr class="bd-line">
+					<td>昨日销量</td>
+					<td>--</td>
+					<td>--</td>
+				</tr>
+				<tr class="bd-line">
+					<td>月销量</td>
+					<td>--</td>
+					<td>--</td>
+				</tr>
+				<tr class="bd-line">
+					<td>总销量</td>
+					<td>--</td>
+					<td>--</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<script>
+$(function(){
+	var timestamp=Math.round(new Date().getTime()/1000/60);//异步URL一分钟变化一次
+	$.getJSON('index.php?act=seller_center&op=statistics&rand='+timestamp, null, function(data){
+		if (data == null) return false;
+			for(var a in data) {
+				if(data[a] != 'undefined' && data[a] != 0) {
+					var tmp = '';
+				if (a != 'goodscount' && a != 'imagecount') {
+					$('#nc_'+a).parents('a').addClass('num');
+				}
+				$('#nc_'+a).html(data[a]);
+			}
+		}
+	});
+});
+</script>
+</div>

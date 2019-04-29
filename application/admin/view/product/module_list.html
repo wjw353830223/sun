@@ -1,0 +1,48 @@
+{include file="open/header" /}
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('product/module_list')}">分区管理</a></li>
+        <li><a href="{:url('product/add_module')}">添加分区</a></li>
+    </ul>
+    <form method="post" class="js-ajax-form" action="{:url('product/module_list')}">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="50">ID</th>
+                <th>分区名称</th>
+                <th>分区描述</th>
+                <th>分区图片</th>
+                <th>添加时间</th>
+                <th width="80">分类状态</th>
+                <th width="180">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+                {foreach name="module" item="val"}
+                <tr>
+                    <td>{$val.module_id}</td>
+                    <td>{$val.module_name}</td>
+                    <td>{$val.module_desc}</td>
+                    <th><img width="25" height="25" src="{$val.module_photo ? $val.module_photo : '__PUBLIC__/images/default-thumbnail.png'}" /></th>
+                    <td>{:date('Y-m-d H:i:s',$val.add_time)}</td>
+                    <td>
+                        {switch name="$val.module_state"}
+                            {case value="0"}关闭{/case}
+                            {case value="1"}开启{/case}
+                        {/switch}
+                    </td>
+                    <td>
+                        <a href="{:url('product/edit_module',['id'=>$val.module_id])}">编辑</a>
+                        | <a href="{:url('product/del_module',['id'=>$val.module_id])}" class="js-ajax-delete">删除</a>
+                    </td>
+                </tr>
+                {/foreach}
+            </tbody>
+        </table>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

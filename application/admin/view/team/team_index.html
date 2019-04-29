@@ -1,0 +1,65 @@
+{include file="open/header" /}
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('team/team_index')}">团队列表</a></li>
+    </ul>
+    <form class="well form-search" method="get" action="{:url('team/team_index')}">
+        创建人账号：
+        <input type="text" name="member_mobile" style="width: 200px;" value="{:input('request.member_mobile')}" placeholder="创建人账号">
+        时间：
+        <input type="text" name="start_time" class="js-datetime" value="{$Think.get.start_time}" style="width: 120px;" autocomplete="off">-
+        <input type="text" name="end_time" class="js-datetime"  value="{$Think.get.end_time}" style="width: 120px;" autocomplete="off"> &nbsp;
+        <input type="submit" class="btn btn-primary" value="搜索" />
+        <a class="btn btn-danger" href="{:url('team/team_index')}">清空</a>
+    </form>
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th width="50">ID</th>
+                <th>团队名称</th>
+                <th>创建人姓名</th>
+                <th>创建人账号</th>
+                <th>团队人数</th>
+                <th>创建时间</th>
+                <th>团队状态</th>
+                <th width="200">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach name="team" item="vo"}
+            <tr>
+                <td>{$vo.team_id}</td>
+                <td>{$vo.team_name}</td>
+                <td>{$vo.member_name}</td>
+                <td>{$vo.member_mobile}</td>
+                <td>{$vo.team_number}</td>
+                <td>{:date("Y-m-d H:i:s",$vo.create_time)}</td>
+                <td>
+                    {if condition="$vo.team_status == 1"}
+                        正常
+                    {elseif condition="$vo.team_status == 0"}
+                        下架
+                    {/if}
+                </td>
+                <td>
+                    {if condition="$vo.team_status == 1"}
+                        <a href="{:url('team/update',['id'=>$vo.team_id,'team_status'=>0])}" class="js-ajax-dialog-btn" data-msg="确定要修改么？">下架</a> |
+                    {elseif condition="$vo.team_status == 0"}
+                        <a href="{:url('team/update',['id'=>$vo.team_id,'team_status'=>1])}" class="js-ajax-dialog-btn" data-msg="确定要修改么？">正常</a> |
+                    {/if}
+                    <a href="{:url('team/team_detail',['id'=>$vo.team_id])}">查看团队详情</a> |
+                    <a href="{:url('team/team_results',['id'=>$vo.team_id])}">团队业绩查看</a>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

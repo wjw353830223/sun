@@ -1,0 +1,148 @@
+{include file="open/header" /} 
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('article/index')}">文章管理</a></li>
+			<li><a href="{:url('article/add')}" target="_self">添加文章</a></li>
+		</ul>
+		<form class="well form-search" method="get" action="{:url('article/index')}">
+			分类： 
+			<select name="category" style="width: 120px;">
+				<option value='0'>全部</option>
+				
+				{$category}
+			</select> &nbsp;&nbsp;
+			时间：
+			<input type="text" name="start_time" class="js-datetime" value="{$Think.get.start_time}" style="width: 120px;" autocomplete="off">-
+			<input type="text" class="js-datetime" name="end_time" value="{$Think.get.end_time}" style="width: 120px;" autocomplete="off"> &nbsp; &nbsp;
+			关键字： 
+			<input type="text" name="keywords" style="width: 200px;" value="{$Think.get.keywords}" placeholder="请输入关键字...">
+			<input type="submit" class="btn btn-primary" value="搜索" />
+			<a class="btn btn-danger" href="{:url('article/index')}">清空</a>
+		</form>
+		<form class="js-ajax-form" action="" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">排序</th>
+						<th width="50">ID</th>
+						<th width="80">分类</th>
+						<th>标题</th>
+						<th width="50">点击量</th>
+						<th width="50">作者</th>
+						<th width="160">发布时间</th>
+						<th width="120">操作</th>
+					</tr>
+				</thead>
+				{foreach name="lists" item="vo"}
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.article_id}" title="ID:1"></td>
+					<notempty name="term">
+					<td><input name="listorders[{$vo.article_id}]" class="input input-order" type="text" size="5" value="{$vo.list_order}"></td>
+					</notempty>
+                    <td><b>{$vo.article_id}</b></td>
+                    <td>{$vo.cate_name}</td>
+					<td>{$vo.title}</td>
+					<td>{$vo.view_nums}</td>
+					<td>{$vo.admin_name}</td>
+					
+					<td>{:date('Y-m-d H:i',$vo['create_time'])}</td>
+					
+					<td>
+						<a href="{:url('article/edit',array('id'=>$vo['article_id']))}">编辑</a> | 
+						<a href="{:url('article/delete',array('id'=>$vo['article_id'],'cate_id'=>$vo['cate_id']))}" class="js-ajax-delete">删除</a> | 
+						{if condition="$vo.status eq 1"}
+						<a href="{:url('article/undercarriage',array('id'=>$vo['article_id']))}"  class="js-ajax-dialog-btn" data-msg="您确定要下架此单页吗？">下架</a> |
+						{elseif condition="$vo.status eq 0"/}
+						<a href="{:url('article/dercarriage',array('id'=>$vo['article_id']))}"  class="js-ajax-dialog-btn" data-msg="您确定要上架此单页吗？">上架</a> |
+						{/if}
+						
+					</td>
+				</tr>
+			    {/foreach}
+			</table>
+			<div class="table-actions">
+				<notempty name="term">
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:url('article/listorders')}">排序</button>
+				</notempty>
+				<!-- <notempty name="terms">
+					<button class="btn btn-primary btn-small js-articles-move" type="button">批量移动</button>
+				</notempty>
+				<button class="btn btn-primary btn-small js-articles-copy" type="button">批量复制</button> -->
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:url('article/delete_group')}" data-subcheck="true" data-msg="你确定删除吗？">删除</button>
+			</div>
+			<div class="pagination">{$lists->render()}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:url('AdminPost/index')}";
+			}
+		}
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量复制
+				$('.js-articles-copy').click(function(e) {
+					var ids=[];
+					$("input[name='ids[]']").each(function() {
+						if ($(this).is(':checked')) {
+							ids.push($(this).val());
+						}
+					});
+					if (ids.length == 0) {
+						art.dialog.through({
+							id : 'error',
+							icon : 'error',
+							content : '您没有勾选信息，无法进行操作！',
+							cancelVal : '关闭',
+							cancel : true
+						});
+						return false;
+					}
+					
+					ids= ids.join(',');
+					art.dialog.open("/index.php/admin/article/header?ids="+ ids, {
+						title : "批量复制",
+						width : "300px"
+					});
+				});
+				//批量移动
+				$('.js-articles-move').click(function(e) {
+					var ids=[];
+					$("input[name='ids[]']").each(function() {
+						if ($(this).is(':checked')) {
+							ids.push($(this).val());
+						}
+					});
+					
+					if (ids.length == 0) {
+						art.dialog.through({
+							id : 'error',
+							icon : 'error',
+							content : '您没有勾选信息，无法进行操作！',
+							cancelVal : '关闭',
+							cancel : true
+						});
+						return false;
+					}
+					
+					ids= ids.join(',');
+					art.dialog.open("/index.php/admin/article/move?old_term_id=1&ids="+ ids, {
+						title : "批量移动",
+						width : "300px"
+					});
+				});
+			});
+		});
+	</script>
+</body>
+</html>

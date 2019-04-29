@@ -1,0 +1,373 @@
+{include file="open/header" /}
+<style>
+    *{
+        list-style: none;
+    }
+    a { color: #1abc9c; }
+    label { font-weight: normal; }
+    .control-group{
+        margin-top:20px;
+    }
+    .chart_background{  width:100%;  height:100%;  background-color: rgba(0,0,0,0.5);  position: fixed;  left:0;  top:0;  display: none;  }
+    .chart_background .chart_person{  width:50%;  position:absolute;  top:150px;  left:25%;  background-color:rgb(246,246,246);  }
+    .chart_header,.chart_footer{  width:100%;  height:40px;  background-color:rgb(246,246,246);  }
+    .chart_left{  display: inline-block;  float: left;  line-height: 40px;  margin:0 0 0 15px;  }
+    .chart_right{  cursor: pointer;  display: inline-block;  float: right;  line-height: 40px;  margin:0 15px 0 0 ;  }
+    .chart_footer>.chart_right{  width:45px;  height:25px;  margin-top:7px;  text-align: center;  line-height:25px;  color: white;  background-color:rgb(48,177,231);  border-radius: 4px;  }
+    form.robot { padding: 10px;  margin: 0; }
+    .cate_list{
+        overflow: auto;
+    }
+    .cate_list>li{
+        float: left;
+        width:45%;
+    }
+    .cate_list li input{
+        margin-top: 0;
+        width:19px;
+    }
+    .cate_list li span{
+        display: inline-block;
+    }
+    .pagination{
+        margin-left: 300px;
+        overflow: auto;
+        clear: both;
+        padding-top: 20px;
+    }
+    .pagination li{
+        float:left;
+        margin-left:20px;
+    }
+
+
+    .upload_progress{
+        width:100%;
+        height:863px;
+        background-color: rgba(0,0,0,0.5);
+        position: fixed;
+        top:0;
+        left: 0;
+        display: none;
+    }
+    .progress{
+        height: 25px;
+        width:550px;
+        background: #262626;
+        padding: 5px;
+        overflow: visible;
+        border-radius: 20px;
+        border-top: 1px solid #000;
+        border-bottom: 1px solid #7992a8;
+        position: absolute;
+        top:45%;
+        left:35%;
+    }
+    .progress .progress-bar{
+        border-radius: 20px;
+        position: relative;
+        animation: animate-positive 2s;
+    }
+    .progress .progress-value{
+        display: block;
+        padding: 3px 7px;
+        font-size: 13px;
+        color: #fff;
+        border-radius: 4px;
+        background: #191919;
+        border: 1px solid #000;
+        position: absolute;
+        top: -40px;
+        right: -10px;
+    }
+    .progress .progress-value:after{
+        content: "";
+        border-top: 10px solid #191919;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        position: absolute;
+        bottom: -6px;
+        left: 26%;
+    }
+    .progress-bar.active{
+        animation: reverse progress-bar-stripes 0.40s linear infinite, animate-positive 2s;
+    }
+    @-webkit-keyframes animate-positive{
+        0% { width: 0; }
+    }
+    @keyframes animate-positive{
+        0% { width: 0; }
+    }
+    .page{
+        margin: 0 38px 10px;
+    }
+    .page td{
+        padding:4px 10px;
+        border:1px solid #ddd;
+    }
+    .page td a{
+        cursor: pointer;
+    }
+    .page td a:hover{
+        text-decoration: none;
+        color:#1abc9c;
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('product/module_list')}">分区管理</a></li>
+        <li><a href="{:url('product/add_module')}">添加分区</a></li>
+        <li class="active"><a href="{:url('product/edit_module')}">编辑分区</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:url('product/edit_module')}">
+        <fieldset>
+            <div class="control-group">
+                <input type="hidden" name="module_id" value="{$module.module_id}" />
+                <div class="control-group">
+                    <label class="control-label">分区名称</label>
+                    <div class="controls">
+                        <input type="text" name="module_name" value="{$module.module_name}" required />
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">分区图片</label>
+                    <div class="controls">
+                        <div class="input-append input-avatar">
+                            <input type="text" name="module_photo" value="{$module.module_photo}" id="module_photo">
+                            <input type="file" name="photo" value="" onchange="set_name(this)">
+                            <button class="btn btn-info" type="button">浏览</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">分区描述</label>
+                    <div class="controls">
+                        <textarea name="module_desc" cols="30" rows="5" required>{$module.module_desc}</textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">分区状态</label>
+                    <div class="controls">
+                        <label class="radio inline" for="active_true">
+                            <input type="radio" name="module_state" id="active_true" value="1" {if condition="$module.module_state === 1"}checked="checked"{/if}>开启
+                        </label>
+                        <label class="radio inline" for="active_false">
+                            <input type="radio" name="module_state" id="active_false" value="0" {if condition="$module.module_state === 0"}checked="checked"{/if}>关闭
+                        </label>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">选择分类名称</label>
+                    <div class="controls">
+                        <input type="checkbox" id="allowCheckbox" style="margin-top:0;"><span style="margin-left:5px;">选择指定分类</span>
+                        <input type="hidden" name="cate_ids" value="{$module.cate_ids}"  id="cate_ids"/>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+            <a class="btn" href="javascript:history.back(-1);">返回</a>
+        </div>
+    </form>
+    <div class="chart_background">
+        <div class="chart_person">
+            <div class="chart_header">
+                <p class="chart_left">分类选择</p>
+                <p class="chart_right" onclick="display()"><a>x</a></p>
+            </div>
+            <div class="chart" id="basic-example">
+                <form class="robot">
+                    <ul class="cate_list"></ul>
+                </form>
+                <table class="page">
+                    <tr>
+                        <td>共 <span class="totalNum"></span>条数据</td>
+                        <td><a class="firstPage">首页</a></td>
+                        <td><a class="prevPage">上一页</a></td>
+                        <td>共<span class="current_Num">1</span>/<span class="totalPage"></span>页</td>
+                        <td><a class="nextPage">下一页</a></td>
+                        <td><a class="endPage">尾页</a></td>
+                    </tr>
+                </table>
+                <div class="chart_footer" style="padding: 10px 0 5px 0; text-align:right;">
+                    <button type="submit" class="btn btn-primary js-ajax-submit robot">确认</button>
+                    <a class="btn" onclick="display()" style="margin-right: 30px;">返回</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+    function set_name(obj){
+        var input = $(obj);
+        if (input.val() != '') {
+            $("#module_photo").val(input.val());
+        };
+    }
+    function display(){
+        $(".chart_background").fadeOut();
+        $('#allowCheckbox').attr('checked',false);
+    }
+    function pretendDevide(){
+        // 每页显示的条数
+        var everyPageNum = 20;
+        // 当前的页数
+        var current_Num = 1;
+        // 拿到所有已选设备组成的数组
+        var tbodyNode = $(".cate_list li").toArray();
+        // 获取数组的长度
+        var arrayLengrh = tbodyNode.length;
+        // 设置总条数
+        $(".totalNum").text(arrayLengrh);
+        // 获取总页数
+        var totalPageNum = Math.ceil(arrayLengrh/everyPageNum);
+        // 显示总页数
+        $(".totalPage").text(totalPageNum);
+        // 如果数组大小大于20
+        if(arrayLengrh > 20){
+            $(".cate_list li").show();
+            // 则把后面的全部隐藏
+            $(".cate_list li:gt(19)").hide();
+            $('table.page').css('display','block');
+        }else{
+            // 小于二十个也可以显示
+            $(".cate_list li").show();
+            $('table.page').css('display','none');
+        }
+        // 点击下一页按钮绑定触发事件
+        $(".nextPage").click(function(){
+            // 判断当期页码是否大于最大页码，如果大于等于，则不触发下一页
+            if(current_Num >= totalPageNum){
+                return false;
+            }else{
+                // 执行下一页
+                //当前页码加1
+                current_Num += 1;
+                //显示当前页码
+                $(".current_Num").text(current_Num);
+                // 让所有tr隐藏出来
+                $(".cate_list li").hide();
+                //获取该页显示的起始范围和结束范围
+                var start = everyPageNum*(current_Num - 1);
+                var end = everyPageNum*current_Num;
+                // 判断在start和end中间的显示，其余隐藏
+                for(var i = start;i < end;i++){
+                    $(".cate_list li").eq(i).show();
+                }
+            }
+        });
+
+        // 点击上一页按钮触发事件
+        $(".prevPage").click(function(){
+            // 判断当期页码是否小于等于0，如果小于等于，则不触发上一页
+            if(current_Num <= 1){
+                return false;
+            }else{
+                // 执行上一页
+                //当前页码减1
+                current_Num -= 1;
+                //显示当前页码
+                $(".current_Num").text(current_Num);
+                // 让所有tr隐藏出来
+                $(".cate_list li").hide();
+                //获取该页显示的起始范围和结束范围
+                var start = everyPageNum*(current_Num - 1);
+                var end = everyPageNum*current_Num;
+                // 判断在start和end中间的显示，其余隐藏
+                for(var i = start;i < end;i++){
+                    $(".cate_list li").eq(i).show();
+                }
+            }
+        });
+
+        // 点击尾页按钮绑定事件
+        $(".endPage").click(function(){
+            // 判断当期页码是否大于最大页码，如果大于等于，则不触发尾页
+            if(current_Num >= totalPageNum){
+                return false;
+            }else{
+                // 执行尾页
+                //当前页码赋值为最大页码
+                current_Num = totalPageNum;
+                //显示当前页码
+                $(".current_Num").text(current_Num);
+                // 让所有tr隐藏出来
+                $(".cate_list li").hide();
+                //获取该页显示的起始范围和结束范围
+                var start = everyPageNum*(current_Num - 1);
+                var end = everyPageNum*current_Num;
+                // 判断在start和end中间的显示，其余隐藏
+                for(var i = start;i < end;i++){
+                    $(".cate_list li").eq(i).show();
+                }
+            }
+        });
+
+        // 跳转首页firstPage
+        $(".firstPage").click(function(){
+            // 判断当期页码是否小于等于1
+            if(current_Num <= 1){
+                return false;
+            }else{
+                //当前页码赋值为最小页码
+                current_Num = 1;
+                //显示当前页码
+                $(".current_Num").text(current_Num);
+                // 让所有tr隐藏出来
+                $(".cate_list li").hide();
+                //获取该页显示的起始范围和结束范围
+                var start = everyPageNum*(current_Num - 1);
+                var end = everyPageNum*current_Num;
+                // 判断在start和end中间的显示，其余隐藏
+                for(var i = start;i < end;i++){
+                    $(".cate_list li").eq(i).show();
+                }
+            }
+        });
+    }
+
+    $(function () {
+        var module_id = $('input[name="module_id"]').val();
+        $.ajax({
+            dataType:"json",
+            type:"post",
+            url:"{:url('product/get_cate')}",
+            data:{type:'edit',module_id:module_id},
+            success:function(data){
+                $.each(data.cate,function(key,value){
+                    if($.inArray(value.gc_id.toString(), data.id) > -1){
+                        $('.cate_list').append('<li><input type="checkbox" checked name="gc_id[]" value="'+value.gc_id+'"><span>'+value.gc_name+'</span></li>');
+                    }else{
+                        $('.cate_list').append('<li><input type="checkbox" name="gc_id[]" value="'+value.gc_id+'"><span>'+value.gc_name+'</span></li>');
+                    }
+                });
+            }
+        });
+        $('#allowCheckbox').on('change', function () {
+            if($('#allowCheckbox').attr('checked')){
+                pretendDevide();
+                $('.chart_background').css('display','block');
+            }
+        });
+
+        $('button.robot').click(function(){
+            var cate_id = "";
+            if($('.robot input[type="checkbox"]:checked').length > 0) {
+                $('.robot input[type="checkbox"]:checked').each(function (key, value) {
+                    cate_id += $(this).val() + ",";
+                });
+                cate_id = cate_id.substring(0, cate_id.length - 1);
+                $('input[name="cate_ids"]').val(cate_id);
+                $(".chart_background").fadeOut();
+                $('form.robot').html('');
+            }
+        });
+    });
+</script>
+</body>
+</html>

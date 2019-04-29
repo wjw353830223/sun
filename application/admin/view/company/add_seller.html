@@ -1,0 +1,57 @@
+{include file="open/header" /} 
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript:void(0);">添加销售员</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:url('company/add_seller')}">
+			<fieldset>
+				<div class="control-group">
+					<div class="control-group">
+						<label class="control-label">所属公司</label>
+						<div class="controls">
+							<input type="hidden" name="store_id" value="{$store_id}">
+							<select name="store_id" disabled="disabled">
+								{foreach name="store" item="vo"}
+									<option value="{$vo.store_id}" {if condition="$vo.store_id == $store_id"} selected {/if}>{$vo.store_name}</option>
+								{/foreach}
+							</select>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">销售员类型</label>
+						<div class="controls">
+							<select name="seller_role">
+								<option value="1">消费商</option>
+								<option value="2">会员兼库管员</option>
+								<option value="3">消费商兼库管员</option>
+							</select>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">销售员姓名</label>
+						<div class="controls">
+							<input type="text" name="seller_name" value="">
+							<span class="form-required">*</span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">登录手机号</label>
+						<div class="controls">
+							<input type="text" name="seller_mobile" value="">
+							<span class="form-required">*</span>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="position_id" value="" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

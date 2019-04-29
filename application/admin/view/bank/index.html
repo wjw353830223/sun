@@ -1,0 +1,52 @@
+{include file="open/header" /}
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('bank/index')}">银行列表</a></li>
+        <li><a href="{:url('bank/add_bank')}">银行添加</a></li>
+    </ul>
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th width="50">ID</th>
+                <th>银行名称</th>
+                <th>银行图标</th>
+                <th>银行状态</th>
+                <th>添加时间</th>
+                <th width="180">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach name="bank" item="vo"}
+            <tr>
+                <td align="center">{$vo.bank_id}</td>
+                <td>{$vo.bank_name}</td>
+                <td><img src="{$vo.bank_img}" alt="" width="100px"/></td>
+                <td>{if condition="$vo['bank_state'] eq 1"}
+                        开启
+                    {else/}
+                        停用
+                    {/if}
+                </td>
+                <td>{:date('Y-m-d H:i:s',$vo.add_time)}</td>
+                <td>
+                    <a href="{:url('bank/edit',array('id'=>$vo['bank_id']))}">编辑</a> |
+                    {if condition="$vo['bank_state'] eq 1"}
+                    <a href="{:url('bank/update',['id'=>$vo['bank_id'],'bank_state'=>0])}" class="js-ajax-dialog-btn" data-msg="您确定要停用此银行吗？">停用</a>
+                    {else/}
+                    <a href="{:url('bank/update',['id'=>$vo['bank_id'],'bank_state'=>1])}" class="js-ajax-dialog-btn" data-msg="您确定要开启此银行吗？">开启</a>
+                    {/if}
+                    | <a href="{:url('bank/delete',['id'=>$vo['bank_id']])}" class="js-ajax-delete">删除</a>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+    <script src="__PUBLIC__/js/common.js"></script>
+</div>
+</body>
+</html>

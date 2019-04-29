@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="/static/css/detail_app.css" rel="stylesheet">
+    <script>
+        //在页面未加载完毕之前显示的loading Html自定义内容
+        var _LoadingHtml = '<div id="loadingDiv" style="background-color: white;width:100%;min-width:320px;height:100%;overflow:hidden;position:fixed;z-index:100"><div style=" height:863px;background-image:url(http://static.healthywo.com/welcome.gif-original);background-repeat: no-repeat;background-position: center center;"></div></div>';
+        //呈现loading效果
+        document.write(_LoadingHtml);
+        document.onreadystatechange = completeLoading;
+        //加载状态为complete时移除loading效果
+        function completeLoading() {
+            if (document.readyState == "complete") {
+                var loadingMask = document.getElementById('loadingDiv');
+                loadingMask.parentNode.removeChild(loadingMask);
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="app_download">
+        <img src="/static/images/logo-app.png">
+        <h4>太阳健康</h4>
+        <p><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.longcai.medical">下载APP</a></p>
+        <div class="clearboth"></div>
+    </div>
+
+    <div class="all">
+
+        <!--banner轮播图-->
+        <div class="img_gallery">
+            <div class="point">
+            </div>
+            <div class="main_img">
+                <ul id="banner_img">
+                </ul>
+                <a href="javascript:;" id="btn_prev"></a>
+                <a href="javascript:;" id="btn_next"></a>
+            </div>
+        </div>
+
+        <!--产品文字介绍-->
+        <div class="detail_text">
+            <div class="text_content">
+                <p class="goods_name"></p>
+                <p class="goods_price">￥<span id="goods_price"></span></p>
+                <p class="goods_description"></p>
+            </div>
+        </div>
+
+       <!-- 产品服务-->
+        <div class="detail_service">
+            <div class="service_header">
+                <p>服务</p>
+            </div>
+            <div class="service_list">
+                <ul class="service">
+                </ul>
+                <div class="clearboth"></div>
+            </div>
+        </div>
+
+        <!--详情页面-->
+        <div class="detail_app">
+        </div>
+
+        <!--详细参数-->
+        <div class="detail_spec">
+            <div class="spec_header">
+                <p >详细参数</p>
+            </div>
+                <table class="goods_spec">
+                </table>
+        </div>
+    </div>
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script src="/static/js/jquery.sha1.js"></script>
+    <script src="/static/js/detail_app.js"></script>
+
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/static/js/html5shiv.min.js"></script>
+    <script src="/static/js/respond.min.js"></script>
+    <![endif]-->
+    <!--[if IE 6]>
+    <script src="/static/js/IE6_PNG.js"></script>
+    <script>
+        DD_belatedPNG.fix('.pngFix');
+    </script>
+    <![endif]-->
+</body>
+</html>

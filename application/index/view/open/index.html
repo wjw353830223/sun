@@ -1,0 +1,35 @@
+<html>
+<head></head>
+<body>
+
+<form action="{:url('pay/initiate')}" method="post">
+    Timestamp:<input type="text" name="_timestamp" value="{:time()}">
+    Client_type:<input type="text" name="client_type" value="android" >
+    Token：<input type="text" name="token" value="e860e5089d7f9e5071eee0422549e8a2">
+    交易方式：<input type="text" name="trade_type" value="MWEB">
+    <br>
+    Order_sn:<input type="text" name="order_sn" value="1000000000323701" >
+    支付方式：<input type="text" name="pay_type" value="unipay">
+    Signature：<input type="text" name="signature" value="">
+    <input type="submit"></input>
+</form>
+</body>
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script>
+    $(function(){
+        var obj = $('form').serialize();
+        $.post("{:url('api/signature/get_sign_new')}",obj,function(res){
+            var data = JSON.parse(res)
+            $(":input[name='signature']").val(data.signature)
+        });
+        $(":input[type=text]").change(function(){
+            obj = $('form').serialize();
+            $.post("{:url('api/signature/get_sign_new')}",obj,function(res){
+                var data = JSON.parse(res)
+                $(":input[name='signature']").val(data.signature)
+            });
+        })
+    })
+
+</script>
+</html>

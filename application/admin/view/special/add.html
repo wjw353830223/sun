@@ -1,0 +1,179 @@
+{include file="open/header" /}
+<style type="text/css">
+.pic-list li {
+	margin-bottom: 5px;
+}
+.input_sevice ul{
+	margin-left:0;
+}
+.input_sevice ul li{
+	list-style: none;
+	float: left;
+	margin-left:20px;
+	width:250px;
+}
+li span {
+	display: inline-block;
+	vertical-align: top;
+}
+strong {
+	font-weight: bold;
+}
+.radio-btn input[type="radio"], .check-box input[type="checkbox"] {
+	visibility: hidden;
+}
+/*Custom checkbox*/
+.check-box {
+	width:14px;
+	height:14px;
+	cursor: pointer;
+	display: inline-block;
+	margin: 2px 7px 0 0;
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 0 1px #ccc;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background: rgb(255, 255, 255);
+	background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(246, 246, 246, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
+	background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+	background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+	background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=0);
+	border: 1px solid #ccc;
+}
+.check-box i {
+	background: url('__PUBLIC__/images/check_mark.png') no-repeat center center;
+	position: absolute;
+	left: 2px;
+	bottom: -17px;
+	width: 12px;
+	height: 12px;
+	opacity: .5;
+	-webkit-transition: all 400ms ease-in-out;
+	-moz-transition: all 400ms ease-in-out;
+	-o-transition: all 400ms ease-in-out;
+	transition: all 400ms ease-in-out;
+	-webkit-transform:rotateZ(-180deg);
+	-moz-transform:rotateZ(-180deg);
+	-o-transform:rotateZ(-180deg);
+	transform:rotateZ(-180deg);
+}
+.checkedBox {
+	-moz-box-shadow: inset 0 0 5px 1px #ccc;
+	-webkit-box-shadow: inset 0 0 5px 1px #ccc;
+	box-shadow: inset 0 0 5px 1px #ccc;
+	border-bottom-color: #fff;
+}
+.checkedBox i {
+	bottom: 2px;
+	-webkit-transform:rotateZ(0deg);
+	-moz-transform:rotateZ(0deg);
+	-o-transform:rotateZ(0deg);
+	transform:rotateZ(0deg);
+}
+input[type="radio"]{
+	margin:0;
+}
+li span{
+	margin-left:10px;
+}
+	.goods_prefix ul{
+		margin:0;
+	}
+	.goods_prefix ul li {
+		list-style: none;
+		margin-bottom: 8px;
+	}
+</style>
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('special/index')}">专题列表</a></li>
+			<li class="active"><a href="{:url('special/add')}" target="_self">添加专题</a></li>
+		</ul>
+		<form action="{:url('special/add_post')}" method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						<tr>
+							<th width="80">专题名称</th>
+							<td>
+								<input type="text" style="width:200px;" name="special_title" required value="" placeholder="请输入专题名称"/>
+								<span class="form-required">*</span>
+							</td>
+						</tr>
+						<tr>
+							<th>专题图片</th>
+							<td class="controls">
+								<div class="input-append input-avatar">
+									<input type="text" name="special_image" value="" id="special_image">
+									<input type="file" name="photo" value="" onchange="set_name(this)">
+									<button class="btn btn-info" type="button">浏览</button>
+								</div>
+							</td>
+						</tr>
+						<tr id="storages">
+							<th width="80">专题链接</th>
+							<td>
+								<input type="text" style="width:400px;" name="special_link_url" value="" placeholder="请输入专题链接"/>
+								<span class="form-required"></span>
+							</td>
+						</tr>
+						<tr>
+							<th>专题简介</th>
+							<td>
+								<textarea name="special_desc" style="width: 98%; height: 50px;resize: none;" placeholder="请填写专题简介"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<th>附加属性</th>
+							<td id="keywords">
+								<input type="text" name="special_field" value="" style="width: 200px" placeholder="请输入参数详情">
+								<!--<input class="btn btn-primary js-ajax-submit" type="button" value="添加" onclick="add_file()">-->
+							</td>
+						</tr>
+						
+						<tr>
+							<th width="80">是否上架</th>
+							<td class="input_sevice">
+								<ul>
+									<li><input type="radio" name="special_state" value="2" checked><span>是</span></li>
+									<li><input type="radio" name="special_state" value="1"><span>否</span></li>
+								</ul>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+				<a class="btn" href="{:url('special/index')}">返回</a>
+			</div>
+		</form>
+		<script>
+            var file_to=0;
+            function add_file()
+            {
+                //添加一行
+                $("#keywords").append("<div id='file_"+file_to+"' style='border:none;margin-top:5px;'>><td><input type='text' value='' style='width: 200px' name='special_field[]' placeholder='请输入参数详情'></td><td><input type='button' class='btn btn-primary js-ajax-submit' value='删除' id='' onclick='del_file("+file_to+")'></td></div>");
+                file_to++;
+            }
+            function del_file(file_id)
+            {
+                $("#file_"+file_id).remove();
+            }
+            function set_name(obj){
+                var input = $(obj);
+                if (input.val() != '') {
+                    $("#special_image").val(input.val());
+                }
+            }
+		</script>
+	</div>
+</body>
+</html>

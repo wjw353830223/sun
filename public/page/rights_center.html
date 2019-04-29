@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width">
+    <title></title>
+    <!--<link rel="stylesheet" href="/static/css/bootstrap.min.css">-->
+</head>
+<style type="text/css">
+*{
+    margin:0;
+    padding:0;
+}
+.all{
+    width:100%;
+    min-width: 750px;
+    background-color: rgb(245,245,245);
+}
+.header_wrap{
+    width:100%;
+    height:435px;
+    background: url("/static/images/bj.png") no-repeat;
+    background-size:cover;
+    padding-top: 26px;
+}
+.header_wrap img{
+    display: block;
+    width:146px;
+    height:188px;
+    margin:0 auto;
+}
+.header_wrap .grade{
+    margin-top: 24px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 26px;
+    font-family: inherit;
+}
+.header_wrap .progress{
+    height: 4px;
+    background: white;
+    overflow: visible;
+    margin:62px 36px 0 36px;
+}
+.progress .progress-bar{
+    height: 4px;
+    width:0;
+    position: relative;
+    animation: animate-positive 2s;
+}
+.progress .progress-value{
+    min-width: 45px;
+    display: block;
+    padding: 3px 7px;
+    font-size: 18px;
+    color: #e9c675;
+    border-radius: 4px;
+    border: 1px solid #e9c675;
+    position: absolute;
+    top: -40px;
+    right: -29px;
+	text-align:center;
+}
+.progress .progress-value:after{
+    content: "";
+    border-top:1px solid rgb(50,54,65);
+    background: url("/static/images/sanjiaoxing.png") no-repeat;
+    background-size:cover ;
+    width:16px;
+    height:10px;
+    position: absolute;
+    bottom:-10px;
+    left: 40%;
+}
+@-webkit-keyframes animate-positive{
+    0% { width: 0; }
+}
+@keyframes animate-positive{
+    0% { width: 0; }
+}
+.header_wrap .number{
+    margin:8px 36px 0 36px ;
+
+}
+.header_wrap .number p{
+    color: #e9c675;
+    font-size: 18px;
+}
+.header_wrap .number .star{
+    float: left;
+}
+.header_wrap .number .end{
+    float: right;
+}
+.header_wrap .number .tishi{
+    clear: both;
+    margin-top: 16px;
+}
+
+.header_wrapr{
+    width:100%;
+    height:435px;
+    background: url("/static/images/bj2.png") no-repeat;
+    background-size:cover;
+    padding-top: 26px;
+    display: none;
+}
+.header_wrapr img{
+    display: block;
+    width:146px;
+    height:188px;
+    margin:0 auto;
+}
+.header_wrapr .grade{
+    margin-top: 40px;
+    text-align: center;
+    color: #e9c675;
+    font-size: 28px;
+    font-family: inherit;
+}
+.header_wrapr .grade_content{
+    margin-top: 50px;
+    text-align: center;
+    color: #e9c675;
+    font-size: 28px;
+    font-family: inherit;
+    line-height: 36px;
+}
+
+.content{
+    margin-top: 15px;
+    padding-bottom: 95px;
+    background-color: white;
+}
+.content .title{
+    background-color: white;
+    padding-top: 46px;
+}
+.content .title p{
+    text-align: center;
+    font-size: 30px;
+    color: #323640;
+    font-weight: 500;
+    padding-bottom:40px;
+    margin-bottom: 0;
+}
+.active{
+    background-color: #dedede;
+}
+.content .touch{
+    display: block;
+    width:100%;
+    height:122px;
+    padding: 36px 0 0 0;
+}
+
+.content .touch .select{
+    height:122px;
+    margin:0 65px 0 65px;
+    border-bottom: 1px solid #eeeeee;
+}
+.content .touch .select .s1{
+    float: left;
+}
+.content .touch .select .s2{
+    float: left;
+    margin-left: 36px;
+}
+.content .touch .select .s2 .s2_1{
+    font-size: 28px;
+    color: #d6af58;
+}
+.content .touch .select .s2 .s2_2{
+    margin-top: 12px;
+    font-size: 22px;
+    color: #30343e;
+}
+.content .touch .select .s3{
+    float: right;
+    margin-top:30px;
+}
+
+.demo1{
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    background-color: rgba(0,0,0,0.7);
+    display: none;
+}
+.demo2{
+    width:578px;
+    height:415px;
+    margin:80px auto 0;
+    background: url("/static/images/light.png") no-repeat;
+    background-size: cover;
+    padding-top:140px;
+}
+.demo2 img{
+    display: block;
+    margin:0 auto;
+}
+.demo1 p{
+    margin-top:40px;
+    text-align: center;
+    color: white;
+    font-size: 26px;
+}
+</style>
+<body>
+    <div class="all">
+        <!--会员-->
+        <div class="header_wrap">
+            <img src="" class="grader_img">
+            <p class="grade" ></p>
+            <div class="progress">
+                <div class="progress-bar"  style="background-color: #e9c675">
+                    <div class="progress-value"></div>
+                </div>
+            </div>
+            <div class="number">
+                <p class="star"></p>
+                <p class="end"></p>
+                <p class="tishi">还差<span class="between_experience"></span>经验即可升级为<span class="to_grade_name"></span></p>
+            </div>
+        </div>
+        <!--消费商-->
+        <div class="header_wrapr">
+            <img src="" class="grader_img">
+            <p class="grade" style="font-size: 32px"></p>
+            <p class="grade_content">您的家族还需<span class="count"></span>名等级为<span class="grade"></span>的成员</p>
+            <p class="grade_content" style="margin-top:15px">即可升至下一等级</p>
+        </div>
+        <div class="content">
+            <div class="title">
+                <p><img src="/static/images/p1.png">&nbsp;&nbsp;会员权益&nbsp;&nbsp;<img src="/static/images/p2.png"> </p>
+            </div>
+            <a class="touch " id="user" href="http://static.healthywo.com/activity_sharegoods.html?fenhon=0" target="_blank">
+                <div class="select">
+                    <img src="/static/images/day.png" class="s1">
+                    <div class="s2">
+                        <p class="s2_1">日奖励</p>
+                        <p class="s2_2">本月消费达标，下月天天享受奖励</p>
+                    </div>
+                    <img src="/static/images/back.png" class="s3">
+                    <div class="clearboth"></div>
+                </div>
+            </a>
+            <a class="touch" href="http://static.healthywo.com/activity_sharegoods.html?fenhon=1" target="_blank">
+                <div class="select">
+                    <img src="/static/images/week.png" class="s1">
+                    <div class="s2">
+                        <p class="s2_1">周奖励</p>
+                        <p class="s2_2">本月消费达标，下月周周享受奖励</p>
+                    </div>
+                    <img src="/static/images/back.png" class="s3">
+                    <div class="clearboth"></div>
+                </div>
+            </a>
+            <a class="touch" href="http://static.healthywo.com/activity_sharegoods.html?fenhon=2" target="_blank">
+                <div class="select">
+                    <img src="/static/images/month.png" class="s1">
+                    <div class="s2">
+                        <p class="s2_1">月奖励</p>
+                        <p class="s2_2">本月消费达标，下月即享月度奖励</p>
+                    </div>
+                    <img src="/static/images/back.png" class="s3">
+                    <div class="clearboth"></div>
+                </div>
+            </a>
+            <a class="touch" href="http://static.healthywo.com/activity_sharegoods.html?fenhon=3" target="_blank">
+                <div class="select">
+                    <img src="/static/images/for.png" class="s1">
+                    <div class="s2">
+                        <p class="s2_1">杰出贡献奖</p>
+                        <p class="s2_2">超过最低消费，即享杰出贡献奖励</p>
+                    </div>
+                    <img src="/static/images/back.png" class="s3">
+                    <div class="clearboth"></div>
+                </div>
+            </a>
+            <a class="touch" href="http://static.healthywo.com/activity_sharegoods.html?fenhon=4" target="_blank">
+                <div class="select">
+                    <img src="/static/images/money.png" class="s1">
+                    <div class="s2">
+                        <p class="s2_1">提成奖励</p>
+                        <p class="s2_2">精选品质好货，消费即享提成奖励</p>
+                    </div>
+                    <img src="/static/images/back.png" class="s3">
+                    <div class="clearboth"></div>
+                </div>
+            </a>
+            <a class="touch" id="member" href="http://static.healthywo.com/activity_sharegoods.html?fenhon=5" target="_blank">
+                <div class="select">
+                    <img src="/static/images/gaoguan.png" class="s1">
+                    <div class="s2">
+                        <p class="s2_1">消费商奖</p>
+                        <p class="s2_2">达到一定等级，即享固定每月奖励</p>
+                    </div>
+                    <img src="/static/images/back.png" class="s3">
+                    <div class="clearboth"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--升级弹框-->
+    <div class="demo1">
+        <div class="demo2">
+            <img src="" class="grader_img">
+            <p>恭喜您升级到<span class="grade"></span></p>
+        </div>
+    </div>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/jquery.sha1.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+$('.touch').hover(function(){
+        $('.touch').removeClass('active');
+        $(this).addClass('active');
+    })
+$(function(){
+
+    /*获取URL*/
+    (function ($) {
+        $.getUrlParam = function (name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+    })(jQuery);
+    var product = $.getUrlParam('token');
+
+    /*获取手机类型*/
+    var ua = navigator.userAgent.toLowerCase();
+    var ctype;
+    if (/iphone|ipad|ipod/.test(ua)) {
+        ctype="ios";
+    } else if (/android/.test(ua)) {
+        ctype="android";
+    }
+
+    /*获取时间戳*/
+    var date= Math.round(new Date().getTime()/1000);
+
+    var  fields=[{name:"client_type",value:ctype},{name:"_timestamp",value:date},{name:"token",value:product}];
+    fields.sort(function(a,b){
+      return a.name > b.name ? 1: a.name < b.name ? -1 : 0;
+    });
+    var sha1 = $.sha1($.param(fields));
+
+    /*AJAX获取信息ֵ*/
+    $.ajax({
+        type: "post",
+        url: "http://sun.healthywo.com/api/member/rights_center",
+        data: {client_type: ctype, _timestamp: date, token: product,signature:sha1},
+        dataType: 'json',
+        success: function (data) {
+            var detail = data.result;
+            /*判断是否为消费商*/
+            var is_seller=detail.is_seller;
+            var is_alert=detail.is_alert;
+            var grade_url=detail.grade_img;
+            var grade_name=detail.grade_name;
+            var grade_experience=detail.grade_experience;
+            var to_experience=detail.to_experience;
+            var experience=detail.experience;
+            var between_experience=detail.between_experience;
+            var to_grade_name=detail.to_grade_name;
+            var count=detail.count;
+            var member_grade=detail.member_grade;
+            if(is_seller==0){
+                $("#user").show();
+                $("#member").hide();
+                /*判读是否弹窗*/
+                if(is_alert==1){
+                    $(".demo1").show();
+                    $(".grader_img").attr('src',grade_url);
+                    $(".grade").append(grade_name);
+                }else{
+                    /*获取图标*/
+                    $(".grader_img").attr('src',grade_url);
+                    /*获取当前会员等级*/
+                    $(".grade").append(grade_name);
+
+                    /* 获取当前会员等级区间以及当前经验值*/
+                    if(experience>to_experience){
+                        $(".progress-value").append(experience);
+                        experience=to_experience;
+                        $(".star").append(grade_experience);
+                        $(".end").append(to_experience);
+
+                    }else{
+                        $(".progress-value").append(experience);
+                        $(".star").append(grade_experience);
+                        $(".end").append(to_experience);
+                    }
+                    var grade_1=parseInt(to_experience)-parseInt(grade_experience);
+                    var grade_2=parseInt(experience)-parseInt(grade_experience);
+                    var progress=grade_2/grade_1;
+                    var progress_1=progress*100;
+                    var progress_width=progress_1.toString()+"%";
+                    $(".progress-bar").animate({width:progress_width},2000).css("overflow","");
+
+
+
+                    /*获取下一级消息*/
+                    $(".between_experience").append(between_experience);
+                    $(".to_grade_name").append(to_grade_name);
+                }
+            }else if(is_seller==1){
+                if(member_grade==6){
+                    $("#user").show();
+                    $("#member").hide();
+                    $(".grade").css("color","white");
+                    $(".grade_content").css("color","white");
+                }else{
+                    $("#user").hide();
+                    $("#member").show();
+                }
+                /*改变头部区域*/
+                $(".header_wrap").hide();
+                $(".header_wrapr").show();
+                /*判读是否弹窗*/
+                if(is_alert==1){
+                    $(".demo1").show();
+                    $(".grader_img").attr('src',grade_url);
+                    $(".grade").append(grade_name);
+                }else{
+                    /*获取图标*/
+                    $(".grader_img").attr('src',grade_url);
+                    /*获取当前会员等级*/
+                    $(".grade").append(grade_name);
+                    /*获取当前下属数量*/
+                    $(".count").append(count);
+                }
+            }
+        }
+    });
+    /*弹框消失*/
+    $(".demo1").click(function(){
+        $(".demo1").hide();
+        location.reload();
+    })
+});
+</script>

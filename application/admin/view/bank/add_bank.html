@@ -1,0 +1,71 @@
+{include file="open/header" /}
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('bank/index')}">银行列表</a></li>
+        <li class="active"><a href="{:url('bank/add_bank')}">银行添加</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:url('bank/add_bank')}">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">银行名称</label>
+                <div class="controls">
+                    <input type="text" name="bank_name" value="" required>
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">银行图标</label>
+                <div class="controls">
+                    <div class="input-append input-avatar">
+                        <input type="text" name="bank_img" value="" id="bank_img">
+                        <input type="file" name="avatar" value="" onchange="avatar_upload(this)" id="avatar_uploder">
+                        <button class="btn btn-info" type="button">浏览</button>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">银行状态</label>
+                <div class="controls">
+                    <select name="bank_state">
+                        <option value="1">开启</option>
+                        <option value="0">停用</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">添加</button>
+            <a class="btn" href="javascript:history.back(-1);">返回</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+
+    function avatar_upload(obj){
+        var $fileinput=$(obj);
+        Wind.css("jcrop");
+        Wind.use("ajaxfileupload","jcrop","noty",function(){
+            $.ajaxFileUpload({
+                url:"{:url('bank/upload')}",
+                secureuri:false,
+                fileElementId:'avatar_uploder',
+                dataType: 'json',
+                success: function (data){
+                    if(data.code == 1){
+                        $('#bank_img').val(data.file);
+                    }else{
+                        artdialog_alert(data.msg);
+                    }
+
+                },
+                error: function (data, status, e){}
+            });
+        });
+        return false;
+    }
+</script>
+</body>
+</html>

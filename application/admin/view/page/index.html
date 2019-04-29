@@ -1,0 +1,71 @@
+{include file="open/header" /}
+
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('page/index')}">单页管理</a></li>
+			<li><a href="{:url('page/add')}">添加单页</a></li>
+		</ul>
+		<form class="well form-search" method="get" action="{:url('page/index')}" mutipa>
+			发布时间
+			<input type="text" name="start_time" class="js-datetime" value="{$Think.get.start_time}" style="width: 120px;" autocomplete="off">-
+			<input autocomplete="off" type="text" class="js-datetime" name="end_time" value="{$Think.get.end_time}" style="width: 120px;"> 关键词
+			<input type="text" name="keyword" style="width: 200px;" value="{$Think.get.keyword}" placeholder="请输入关键字...">
+			<button class="btn btn-primary">搜索</button>
+			<a class="btn btn-danger" href="{:url('page/index')}">清空</a>
+		</form>
+		<form class="js-ajax-form" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="100">ID</th>
+						<th>标题</th>
+						<th>点击量</th>
+						<th width="80">作者</th>
+						<th width="120"><span>发布时间</span></th>
+						<th width="120">操作</th>
+					</tr>
+				</thead>
+				{foreach name="lists" item="vo"}
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo['page_id']}"></td>
+					<td>{$vo.page_id}</td>
+					<td><span>{$vo.title}</span></td>
+					<td>{$vo.view_nums}</td>
+					<td>{$vo.admin_name}</td>
+					<td>{$vo.create_time}</td>
+					<td>
+						<a href="{:url('page/edit',array('id'=>$vo['page_id']))}">编辑</a>|
+						{if condition="$vo.status eq 1"}
+						<a href="{:url('page/lock',array('id'=>$vo['page_id']))}"  class="js-ajax-dialog-btn" data-msg="您确定要下架此单页吗？">下架</a>|
+						{elseif condition="$vo.status eq 2"/}
+						<a href="{:url('page/grounding',array('id'=>$vo['page_id']))}"  class="js-ajax-dialog-btn" data-msg="您确定要上架此单页吗？">上架</a>|
+						{/if}
+						<a href="{:url('page/delete',array('id'=>$vo['page_id']))}" class="js-ajax-delete">删除</a>
+					</td>
+				</tr>
+				{/foreach}
+			</table>
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:url('page/delgroup')}" data-subcheck="true" data-msg="你确定删除吗？">删除</button>
+			</div>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

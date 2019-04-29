@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="tabmenu">
+    <ul class="tab pngFix">
+        <li class="active"><a  href="">消息反馈</a></li>
+    </ul>
+</div>
+<form method="get" action="index.php">
+    <table class="search-form">
+        <input type="hidden" name="act" value="store_goods_online" />
+        <input type="hidden" name="op" value="index" />
+        <tr>
+            <td>&nbsp;</td>
+            <th>产品分类</th>
+            <td class="w160"><select name="stc_id" class="w150">
+                <option value="0">请选择...</option>
+                <option value="1">小活宝</option>
+                <option value="2">第二代机器人</option>
+                <option value="3">衍生品</option>
+            </select></td>
+            <td class="w160"><input type="text" class="text w150" name="keyword" value=""/></td>
+            <td class="tc w70"><label class="submit-border">
+                <input type="submit" class="submit" value="搜索" />
+            </label></td>
+        </tr>
+    </table>
+</form>
+<table class="ncsc-default-table">
+    <thead>
+    <tr nc_type="table_header">
+        <th class="w30">&nbsp;</th>
+        <th class="w50">&nbsp;</th>
+        <th coltype="editable" column="goods_name" checker="check_required" inputwidth="80px">申请产品名称</th>
+        <th class="w100">产品类型</th>
+        <th class="w50">产品价格</th>
+        <th class="w100">发起时间</th>
+        <th class="w100">审批公司</th>
+        <th class="w100">请求数量</th>
+        <th class="w100">总价</th>
+        <th class="w120">审核状态</th>
+    </tr>
+    <tr>
+        <td class="tc"><input type="checkbox" id="all" class="checkall"/></td>
+        <td colspan="20"><label for="all" >全选</label>
+            <a href="{:url('SellerCenter/kc_apply')}" class="ncsc-btn-mini" nctype="batch" data-param=""><i></i>返回上级</a>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <!--模板-->
+    <tr>
+        <th class="tc"><input type="checkbox" class="checkitem tc"  value="100085"/></th>
+        <th colspan="20">平台货号：0000001</th>
+    </tr>
+    <tr>
+        <td class="trigger"><i class="tip icon-plus-sign" nctype="ajaxGoodsList" data-comminid="100085" title=""></i></td>
+        <td><div class="pic-thumb"><a href="" ><img src=""/></a></div></td>
+        <td class="tl"><dl class="goods-name">
+            <dt style="max-width: 450px !important;">
+                <a href="" >小活宝</a></dt>
+            <dd>产品型号：ZXCKAO#1231</dd>
+            </dd>
+        </dl></td>
+        <td><span>机器人</span></td>
+        <td><span>&yen;899.00</span></td>
+        <td class="goods-time">2014-01-06</td>
+        <td><span >山西省分部</span></td>
+        <td><span >4988件</span></td>
+        <td><span >&yen;899.00</span></td>
+        <td><span >审核中</span></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <th class="tc"><input type="checkbox" id="all2" class="checkall"/></th>
+        <th colspan="10"><label for="all2">全选</label>
+            <a href="{:url('SellerCenter/kc_apply')}" class="ncsc-btn-mini" nctype="batch" data-param=""><i></i>返回上级</a>
+        </th>
+    </tr>
+    <tr>
+        <td colspan="20"><div class="pagination"> <ul><li><span>首页</span></li><li><span>上一页</span></li><li><span class="currentpage">1</span></li><li><span>下一页</span></li><li><span>末页</span></li></ul> </div></td>
+    </tr>
+    </tfoot>
+</table>
+</body>
+</html>

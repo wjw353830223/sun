@@ -1,0 +1,45 @@
+{include file="open/header" /} 
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('mange/index')}">管理员列表</a></li>
+			<li><a href="{:url('mange/add')}">管理员添加</a></li>
+			<li class="active"><a>编辑管理员</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:url('mange/edit_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">用户名</label>
+					<div class="controls">
+						<input type="text" name="admin_name" value="{$users.admin_name}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">密码</label>
+					<div class="controls">
+						<input type="password" name="admin_password" value="" placeholder="******">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">角色</label>
+					<div class="controls">
+						<select name="role_id" {if condition="sp_get_current_admin_id() neq 1 && $vo['admin_id'] eq 1"}disabled="true"{/if}>
+							<option value="0">请选择</option>
+							{foreach name="roles" item="vo"}
+							<option value="{$vo['role_id']}" {if condition="$vo['role_id'] == $users.role_id"}selected{/if}>{$vo.name}</option>
+							{/foreach}
+						</select>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="id" value="{$users.admin_id}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+				<a class="btn" href="javascript:history.back(-1);">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

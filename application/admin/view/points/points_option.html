@@ -1,0 +1,53 @@
+{include file="open/header" /}
+</head>
+<body>
+    <div class="wrap">
+        <ul class="nav nav-tabs">
+            <li><a href="{:url('Points/index')}">积分明细</a></li>
+            <li class="active"><a href="{:url('Points/points_option')}">积分充值</a></li>
+        </ul>
+        <form method="post" class="form-horizontal js-ajax-form" action="{:url('Points/points_option')}">
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label">会员账号</label>
+                    <div class="controls">
+                        <input type="text" name="member_mobile" required />
+                        <span class="form-required">*</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">增减类型</label>
+                    <div class="controls">
+                        <select name="type">
+                            <option value="admin_add" selected>增加</option>
+                            <option value="admin_del">扣除</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-group">
+                        <label class="control-label">积分值</label>
+                        <div class="controls">
+                            <input type="text" name="points" required />
+                            <span class="form-required">*</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-group">
+                        <label class="control-label">描述</label>
+                        <div class="controls">
+                            <textarea name="pl_desc" id="" cols="10" rows="5" style="resize: none;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+                <a class="btn" href="javascript:history.back(-1);">返回</a>
+            </div>
+        </form>
+    </div>
+    <script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

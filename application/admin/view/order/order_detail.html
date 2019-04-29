@@ -1,0 +1,88 @@
+{include file="open/header" /}
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript::void(0);">订单详情</a></li>
+		</ul>
+		<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr style="border-left:1px solid RGB(221,221,221)">
+						<tr><th colspan="2">订单信息</th></tr>
+						<tr >
+							<td width="820px">订单号:{$order_info.order_sn} {if condition="$order_info['pay_sn']"}(支付单号:{$order_info.pay_sn}){/if}</td>
+							<td style="border-top: 1px solid #ddd;border-left:0;">订单状态:<span style="color:red;font-weight:bold">{switch name="$order_info['order_state']"}
+							    {case value="10"}未付款{/case}
+							    {case value="20"}待发货{/case}
+							    {case value="30"}已发货{/case}
+							    {case value="40"}已收货{/case}
+							    {case value="50"}已完成{/case}
+							    {default /}已取消
+								{/switch}</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="border-top:0">订单总额:<span style="color:red;font-weight:bold">￥{$order_info.order_amount}</span> </td>
+							<td style="border:0">运费:￥{$order_info.shipping_fee ? $order_info.shipping_fee : "0.00"}</td>
+						</tr>
+						<tr >
+							<td style="border-top:1px solid gray">买家:{$order_info.buyer_name}</td>
+							<td style="border-top:1px solid gray;border-left:0;">买家电话:{$order_info.member_mobile}</td>
+						</tr>
+						<tr>
+							<td style="border-top:0">支付方式：<b style="color:red;">{$order_info.payment_code}</b> </td><td style="border:0">下单时间: {:date('Y-m-d H:i',$order_info['create_time'])}</td>
+						</tr>
+					</tr>
+					<tr style="border-left:1px solid RGB(221,221,221)">
+						<tr><th colspan="2">收货人</th></tr>
+						<tr><td style="border-top:0">收货人姓名: {$order_info.buyer_info.reciver_name}</td><td style="border:0">电话号码:{$order_info.buyer_info.reciver_info.mobile} </td></tr>
+						<tr><td style="border-top:0">详细地址:{$order_info.buyer_info.reciver_info.address}</td></tr>
+					</tr>
+					<tr style="border-left:1px solid RGB(221,221,221)">
+						<tr><th colspan="2">商品信息</th></tr>
+						<tr>
+							<td colspan="2">
+								<table>
+								<thead>
+									<tr>
+										<th style="border-left:none;width:500px;">商品信息</th>
+										<th width="300">单价</th>
+										<th width="300">数量</th>
+										<th width="300">规格</th>
+										<th width="300">支付金额</th>
+										{if condition="$order_partition_sn_nums>0"}
+										<th width="300">子订单号</th>
+										{/if}
+									</tr>
+								</thead>
+									{foreach name="$order_info['goods_info']" item="vo"}
+									<tr>
+										<td style="border-left:none"><img src="{$vo.goods_image}" width="80px" height="80px">&nbsp;&nbsp;&nbsp;&nbsp;{$vo.goods_name}</td>
+										<td style="">￥{$vo.goods_price}</td>
+										<td >{$vo.goods_num}</td>
+										<td >{$vo.spec_value}</td>
+										<td >￥{$vo.goods_amount}</td>
+										{if condition="$vo['order_partition_sn']"}
+										<td >{$vo.order_partition_sn}</td>
+										{/if}
+									</tr>
+									{/foreach}
+								</table>
+							</td>
+						</tr>
+					</tr>
+					<tr style="border-left:1px solid RGB(221,221,221)">
+						<tr><th colspan="2">操作记录</th></tr>
+						{foreach name="$order_info['order_log']" item="vo"}
+						<tr><td colspan="2">{$vo.log_msg}</td></tr>
+						{/foreach}
+						
+					</tr>
+				</thead>
+		</table>
+		<div class="form-actions">
+			<a class="btn" href="javascript:history.back(-1);">返回</a>
+		</div>
+	</div>
+</body>
+</html>
